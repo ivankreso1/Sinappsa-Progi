@@ -1,0 +1,1 @@
+testni text file da folder ne bi bio prazan inace se ne objavi na remote repository
