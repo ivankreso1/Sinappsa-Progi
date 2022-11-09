@@ -1,15 +1,31 @@
 package com.example.projekt.rest;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.projekt.domain.Kolegij;
+import com.example.projekt.service.KolegijService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/placeholder")
+@RequestMapping("/kolegiji")
 public class KolegijController {
 
+    @Autowired
+    private KolegijService kolegijService;
+
+//    @GetMapping
+//    public String testirajPut() {
+//        return "Hello from backend!";
+//    }
+
     @GetMapping
-    public String testirajPut() {
-        return "Hello from backend!";
+    public List<Kolegij> getKolegiji() {
+        return kolegijService.getKolegiji();
+    }
+
+    @PostMapping
+    public Kolegij postKolegij(@RequestBody CreateKolegijDTO kolegijDTO) {
+        return kolegijService.napraviKolegij(kolegijDTO.getNazivKolegija(), kolegijDTO.getSmjer());        // ne slat CreateKolegijDTO klasu u service, za nju samo controller
     }
 }

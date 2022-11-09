@@ -20,6 +20,7 @@ public class Upit {
     @Column
     private String poruka;
 
+    @Enumerated(EnumType.STRING)
     @Column
     private StanjeUpita stanjeUpita;
 

@@ -1,8 +1,6 @@
 package com.example.projekt.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Kolegij {
@@ -11,6 +9,7 @@ public class Kolegij {
     @Column
     private String ime;
 
+    @Enumerated(EnumType.STRING)
     @Column
     private Smjer smjer;
 

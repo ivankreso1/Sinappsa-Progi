@@ -18,6 +18,7 @@ public class Oglas {
     @ManyToOne
     private Kolegij kolegij;
 
+    @Enumerated(EnumType.STRING)
     @Column
     private Kategorija kategorija;
 

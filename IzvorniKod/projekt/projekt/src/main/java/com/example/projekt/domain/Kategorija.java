@@ -1,5 +1,5 @@
 package com.example.projekt.domain;
 
 public enum Kategorija {
-    Labos, Blic, Gradivo, IspitniRok, KontinuiraniIspit
+    LABOS, BLIC, GRADIVO, ISPITNI_ROK, KONTINUIRANI_ISPIT
 }

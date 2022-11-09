@@ -1,5 +1,5 @@
 package com.example.projekt.domain;
 
 public enum StanjeUpita {
-    UTijeku, Prihvacen, Odbijen, CekaOcjenjivanje
+    U_TIJEKU, PRIHVACEN, ODBIJEN, CEKA_OCJENJIVANJE
 }
