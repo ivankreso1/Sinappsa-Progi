@@ -1,10 +1,20 @@
+import React from 'react';
 import './App.css';
-import Login from "./components/Login";
+import { useNavigate } from 'react-router-dom';
+
+
+/**/
 
 function App() {
+
+  const navigate = useNavigate()
+  function goToLogin() {
+    navigate("/login")
+  }
   return (
-    <div className="App">
-      <Login />
+    <div>
+      <h1>Home page</h1>
+      <button onClick={goToLogin}> Login </button>
     </div>
   );
 }

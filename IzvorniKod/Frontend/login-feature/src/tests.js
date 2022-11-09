@@ -1,4 +1,4 @@
-export default [
+let tests = [
     {
         id: 1,
         email: "pero.peric@gmail.com",
@@ -22,3 +22,5 @@ export default [
         password: "lukinaSifra"
     }
 ]
+
+export default tests
