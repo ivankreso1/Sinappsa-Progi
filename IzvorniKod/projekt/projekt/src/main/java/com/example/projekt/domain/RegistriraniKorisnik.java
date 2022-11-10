@@ -11,6 +11,9 @@ public class RegistriraniKorisnik {
     private Long id;
 
     @Column(unique = true)
+    private String korisnickoIme;
+
+    @Column(unique = true)
     private String email;
 
     @Column
@@ -31,22 +34,33 @@ public class RegistriraniKorisnik {
     @Column
     private int sumaPrimljenihRecenzija;
 
-    @Lob // Large Object, jos byte pa je myb BLOB - binary large object
-    @Column()
-    private byte[] avatar;
+//    @Lob // Large Object, jos byte pa je myb BLOB - binary large object
+//    @Column()
+//    private byte[] avatar;
+    @Column
+    private String avatar;
 
-    public RegistriraniKorisnik(String email, String ime, String prezime, String lozinka, boolean moderator, byte[] avatar) {
+    public RegistriraniKorisnik(String email, String korisnickoIme, String ime, String prezime, String lozinka, String avatar) {
         this.email = email;
+        this.korisnickoIme = korisnickoIme;
         this.ime = ime;
         this.prezime = prezime;
         this.lozinka = lozinka;
-        this.moderator = moderator;
         this.avatar = avatar;
         this.sumaPrimljenihRecenzija = 0;
         this.brojPrimljenihRecenzija = 0;
+        this.moderator = false;
     }
 
     public RegistriraniKorisnik() {   // mora postojat zbog nacina na koji spring data vraca podatke iz tablice
+    }
+
+    public String getKorisnickoIme() {
+        return korisnickoIme;
+    }
+
+    public void setKorisnickoIme(String korisnickoIme) {
+        this.korisnickoIme = korisnickoIme;
     }
 
     public Long getId() {
@@ -113,11 +127,11 @@ public class RegistriraniKorisnik {
         this.sumaPrimljenihRecenzija = sumaPrimljenihRecenzija;
     }
 
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -125,6 +139,7 @@ public class RegistriraniKorisnik {
     public String toString() {
         return "RegistriraniKorisnik{" +
                 "id=" + id +
+                ", korisnickoIme='" + korisnickoIme + '\'' +
                 ", email='" + email + '\'' +
                 ", ime='" + ime + '\'' +
                 ", prezime='" + prezime + '\'' +
@@ -132,9 +147,7 @@ public class RegistriraniKorisnik {
                 ", moderator=" + moderator +
                 ", brojPrimljenihRecenzija=" + brojPrimljenihRecenzija +
                 ", sumaPrimljenihRecenzija=" + sumaPrimljenihRecenzija +
-                ", avatar=" + Arrays.toString(avatar) +
+                ", avatar=" + avatar +
                 '}';
     }
-
-
 }

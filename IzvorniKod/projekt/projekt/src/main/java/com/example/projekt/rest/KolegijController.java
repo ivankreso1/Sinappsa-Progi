@@ -24,6 +24,7 @@ public class KolegijController {
         return kolegijService.getKolegiji();
     }
 
+
     @PostMapping
     public Kolegij postKolegij(@RequestBody CreateKolegijDTO kolegijDTO) {
         return kolegijService.napraviKolegij(kolegijDTO.getNazivKolegija(), kolegijDTO.getSmjer());        // ne slat CreateKolegijDTO klasu u service, za nju samo controller
