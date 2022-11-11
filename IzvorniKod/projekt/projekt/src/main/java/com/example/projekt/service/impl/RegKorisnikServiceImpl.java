@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RegKorisnikServiceImpl implements RegKorisnikService {
@@ -30,10 +31,16 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
         if(regKorisnikRepository.existsByKorisnickoIme(korisnickoIme)) {
             throw new RequestDeniedException("Ovo korisnicko ime je vec zauzeto.");
         }
+        // provjerit da zavrsava mail sa @fer.hr
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashLozinka = passwordEncoder.encode(lozinka);
 
         return regKorisnikRepository.save(new RegistriraniKorisnik(email, korisnickoIme, ime, prezime, hashLozinka, avatar));
+    }
+
+    @Override
+    public Optional<RegistriraniKorisnik> findByKorisnickoIme(String korisnickoIme) {
+        return regKorisnikRepository.findByKorisnickoIme(korisnickoIme);
     }
 }
