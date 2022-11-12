@@ -13,4 +13,6 @@ public interface RegKorisnikService {
     List<RegistriraniKorisnik> dohvatiKorisnike();
 
     Optional<RegistriraniKorisnik> findByKorisnickoIme(String korisnickoIme);
+
+    RegistriraniKorisnik prijavi(String korisnickoIme, String lozinka);
 }

@@ -25,4 +25,9 @@ public class RegKorisnikController {
         return regKorisnikService.registriraj(regKorisnikDTO.getEmail(),regKorisnikDTO.getKorisnickoIme(), regKorisnikDTO.getIme(), regKorisnikDTO.getPrezime(), regKorisnikDTO.getLozinka(), regKorisnikDTO.getAvatar());
     }
 
+    @PostMapping("prijava")
+    public RegistriraniKorisnik prijavi(@RequestBody LoginDTO loginDTO) {
+        return regKorisnikService.prijavi(loginDTO.getKorisnickoIme(), loginDTO.getLozinka());
+    }
+
 }
