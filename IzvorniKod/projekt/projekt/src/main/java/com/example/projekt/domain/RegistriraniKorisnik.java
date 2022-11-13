@@ -2,6 +2,7 @@ package com.example.projekt.domain;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.Objects;
 
 @Entity
 public class RegistriraniKorisnik {
@@ -149,5 +150,18 @@ public class RegistriraniKorisnik {
                 ", sumaPrimljenihRecenzija=" + sumaPrimljenihRecenzija +
                 ", avatar=" + avatar +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RegistriraniKorisnik that = (RegistriraniKorisnik) o;
+        return moderator == that.moderator && brojPrimljenihRecenzija == that.brojPrimljenihRecenzija && sumaPrimljenihRecenzija == that.sumaPrimljenihRecenzija && id.equals(that.id) && korisnickoIme.equals(that.korisnickoIme) && email.equals(that.email) && ime.equals(that.ime) && prezime.equals(that.prezime) && lozinka.equals(that.lozinka) && avatar.equals(that.avatar);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, korisnickoIme, email, ime, prezime, lozinka, moderator, brojPrimljenihRecenzija, sumaPrimljenihRecenzija, avatar);
     }
 }

@@ -21,6 +21,11 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
     PasswordEncoder passwordEncoder;
 
     @Override
+    public Optional<RegistriraniKorisnik> findById(Long id) {
+        return regKorisnikRepository.findById(id);
+    }
+
+    @Override
     public List<RegistriraniKorisnik> dohvatiKorisnike() {
         return regKorisnikRepository.findAll();
     }

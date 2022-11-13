@@ -3,7 +3,6 @@ package com.example.projekt.rest;
 import com.example.projekt.domain.Kolegij;
 import com.example.projekt.service.KolegijService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class KolegijController {
 //    }
 
     @GetMapping
-    // @Secured("ROLE_ADMIN")       - ak stavis ovo, onda samo sa Basic Auth parametrima admin, pass mozes ovo zvat, inace 401 Unauthorized
+    // @Secured("ROLE_ADMIN")     //  - ak stavis ovo, onda samo sa Basic Auth parametrima admin, pass mozes ovo zvat, inace 401 Unauthorized
     public List<Kolegij> getKolegiji() {
         return kolegijService.getKolegiji();
     }

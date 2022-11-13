@@ -1,12 +1,18 @@
 package com.example.projekt.rest;
 
 import com.example.projekt.domain.RegistriraniKorisnik;
+import com.example.projekt.service.OglasService;
 import com.example.projekt.service.RegKorisnikService;
+import com.example.projekt.service.RequestDeniedException;
 import com.example.projekt.service.impl.RegKorisnikServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/korisnik")
@@ -14,6 +20,9 @@ public class RegKorisnikController {
 
     @Autowired
     private RegKorisnikService regKorisnikService;
+
+    @Autowired
+    private OglasService oglasService;
 
     @GetMapping
     public List<RegistriraniKorisnik> getKorisnike() {
@@ -28,6 +37,31 @@ public class RegKorisnikController {
     @PostMapping("prijava")
     public RegistriraniKorisnik prijavi(@RequestBody LoginDTO loginDTO) {
         return regKorisnikService.prijavi(loginDTO.getKorisnickoIme(), loginDTO.getLozinka());
+    }
+
+    @GetMapping("podaci/{id}")
+    public MyProfileDTO dohvatiPodatkeProfila(@PathVariable("id") Long id, @AuthenticationPrincipal User u) {
+        MyProfileDTO myProfileDTO = new MyProfileDTO();
+
+        if(u == null) {
+            throw new RequestDeniedException("Ne postoje podaci o autentikaciji");
+        }
+
+        Optional<RegistriraniKorisnik> korisnikPrekoId = regKorisnikService.findById(id);
+        Optional<RegistriraniKorisnik> korisnikPrekoAutentikacije = regKorisnikService.findByKorisnickoIme(u.getUsername());
+
+        if(korisnikPrekoId.isEmpty()) {
+            throw new RequestDeniedException("Nema korisnika sa id-om: " + id);
+        }
+        if(korisnikPrekoAutentikacije.isEmpty()) {
+            throw new RequestDeniedException("Ne postoje podaci o autentikaciji");
+        }
+        if(!korisnikPrekoAutentikacije.get().equals(korisnikPrekoId.get())) {
+            throw new RequestDeniedException("Moze se pristupiti samo svojim podacima.");
+        }
+        myProfileDTO.setRegistriraniKorisnik(korisnikPrekoId.get());
+        myProfileDTO.setOglasi(oglasService.dohvatiOglasePoKorisniku(korisnikPrekoId.get()));
+        return myProfileDTO;
     }
 
 }

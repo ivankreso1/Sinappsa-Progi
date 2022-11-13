@@ -15,4 +15,6 @@ public interface RegKorisnikService {
     Optional<RegistriraniKorisnik> findByKorisnickoIme(String korisnickoIme);
 
     RegistriraniKorisnik prijavi(String korisnickoIme, String lozinka);
+
+    Optional<RegistriraniKorisnik> findById(Long id);
 }
