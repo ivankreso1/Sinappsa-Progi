@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Card } from "react-bootstrap";
+import avatars from "../avatars";
 
 /*
 Treba postojati nekakva procedura nakon sto se s backenda dohvate podaci - treba se pratiti je li forma dobro ispunjena => ako je, onda se preusmjerava na home page i cuvaju se upisani podaci
@@ -19,9 +20,11 @@ export default function Register() {
         password: "",
     })
 
+    const [chosenAvatar, setChosenAvatar] = useState("")
+
     function handleInfoChange(e) {
         setRegisterInfo(prevInfo => {
-            return { ...prevInfo, [e.target.name]: e.target.value }     
+            return { ...prevInfo, [e.target.name]: e.target.value }     //posto ima vise inputova, treba ih se razlikovati po name-u => to je jedan od parametara koji je sacuvan u event.target
         })
     }
 
@@ -29,6 +32,14 @@ export default function Register() {
         e.preventDefault()
         console.log(registerInfo)
 
+    }
+
+    function handleAvatarOnclick(id) {
+        console.log("Clicked on avatar number: " + id)
+        setChosenAvatar(id)
+        setRegisterInfo(prevInfo => {
+            return { ...prevInfo, avatar: id }
+        })
     }
 
     return (
@@ -83,6 +94,18 @@ export default function Register() {
                         </Form.Control>
                     </Form.Group>
                     <div className="avatar-placeholder">
+                        {avatars.map(
+                            avatar =>
+                                <img
+                                    key={avatar.id}
+                                    src={avatar.src}
+                                    alt=""
+                                    style={{
+                                        border: chosenAvatar === avatar.id ? "7.5px solid #5495E3" : "2px solid black"
+                                    }}
+                                    onClick={() => handleAvatarOnclick(avatar.id)}
+                                ></img>
+                        )}
                 </div>
                 <Form.Group
                     className="info-input"
@@ -114,6 +137,7 @@ export default function Register() {
                     disabled={(!registerInfo.firstName ||
                         !registerInfo.lastName ||
                         !registerInfo.userName ||
+                        !registerInfo.avatar ||
                         !registerInfo.password ||
                         !registerInfo.email) ? true : false}> Submit </Button>
             </Form>
