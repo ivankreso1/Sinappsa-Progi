@@ -4,16 +4,16 @@ import { Button, Form, Card } from "react-bootstrap";
 import tests from "../tests"
 import "../cssFiles/login.css"
 
-
 export default function Login() {
 
-
     const [info, setInfo] = useState({
-        email: "",
+        userName: "",
         password: ""
-    })      //pocetne informacije 
+    })       
     
     const [loggedIn, setLoggedIn] = useState(false)
+    let value = false   //ako se u useState ubaci hardcodirana vrijednost, promjene ce biti odmah vidljive, odmah ce se updateati vrijednost
+
     const navigate = useNavigate()
 
     function handleInfoChange(e) {      
@@ -22,22 +22,19 @@ export default function Login() {
         })   
     }
 
-    function handleSubmit(e) {  //poziva se kada se forma submita (pritiskom na submit gumb)
-        e.preventDefault()  //zaustavlja se defaultno ponasanje weba da se stranica refresha - ja sam htio ispisati podatke i ostaviti podatke u input poljima
-        //setSubmited(false)      //cim se nesto mijenjalo (lozinka ili e-mail adresa), mice se poruka o uspjesnom loginu - inace bi stalno bilo true i 
-                                //stalno bi se ispisivala poruka o uspjesnoj prijavi
+    function handleSubmit(e) {
+        e.preventDefault()
+        value = false
         for (let test of tests) {
-            if (test.email === info.email
+            if (test.email === info.userName
                 &&
                 test.password === info.password) {
-                console.log("USAO")
-                setLoggedIn(true)
+                value = true
+                setLoggedIn(value)
             }
-            console.log("Logged in: " + loggedIn)
         }
 
-        //console.log("Submited prije navigate: " + loggedIn)
-        if (loggedIn) navigate("/profile")      //ukoliko se korisnik ispravno ulogirao, odvedi ga na profile
+        if (value) navigate("/profile")
     }
 
     return (
@@ -56,14 +53,15 @@ export default function Login() {
                 <h1> Login </h1>
                 <Form
                     className="form"
-                    onSubmit={handleSubmit}>
+                    onClick={handleSubmit}
+                    >
                     <Form.Group
                         className="info-input"
                     >
-                        <Form.Control type="email"
-                            placeholder="Email address"
-                            name="email"
-                            value={info.email}
+                        <Form.Control type="text"
+                            placeholder="Korisničko ime"
+                            name="userName"
+                            value={info.userName}
                             required
                             onChange={handleInfoChange}>
                         </Form.Control>
@@ -72,7 +70,7 @@ export default function Login() {
                         className="info-input"
                     >
                         <Form.Control type="password"
-                            placeholder="Password"
+                            placeholder="Lozinka"
                             name="password"
                             required
                             value={info.password}
@@ -82,10 +80,10 @@ export default function Login() {
 
                     <Button
                         type="submit"
-                        disabled={!info.email || !info.password ? true : false}> Submit </Button>
+                        disabled={!info.userName || !info.password ? true : false}> Submit </Button>
                 </Form>
                 <div className="register-link">
-                    Not a member? <a href="/profile">Register here</a>
+                    Nemaš korisnički račun? <a href="/register">Registriraj se ovdje</a>
                 </div>
             </Card>
 
