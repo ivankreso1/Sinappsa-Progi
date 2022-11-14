@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Card } from "react-bootstrap";
-import tests from "../tests"
 import "../cssFiles/login.css"
 
 export default function Login() {
@@ -11,7 +10,6 @@ export default function Login() {
         password: ""
     })       
     
-    const [loggedIn, setLoggedIn] = useState(false)
     let value = false   //ako se u useState ubaci hardcodirana vrijednost, promjene ce biti odmah vidljive, odmah ce se updateati vrijednost
 
     const navigate = useNavigate()
@@ -24,17 +22,18 @@ export default function Login() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        value = false
-        for (let test of tests) {
-            if (test.email === info.userName
-                &&
-                test.password === info.password) {
-                value = true
-                setLoggedIn(value)
-            }
+        const data = {
+            userName: info.userName,
+            password: info.password
         }
-
-        if (value) navigate("/profile")
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `username=${info.username}&password=${info.password}`
+        }
+        return fetch("/login", options)
     }
 
     return (
