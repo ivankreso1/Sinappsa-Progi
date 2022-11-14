@@ -23,17 +23,19 @@ export default function Login() {
     function handleSubmit(e) {
         e.preventDefault()
         const data = {
-            userName: info.userName,
-            password: info.password
+            korisnickoIme: info.userName,
+            lozinka: info.password
         }
         const options = {
             method: "POST",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/json"
             },
-            body: `username=${info.username}&password=${info.password}`
+            body: JSON.stringify(data)
         }
-        return fetch("/login", options)
+        fetch("http://localhost:8080/korisnik/prijava", options)
+        .then(res => res.json())
+        .then(data => console.log(data))
     }
 
     return (
@@ -52,7 +54,7 @@ export default function Login() {
                 <h1> Login </h1>
                 <Form
                     className="form"
-                    onClick={handleSubmit}
+                    onSubmit={handleSubmit}
                     >
                     <Form.Group
                         className="info-input"

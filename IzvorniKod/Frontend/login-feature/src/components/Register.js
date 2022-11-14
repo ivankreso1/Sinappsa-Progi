@@ -12,13 +12,14 @@ export default function Register() {
 
 
     const [registerInfo, setRegisterInfo] = useState({
-        firstName: "",
-        lastName: "",
-        userName: "",
+        ime: "",
+        prezime: "",
+        korisnickoIme: "",
         email: "",
         avatar: "",
-        password: "",
+        lozinka: "",
     })
+
 
     const [chosenAvatar, setChosenAvatar] = useState("")
 
@@ -30,8 +31,25 @@ export default function Register() {
 
     function handleSubmit(e) {      //ovdje ide post zahtjev
         e.preventDefault()
-        console.log(registerInfo)
+        const data = {
+            korisnickoIme: registerInfo.korisnickoIme,
+            email: registerInfo.email,
+            ime: registerInfo.ime,
+            prezime: registerInfo.prezime,
+            lozinka: registerInfo.lozinka,
+            avatar: registerInfo.avatar,
 
+        }
+        const options = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }
+        fetch("http://localhost:8080/korisnik/registracija", options)
+        .then(res => res.json())
+        .then(data => console.log(data))
     }
 
     function handleAvatarOnclick(id) {
@@ -65,8 +83,8 @@ export default function Register() {
                     >
                         <Form.Control type="text"
                             placeholder="Ime"
-                            name="firstName"
-                            value={registerInfo.firstName}
+                            name="ime"
+                            value={registerInfo.ime}
                             required
                             onChange={handleInfoChange}>
                         </Form.Control>
@@ -76,9 +94,9 @@ export default function Register() {
                     >
                         <Form.Control type="text"
                             placeholder="Prezime"
-                            name="lastName"
+                            name="prezime"
                             required
-                            value={registerInfo.lastName}
+                            value={registerInfo.prezime}
                             onChange={handleInfoChange}>
                         </Form.Control>
                     </Form.Group>
@@ -87,8 +105,8 @@ export default function Register() {
                     >
                         <Form.Control type="text"
                             placeholder="Korisničko ime"
-                            name="userName"
-                            value={registerInfo.userName}
+                            name="korisnickoIme"
+                            value={registerInfo.korisnickoIme}
                             required
                             onChange={handleInfoChange}>
                         </Form.Control>
@@ -121,11 +139,11 @@ export default function Register() {
                 <Form.Group
                     className="info-input"
                 >
-                    <Form.Control type="text"
+                    <Form.Control type="password"
                         placeholder="Lozinka"
-                        name="password"
+                        name="lozinka"
                         required
-                        value={registerInfo.password}
+                        value={registerInfo.lozinka}
                         onChange={handleInfoChange}>
                     </Form.Control>
                 </Form.Group>
@@ -134,11 +152,11 @@ export default function Register() {
                         marginBottom: "10px"
                     }}
                     type="submit"
-                    disabled={(!registerInfo.firstName ||
-                        !registerInfo.lastName ||
-                        !registerInfo.userName ||
+                    disabled={(!registerInfo.ime ||
+                        !registerInfo.prezime ||
+                        !registerInfo.korisnickoIme ||
                         !registerInfo.avatar ||
-                        !registerInfo.password ||
+                        !registerInfo.lozinka ||
                         !registerInfo.email) ? true : false}> Submit </Button>
             </Form>
         </Card>
