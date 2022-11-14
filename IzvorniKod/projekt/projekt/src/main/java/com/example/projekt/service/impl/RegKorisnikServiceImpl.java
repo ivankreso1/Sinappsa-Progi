@@ -63,6 +63,9 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
         if(!email.endsWith("@fer.hr")) {
             throw new RequestDeniedException("E-mail adresa " + email + " nije iz FER-ove domene.");
         }
+        if(lozinka.length() < 5) {
+            throw new RequestDeniedException("Lozinka mora imati barem 5 znakova.");
+        }
 
         String hashLozinka = passwordEncoder.encode(lozinka);
 

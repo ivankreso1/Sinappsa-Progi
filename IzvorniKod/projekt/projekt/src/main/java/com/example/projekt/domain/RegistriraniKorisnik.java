@@ -1,8 +1,10 @@
 package com.example.projekt.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Arrays;
 import java.util.Objects;
+
 
 @Entity
 public class RegistriraniKorisnik {
@@ -24,6 +26,7 @@ public class RegistriraniKorisnik {
     private String prezime;
 
     @Column
+    @Size(min = 5)
     private String lozinka;
 
     @Column
