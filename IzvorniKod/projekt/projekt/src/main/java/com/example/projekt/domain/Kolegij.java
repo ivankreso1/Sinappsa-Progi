@@ -6,11 +6,11 @@ import javax.persistence.*;
 public class Kolegij {
 
     @Id
-    @Column
+    @Column(nullable = false)
     private String ime;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private Smjer smjer;
 
     public Kolegij() {

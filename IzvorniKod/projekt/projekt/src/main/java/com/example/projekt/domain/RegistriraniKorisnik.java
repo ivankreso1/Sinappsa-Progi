@@ -13,36 +13,38 @@ public class RegistriraniKorisnik {
     @GeneratedValue
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String korisnickoIme;
 
-    @Column(unique = true)
-    private String email;
-
-    @Column
+    @Column(nullable = false)
     private String ime;
 
-    @Column
+    @Column(nullable = false)
     private String prezime;
 
-    @Column
+    @Column(nullable = false)
+    private String avatar;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     @Size(min = 5)
     private String lozinka;
 
-    @Column
+    @Column(nullable = false)
     private boolean moderator;
 
-    @Column
+    @Column(nullable = false)
     private int brojPrimljenihRecenzija;
 
-    @Column
+    @Column(nullable = false)
     private int sumaPrimljenihRecenzija;
 
 //    @Lob // Large Object, jos byte pa je myb BLOB - binary large object
 //    @Column()
 //    private byte[] avatar;
-    @Column
-    private String avatar;
+
 
     public RegistriraniKorisnik(String email, String korisnickoIme, String ime, String prezime, String lozinka, String avatar) {
         this.email = email;

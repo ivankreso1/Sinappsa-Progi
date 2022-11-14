@@ -17,11 +17,11 @@ public class Upit {
     @ManyToOne
     private Oglas oglas;
 
-    @Column
+    @Column(nullable = false)
     private String poruka;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private StanjeUpita stanjeUpita;
 
     public Upit() {

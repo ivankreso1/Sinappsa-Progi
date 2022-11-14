@@ -9,26 +9,26 @@ public class Oglas {
     @GeneratedValue
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String naslov;
 
-    @Column
+    @Column(nullable = false)
     private String opis;
 
     @ManyToOne
     private Kolegij kolegij;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private Kategorija kategorija;
 
     @ManyToOne
     private RegistriraniKorisnik kreator;
 
-    @Column
+    @Column(nullable = false)
     private boolean aktivan;
 
-    @Column
+    @Column(nullable = false)
     private boolean trazimPomoc;
 
     public Oglas() {
