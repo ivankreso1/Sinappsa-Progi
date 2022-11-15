@@ -12,6 +12,7 @@ export default function Login() {
     
     let value = false   //ako se u useState ubaci hardcodirana vrijednost, promjene ce biti odmah vidljive, odmah ce se updateati vrijednost
 
+    const [error, setError] = useState("")
     const navigate = useNavigate()
 
     function handleInfoChange(e) {      
@@ -35,7 +36,14 @@ export default function Login() {
         }
         fetch("http://localhost:8080/korisnik/prijava", options)
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
+            if (data.error) {
+                //console.log("U error")
+                console.log(data.message)
+                setError(data.message)
+            }
+        })
     }
 
     return (
