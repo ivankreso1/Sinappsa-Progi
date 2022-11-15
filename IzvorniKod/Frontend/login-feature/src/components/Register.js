@@ -184,7 +184,7 @@ export default function Register() {
             </Form>
             <div className="error-message">
                     {error}
-                </div>
+            </div>
         </Card>
         </div >
     )

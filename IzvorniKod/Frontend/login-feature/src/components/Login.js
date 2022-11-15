@@ -10,8 +10,6 @@ export default function Login() {
         password: ""
     })       
     
-    let value = false   //ako se u useState ubaci hardcodirana vrijednost, promjene ce biti odmah vidljive, odmah ce se updateati vrijednost
-
     const [error, setError] = useState("")
     const navigate = useNavigate()
 

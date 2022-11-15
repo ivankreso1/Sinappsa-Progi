@@ -4,15 +4,15 @@ import Avatar3 from "./avatars/Avatar3.png"
 
 let avatars =  [
     {
-        id: 1,
+        id: "1",
         src: Avatar1
     },
     {
-        id: 2,
+        id: "2",
         src: Avatar2
     },
     {
-        id: 3,
+        id: "3",
         src: Avatar3
     }
 ]
