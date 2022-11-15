@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import avatars from "../avatars";
 
 /*
@@ -20,7 +21,8 @@ export default function Register() {
         lozinka: "",
     })
 
-
+    const navigate = useNavigate()
+    const [error, setError] = useState("")
     const [chosenAvatar, setChosenAvatar] = useState("")
 
     function handleInfoChange(e) {
@@ -49,7 +51,28 @@ export default function Register() {
         }
         fetch("http://localhost:8080/korisnik/registracija", options)
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
+            if (data.error) {
+                //console.log("U error")
+                console.log(data.message)
+                setError(data.message)
+            }
+            else {
+                const personInfo = {
+                    avatar: data.avatar,
+                    brojPrimljenihRecenzija: data.brojPrimljenihRecenzija,
+                    email: data.email,
+                    ime: data.ime,
+                    korisnickoIme: data.korisnickoIme,
+                    prezime: data.prezime,
+                    sumaPrimljenihRecenzija: data.sumaPrimljenihRecenzija
+                }
+                localStorage.setItem("personInfo", JSON.stringify(personInfo))
+                //console.log("ovdje")
+                navigate("/profile")
+            }
+        })
     }
 
     function handleAvatarOnclick(id) {
@@ -159,8 +182,10 @@ export default function Register() {
                         !registerInfo.lozinka ||
                         !registerInfo.email) ? true : false}> Submit </Button>
             </Form>
+            <div className="error-message">
+                    {error}
+            </div>
         </Card>
-
         </div >
     )
 }

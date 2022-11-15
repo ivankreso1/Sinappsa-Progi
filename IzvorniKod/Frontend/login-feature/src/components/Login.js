@@ -10,8 +10,7 @@ export default function Login() {
         password: ""
     })       
     
-    let value = false   //ako se u useState ubaci hardcodirana vrijednost, promjene ce biti odmah vidljive, odmah ce se updateati vrijednost
-
+    const [error, setError] = useState("")
     const navigate = useNavigate()
 
     function handleInfoChange(e) {      
@@ -35,7 +34,28 @@ export default function Login() {
         }
         fetch("http://localhost:8080/korisnik/prijava", options)
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
+            if (data.error) {
+                //console.log("U error")
+                console.log(data.message)
+                setError(data.message)
+            }
+            else {
+                const personInfo = {
+                    avatar: data.avatar,
+                    brojPrimljenihRecenzija: data.brojPrimljenihRecenzija,
+                    email: data.email,
+                    ime: data.ime,
+                    korisnickoIme: data.korisnickoIme,
+                    prezime: data.prezime,
+                    sumaPrimljenihRecenzija: data.sumaPrimljenihRecenzija
+                }
+                localStorage.setItem("personInfo", JSON.stringify(personInfo))
+                //console.log("ovdje")
+                navigate("/profile")
+            }
+        })
     }
 
     return (
@@ -86,8 +106,10 @@ export default function Login() {
                 <div className="register-link">
                     Nemaš korisnički račun? <a href="/register">Registriraj se ovdje</a>
                 </div>
+                <div className="error-message">
+                    {error}
+                </div>
             </Card>
-
         </div>
     )
 }
