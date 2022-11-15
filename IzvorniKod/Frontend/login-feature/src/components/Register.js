@@ -58,6 +58,20 @@ export default function Register() {
                 console.log(data.message)
                 setError(data.message)
             }
+            else {
+                const personInfo = {
+                    avatar: data.avatar,
+                    brojPrimljenihRecenzija: data.brojPrimljenihRecenzija,
+                    email: data.email,
+                    ime: data.ime,
+                    korisnickoIme: data.korisnickoIme,
+                    prezime: data.prezime,
+                    sumaPrimljenihRecenzija: data.sumaPrimljenihRecenzija
+                }
+                localStorage.setItem("personInfo", JSON.stringify(personInfo))
+                //console.log("ovdje")
+                navigate("/profile")
+            }
         })
     }
 
@@ -168,8 +182,10 @@ export default function Register() {
                         !registerInfo.lozinka ||
                         !registerInfo.email) ? true : false}> Submit </Button>
             </Form>
+            <div className="error-message">
+                    {error}
+                </div>
         </Card>
-
         </div >
     )
 }

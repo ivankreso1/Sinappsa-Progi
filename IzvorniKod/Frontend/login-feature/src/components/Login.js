@@ -43,6 +43,20 @@ export default function Login() {
                 console.log(data.message)
                 setError(data.message)
             }
+            else {
+                const personInfo = {
+                    avatar: data.avatar,
+                    brojPrimljenihRecenzija: data.brojPrimljenihRecenzija,
+                    email: data.email,
+                    ime: data.ime,
+                    korisnickoIme: data.korisnickoIme,
+                    prezime: data.prezime,
+                    sumaPrimljenihRecenzija: data.sumaPrimljenihRecenzija
+                }
+                localStorage.setItem("personInfo", JSON.stringify(personInfo))
+                //console.log("ovdje")
+                navigate("/profile")
+            }
         })
     }
 
@@ -94,8 +108,10 @@ export default function Login() {
                 <div className="register-link">
                     Nemaš korisnički račun? <a href="/register">Registriraj se ovdje</a>
                 </div>
+                <div className="error-message">
+                    {error}
+                </div>
             </Card>
-
         </div>
     )
 }
