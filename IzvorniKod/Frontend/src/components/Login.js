@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Card } from "react-bootstrap";
 import "../cssFiles/login.css"
+import configData from "./config.json";
 
 export default function Login() {
 
@@ -25,14 +26,15 @@ export default function Login() {
             korisnickoIme: info.userName,
             lozinka: info.password
         }
-        const options = {
+        const banana = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         }
-        fetch("https://sheeshmishi.onrender.com/api/korisnik/prijava", options)
+
+        fetch(`${configData.hostname}/korisnik/prijava`, banana)
         .then(res => res.json())
         .then(data => {
             console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada

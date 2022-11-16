@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import avatars from "../avatars";
+import configData from "./config.json";
 
 /*
 Treba postojati nekakva procedura nakon sto se s backenda dohvate podaci - treba se pratiti je li forma dobro ispunjena => ako je, onda se preusmjerava na home page i cuvaju se upisani podaci
@@ -42,14 +43,15 @@ export default function Register() {
             avatar: registerInfo.avatar,
 
         }
-        const options = {
+        const banana = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         }
-        fetch("https://sheeshmishi.onrender.com/api/korisnik/registracija", options)
+
+        fetch(`${configData.hostname}/korisnik/registracija`, banana)
         .then(res => res.json())
         .then(data => {
             console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
@@ -76,7 +78,7 @@ export default function Register() {
     }
 
     function handleAvatarOnclick(id) {
-        console.log("Clicked on avatar number: " + id)
+        // console.log("Clicked on avatar number: " + id)
         setChosenAvatar(id)
         setRegisterInfo(prevInfo => {
             return { ...prevInfo, avatar: id }
