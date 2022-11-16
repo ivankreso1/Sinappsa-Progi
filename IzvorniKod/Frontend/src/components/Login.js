@@ -32,7 +32,7 @@ export default function Login() {
             },
             body: JSON.stringify(data)
         }
-        fetch("http://localhost:8080/api/korisnik/prijava", options)
+        fetch("https://sheeshmishi.onrender.com/api/korisnik/prijava", options)
         .then(res => res.json())
         .then(data => {
             console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
