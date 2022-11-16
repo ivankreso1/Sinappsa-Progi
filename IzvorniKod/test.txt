@@ -1,4 +1,0 @@
-testni text file da folder ne bi bio prazan inace se ne objavi na remote repository
-
-Evo opet malo Karla i grana...ovaj put pozdrav iz novostvorene grane develop! 
-Drago mi je što smo se upoznali i radujem se našem druženju! ;)
