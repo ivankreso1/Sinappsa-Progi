@@ -1,0 +1,3 @@
+frontend link: https://sheeshmishi-fe.onrender.com
+backend link: https://sheeshmishi.onrender.com
+baza: application.properties (svi potrebni podatci su vidljivi ondje)
