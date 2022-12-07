@@ -6,6 +6,7 @@ import com.example.projekt.service.RegKorisnikService;
 import com.example.projekt.service.RequestDeniedException;
 import com.example.projekt.service.impl.RegKorisnikServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "https://sheeshmishi-fe.onrender.com")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/korisnik")
 public class RegKorisnikController {

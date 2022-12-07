@@ -43,7 +43,7 @@ export default function Register() {
             avatar: registerInfo.avatar,
 
         }
-        const banana = {
+        const method = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -51,7 +51,7 @@ export default function Register() {
             body: JSON.stringify(data)
         }
 
-        fetch(`${configData.hostname}/korisnik/registracija`, banana)
+        fetch(`${configData.hostname}/korisnik/registracija`, method)
         .then(res => res.json())
         .then(data => {
             console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
