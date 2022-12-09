@@ -19,8 +19,7 @@ import static org.springframework.security.core.authority.AuthorityUtils.commaSe
 @Service
 public class KorisnikUserDetailsService implements UserDetailsService {
 
-    @Value("${progi.admin.password}")          // pise u application.properties -> property injection
-                                                // taj hash je 'pass'
+    @Value("${progi.admin.password}")          // pise u application.properties -> property injection, taj hash je 'pass'
     private String adminPasswordHash;
 
     @Autowired
