@@ -21,9 +21,14 @@ public class UpitServiceImpl implements UpitService {
     @Autowired
     private UpitRepository upitRepository;
 
+//    @Override
+//    public List<Upit> getUpiti() {
+//        return upitRepository.findAll();
+//    }
+
     @Override
     public List<Upit> listUpitByKreator(RegistriraniKorisnik registriraniKorisnik) {
-        return upitRepository.findByKreator(registriraniKorisnik);
+        return upitRepository.findByAutorUpita(registriraniKorisnik);
     }
     /*
     @Override

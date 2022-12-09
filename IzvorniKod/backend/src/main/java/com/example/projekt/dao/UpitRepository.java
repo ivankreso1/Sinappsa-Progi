@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UpitRepository extends JpaRepository<Upit, Long> {
-    List<Upit> findByKreator(RegistriraniKorisnik registriraniKorisnik);
+    List<Upit> findByAutorUpita(RegistriraniKorisnik registriraniKorisnik);
     List<Upit> findByOglas(Oglas oglas);
 }

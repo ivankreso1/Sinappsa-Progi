@@ -23,6 +23,11 @@ public class UpitController {
     @Autowired
     private OglasService oglasService;
 
+//    @GetMapping()
+//    public List<Upit> getUpiti() {
+//        return upitService.getUpiti();
+//    }
+
     @GetMapping("autorUpita/{idAutoraUpita}")
     public List<Upit> getUpitByKreator(@PathVariable("idAutoraUpita") Long idAutoraUpita) {
         Optional<RegistriraniKorisnik> registriraniKorisnik = regKorisnikService.findById(idAutoraUpita);
