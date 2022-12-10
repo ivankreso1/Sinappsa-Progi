@@ -1,7 +1,7 @@
 import React from 'react';
 import '../cssFiles/App.css';
 import { useNavigate } from 'react-router-dom';
-
+import Filter from "./Filter"
 
 /**/
 
@@ -14,6 +14,7 @@ function App() {
   return (
     <div>
       <h1>Home page</h1>
+      <Filter />
       <button onClick={goToLogin}> Login </button>
     </div>
   );
