@@ -63,12 +63,12 @@ insert into kolegij(ime, smjer) values('Komunikacijski sustavi', 'E');
 insert into kolegij(ime, smjer) values('Algoritmi i strukture podataka', 'R');
 insert into kolegij(ime, smjer) values('Digitalna logika', 'R');
 
-insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija) values (-1, 'ivank', 'Ivan', 'Krešo', '2', 'ivan@fer.hr', 'ivanivan', 'false', 0, 0);
-insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija) values (-5, 'admin', 'a', 'a', '1', 'admin@fer.hr', '$2a$10$7dR1nXFoZCc1I9UMEWxWDO4AIC7CRh66h5O90YlcNk7wo0GqaHoI6', true, 0, 0);
-insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija) values (-3, 'markop', 'Marko', 'Proserenjak', '3', 'mp@fer.hr', 'markokonj', 'false', 0, 0);
-insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija) values (-4, 'petarl', 'Petar', 'Lopović', '2', 'pl@fer.hr', 'petarlopov', 'false', 0, 0);
-insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija) values (-6, 'lucijat', 'Lucija', 'Toto', '1', 'lt@fer.hr', 'totolucija', 'false', 0, 0);
-insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija) values (-7, 'tamarag', 'Tamara', 'Golub', '3', 'tg@fer.hr', 'pticagolub', 'false', 0, 0);
+insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-1, 'ivank', 'Ivan', 'Krešo', '2', 'ivan@fer.hr', 'ivanivan', 'false', 0, 0, true);
+insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-5, 'admin', 'a', 'a', '1', 'admin@fer.hr', '$2a$10$7dR1nXFoZCc1I9UMEWxWDO4AIC7CRh66h5O90YlcNk7wo0GqaHoI6', true, 0, 0, true);
+insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-3, 'markop', 'Marko', 'Proserenjak', '3', 'mp@fer.hr', 'markokonj', 'false', 0, 0, true);
+insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-4, 'petarl', 'Petar', 'Lopović', '2', 'pl@fer.hr', 'petarlopov', 'false', 0, 0, true);
+insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-6, 'lucijat', 'Lucija', 'Toto', '1', 'lt@fer.hr', 'totolucija', 'false', 0, 0, true);
+insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-7, 'tamarag', 'Tamara', 'Golub', '3', 'tg@fer.hr', 'pticagolub', 'false', 0, 0, true);
 
 insert into oglas(id, kreator_id, naslov, opis, aktivan, kategorija, trazim_pomoc) values (-2, -1, 'Zelim error', 'ovo je da izazove error', true, 'LABOS', true);
 insert into oglas(id, kreator_id, naslov, opis, aktivan, kategorija, trazim_pomoc) values (-3, -3, 'Matan1 instrukcije', 'Nudim pomoć oko rješavanja zadataka', true, 'GRADIVO', false);

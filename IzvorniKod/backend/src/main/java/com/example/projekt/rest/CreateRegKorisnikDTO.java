@@ -6,7 +6,7 @@ public class CreateRegKorisnikDTO {
     private String ime;
     private String prezime;
     private String lozinka;
-    private String avatar;     // jos diskutabilno kak cemo to rijesit
+    private String avatar;
 
     public String getAvatar() {
         return avatar;

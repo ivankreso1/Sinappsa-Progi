@@ -41,9 +41,11 @@ public class RegistriraniKorisnik {
     @Column(nullable = false)
     private int sumaPrimljenihRecenzija;
 
-//    @Lob // Large Object, jos byte pa je myb BLOB - binary large object
-//    @Column()
-//    private byte[] avatar;
+    @Column
+    private String verificationCode;
+
+    @Column
+    private boolean enabled;
 
 
     public RegistriraniKorisnik(String email, String korisnickoIme, String ime, String prezime, String lozinka, String avatar) {
@@ -56,9 +58,26 @@ public class RegistriraniKorisnik {
         this.sumaPrimljenihRecenzija = 0;
         this.brojPrimljenihRecenzija = 0;
         this.moderator = false;
+        this.enabled = false;
     }
 
     public RegistriraniKorisnik() {   // mora postojat zbog nacina na koji spring data vraca podatke iz tablice
+    }
+
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getKorisnickoIme() {

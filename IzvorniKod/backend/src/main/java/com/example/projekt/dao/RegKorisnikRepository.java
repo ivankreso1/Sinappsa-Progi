@@ -10,4 +10,6 @@ public interface RegKorisnikRepository extends JpaRepository<RegistriraniKorisni
     boolean existsByEmail(String email);
     boolean existsByKorisnickoIme(String korisnickoIme);
     Optional<RegistriraniKorisnik> findByKorisnickoIme(String korisnickoIme);
+
+    RegistriraniKorisnik findByVerificationCode(String code);
 }
