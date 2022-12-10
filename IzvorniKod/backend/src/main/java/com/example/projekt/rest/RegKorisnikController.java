@@ -42,8 +42,12 @@ public class RegKorisnikController {
     }
 
     @GetMapping("/verify")
-    public void verifyUser(@Param("code") String code) {
-        regKorisnikService.verify(code);
+    public String verifyUser(@Param("code") String code) {
+        if(regKorisnikService.verify(code)) {
+            return "Uspješno ste verificirani! Od sada se možete prijaviti u sustav sa svojim korisničkim podacima. \nMožete zatvoriti ovu stranicu.";
+        } else {
+            return "Nažalost, verifikacija nije uspjela. Ovaj profil je već verificiran ili je kod za verifikaciju pogrešan. \nMožete zatvoriti ovu stranicu. ";
+        }
     }
 
     private String getSiteURL(HttpServletRequest request) {

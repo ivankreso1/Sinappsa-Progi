@@ -96,7 +96,7 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
 
     private void sendVerificationEmail(RegistriraniKorisnik registriraniKorisnik, String siteURL) throws MessagingException, UnsupportedEncodingException {
         String toAddress = registriraniKorisnik.getEmail();
-        String fromAddress = "ivan.kreso1@gmail.com";
+        String fromAddress = "sinappsa.team@gmail.com";
         String senderName = "Sinappsa";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
