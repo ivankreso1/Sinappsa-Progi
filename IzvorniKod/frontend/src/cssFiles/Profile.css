@@ -6,15 +6,6 @@ body {
     width: 100%;
     overflow: hidden;
 }
-
-#root {
-    background: linear-gradient(45deg, blue, red);
-    /*font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;*/
-    /*background: linear-gradient(120deg, #56CCF2, #2F80ED);*/
-
-    /*background: linear-gradient(120deg, #00b09b,#96c93d);*/
-}
-
 .profile-container {
     margin: 0;
     height: 100vh;
