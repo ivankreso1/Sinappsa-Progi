@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class KolegijServiceImpl implements KolegijService {
+    private Smjer smjer;
 
     @Autowired
     private KolegijRepository kolegijRepository;
@@ -24,7 +26,7 @@ public class KolegijServiceImpl implements KolegijService {
 
     @Override
     public Kolegij napraviKolegij(String nazivKolegija, String smjerSlovo) {
-        Smjer smjer = null;
+        //Smjer smjer = null;
         if(smjerSlovo.equals("E")) {
             smjer = Smjer.E;
         } else if(smjerSlovo.equals("R")) {
@@ -37,5 +39,17 @@ public class KolegijServiceImpl implements KolegijService {
             throw new RequestDeniedException("Vec postoji kolegij s tim imenom");
         }
         return kolegijRepository.save(new Kolegij(nazivKolegija, smjer));
+    }
+
+    @Override
+    public List<Kolegij> getKolegijiPoSmjeru (String smjerSlovo) {
+        if (smjerSlovo.equals("e")) {
+            smjer = Smjer.E;
+        } else if (smjerSlovo.equals("r")) {
+            smjer = Smjer.R;
+        } else {
+            throw new RequestDeniedException("Smjer mora biti E ili R");
+        }
+        return kolegijRepository.findAll().stream().filter((kolegij) -> kolegij.getSmjer().equals(smjer)).collect(Collectors.toList());
     }
 }

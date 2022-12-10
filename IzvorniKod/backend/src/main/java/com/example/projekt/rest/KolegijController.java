@@ -30,4 +30,9 @@ public class KolegijController {
     public Kolegij postKolegij(@RequestBody CreateKolegijDTO kolegijDTO) {
         return kolegijService.napraviKolegij(kolegijDTO.getNazivKolegija(), kolegijDTO.getSmjer());        // ne slat CreateKolegijDTO klasu u service, za nju samo controller
     }
+
+    @GetMapping("/smjer/{smjer}")
+    public List<Kolegij> getKolegijiPoSmjeru(@PathVariable String smjer) {
+        return kolegijService.getKolegijiPoSmjeru(smjer);
+    }
 }

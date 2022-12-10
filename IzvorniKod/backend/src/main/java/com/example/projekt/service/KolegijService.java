@@ -11,4 +11,6 @@ public interface KolegijService {
     List<Kolegij> getKolegiji();
 
     Kolegij napraviKolegij(String nazivKolegija, String smjer);
+
+    List<Kolegij> getKolegijiPoSmjeru(String smjer);
 }
