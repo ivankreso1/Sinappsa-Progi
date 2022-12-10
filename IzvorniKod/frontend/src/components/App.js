@@ -12,7 +12,7 @@ function App() {
     navigate("/login")
   }
   return (
-    <div>
+    <div className= "home-page">
       <h1>Home page</h1>
       <Filter />
       <button onClick={goToLogin}> Login </button>
