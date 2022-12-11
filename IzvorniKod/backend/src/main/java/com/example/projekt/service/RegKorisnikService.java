@@ -1,6 +1,7 @@
 package com.example.projekt.service;
 
 import com.example.projekt.domain.RegistriraniKorisnik;
+import com.example.projekt.rest.dto.RangiraniKorisnikDTO;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -27,4 +28,6 @@ public interface RegKorisnikService {
     RegistriraniKorisnik promijeniLozinku(RegistriraniKorisnik registriraniKorisnik, String novaLozinka);
 
     RegistriraniKorisnik promijeniAvatar(RegistriraniKorisnik registriraniKorisnik, String noviAvatar);
+
+    List<RangiraniKorisnikDTO> dohvatiNajboljih10();
 }

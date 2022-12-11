@@ -4,6 +4,7 @@ import com.example.projekt.domain.RegistriraniKorisnik;
 import com.example.projekt.rest.dto.ChangeKorisnickiPodaciDTO;
 import com.example.projekt.rest.dto.CreateRegKorisnikDTO;
 import com.example.projekt.rest.dto.LoginDTO;
+import com.example.projekt.rest.dto.RangiraniKorisnikDTO;
 import com.example.projekt.service.RegKorisnikService;
 import com.example.projekt.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,11 @@ public class RegKorisnikController {
         autentikacijaKorisnika(korisnikPrekoId, korisnikPrekoAutentikacije);
 
         return korisnikPrekoId.get();
+    }
+
+    @GetMapping("/rang")
+    public List<RangiraniKorisnikDTO> dohvatiNajboljih10() {
+        return regKorisnikService.dohvatiNajboljih10();
     }
 
     @PutMapping("/promijeni/username/{id}")
