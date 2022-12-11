@@ -3,14 +3,13 @@ package com.example.projekt.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
+import com.example.projekt.rest.dto.CreateOglasDTO;
+import com.example.projekt.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.projekt.domain.Kolegij;
 import com.example.projekt.domain.Oglas;
@@ -35,6 +34,16 @@ public class OglasController {
     @GetMapping
     public List<Oglas> listOglasi() {
         return oglasService.listSveOglase();
+    }
+
+    @GetMapping("/{id}")
+    public Oglas dohvatiOglasPoId(@PathVariable Long id) {
+        Optional<Oglas> oglas = oglasService.dohvatiOglasPoId(id);
+        if (oglas.isEmpty()) {
+            throw new RequestDeniedException("Ne postoji oglas s id = " + id);
+        } else {
+            return oglas.get();
+        }
     }
 
     @PostMapping

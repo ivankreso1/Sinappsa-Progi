@@ -5,6 +5,7 @@ import com.example.projekt.domain.RegistriraniKorisnik;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface OglasService {
@@ -14,4 +15,6 @@ public interface OglasService {
     Oglas objaviOglas(Oglas oglas);
 
     List<Oglas> dohvatiOglasePoKorisniku(RegistriraniKorisnik registriraniKorisnik);
+
+    Optional<Oglas> dohvatiOglasPoId(Long id);
 }

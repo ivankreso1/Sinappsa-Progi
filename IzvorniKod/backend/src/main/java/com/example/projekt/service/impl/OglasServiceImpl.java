@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OglasServiceImpl implements OglasService {
@@ -52,7 +53,11 @@ public class OglasServiceImpl implements OglasService {
         if (!Arrays.stream(Kategorija.values()).toList().contains(oglas.getKategorija())) {
             throw new RequestDeniedException("Odabrana kategorija se ne nalazi na popisu dostupnih kategorija");
         }
-
         return oglasRepository.save(oglas);
+    }
+
+    @Override
+    public Optional<Oglas> dohvatiOglasPoId(Long id) {
+        return oglasRepository.findById(id);
     }
 }

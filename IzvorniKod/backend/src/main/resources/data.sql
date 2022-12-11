@@ -32,7 +32,7 @@ delete from oglas where id = -4;
 delete from oglas where id = -5;
 delete from oglas where id = -6;
 
-delete from kolegij where ime = 'Linearna Algebra';
+delete from kolegij where ime = 'Linearna algebra';
 delete from kolegij where ime = 'Baze podataka';
 delete from kolegij where ime = 'Osnove elektrotehnike';
 delete from kolegij where ime = 'Fizika 1';
@@ -60,7 +60,7 @@ delete from registrirani_korisnik where id = -14;
 delete from registrirani_korisnik where id = -15;
 delete from registrirani_korisnik where id = -16;
 
-insert into kolegij(ime, smjer) values ('Linearna algebra', 'R');
+insert into kolegij(ime, smjer) values('Linearna algebra', 'R');
 insert into kolegij(ime, smjer) values('Baze podataka', 'R');
 insert into kolegij(ime, smjer) values('Osnove elektrotehnike', 'R');
 insert into kolegij(ime, smjer) values('Fizika 1', 'R');
@@ -87,8 +87,6 @@ insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, emai
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-14, 'ivank14', 'Ivan', 'Krešo', '2', 'ivan14@fer.hr', 'ivanivan', 'false', 5, 17, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-15, 'ivank15', 'Ivan', 'Krešo', '2', 'ivan15@fer.hr', 'ivanivan', 'false', 1, 3, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-16, 'ivank16', 'Ivan', 'Krešo', '2', 'ivan16@fer.hr', 'ivanivan', 'false', 2, 7, true);
-
-
 
 insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-2, -1, 'Zelim error', 'ovo je da izazove error', 'Algoritmi i strukture podataka', true, 'LABOS', true);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-3, -3, 'Linalg instrukcije', 'Nudim pomoć oko rješavanja zadataka', 'Linearna algebra', true, 'GRADIVO', false);
