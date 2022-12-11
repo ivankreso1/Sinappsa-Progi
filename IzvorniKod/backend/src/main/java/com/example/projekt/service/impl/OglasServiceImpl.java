@@ -1,12 +1,16 @@
 package com.example.projekt.service.impl;
 
 import com.example.projekt.dao.OglasRepository;
+import com.example.projekt.domain.Kategorija;
 import com.example.projekt.domain.Oglas;
 import com.example.projekt.domain.RegistriraniKorisnik;
+import com.example.projekt.service.KolegijService;
 import com.example.projekt.service.OglasService;
+import com.example.projekt.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -14,6 +18,9 @@ public class OglasServiceImpl implements OglasService {
 
     @Autowired
     private OglasRepository oglasRepository;
+
+    @Autowired
+    private KolegijService kolegijService;
 
     @Override
     public List<Oglas> listSveOglase() {
@@ -27,6 +34,25 @@ public class OglasServiceImpl implements OglasService {
 
     @Override
     public Oglas objaviOglas(Oglas oglas) {
+        if (oglas.getNaslov() == null || oglas.getOpis() == null || oglas.getKolegij() == null || oglas.getKategorija() == null) {
+            throw new RequestDeniedException("Sva polja moraju biti ispunjena");
+        }
+        if (oglas.getNaslov().isEmpty() || oglas.getOpis().isEmpty()
+        ) {
+            throw new RequestDeniedException("Polja ne smiju biti prazna");
+        }
+        /* provjera je li korisnik ulogiran
+            * if () {
+            * throw
+            * }
+        */
+        if (!kolegijService.getKolegiji().contains(oglas.getKolegij())) {
+            throw new RequestDeniedException("Odabrani kolegij se ne nalazi na popisu dostupnih kolegija");
+        }
+        if (!Arrays.stream(Kategorija.values()).toList().contains(oglas.getKategorija())) {
+            throw new RequestDeniedException("Odabrana kategorija se ne nalazi na popisu dostupnih kategorija");
+        }
+
         return oglasRepository.save(oglas);
     }
 }

@@ -42,6 +42,11 @@ public class KolegijServiceImpl implements KolegijService {
     }
 
     @Override
+    public Optional<Kolegij> findByImeKolegija(String nazivKolegija) {
+        return kolegijRepository.findById(nazivKolegija);
+    }
+
+    @Override
     public List<Kolegij> getKolegijiPoSmjeru (String smjerSlovo) {
         if (smjerSlovo.equals("e")) {
             smjer = Smjer.E;

@@ -1,7 +1,7 @@
 /* PRAVILA
      1. Ako nesto stavljate u insert, to isto mora bit deletano tu iznad inace bude error
         jer zelite stavit nesto s primary keyom koji vec postoji
-     2. Deleteovi moraju ic ovim poretkom, prvo svi kolegiji pa svi upiti pa svi oglasi pa svi korisnici,
+     2. Deleteovi moraju ic ovim poretkom, prvo svi upiti pa svi oglasi pa svi kolegiji pa svi korisnici,
         inace npr da prvo obrisete korisnika, a ne oglas, bi vam bacilo error da brisete korisnika ciji id je
         neki atribut u oglas
      3. Insertovi moraju ic redom kolegij, korisnik, oglas, upit, jer nemrete stvorit oglas sa id-om
@@ -20,18 +20,6 @@
                 bit skroz prazna tablica), i onda samo vratite na update da radite dalje s lijepom cistom bazom
 bla*/
 
-delete from kolegij where ime = 'Linearna Algebra';
-delete from kolegij where ime = 'Baze podataka';
-delete from kolegij where ime = 'Osnove elektrotehnike';
-delete from kolegij where ime = 'Fizika 1';
-delete from kolegij where ime = 'Elektroenergetika';
-delete from kolegij where ime = 'Signali i sustavi';
-delete from kolegij where ime = 'Vjerojatnost i statistika';
-delete from kolegij where ime = 'Elektronika 2';
-delete from kolegij where ime = 'Komunikacijski sustavi';
-delete from kolegij where ime = 'Algoritmi i strukture podataka';
-delete from kolegij where ime = 'Digitalna logika';
-
 delete from upit where id = -3;
 delete from upit where id = -4;
 delete from upit where id = -5;
@@ -44,6 +32,18 @@ delete from oglas where id = -4;
 delete from oglas where id = -5;
 delete from oglas where id = -6;
 
+delete from kolegij where ime = 'Linearna Algebra';
+delete from kolegij where ime = 'Baze podataka';
+delete from kolegij where ime = 'Osnove elektrotehnike';
+delete from kolegij where ime = 'Fizika 1';
+delete from kolegij where ime = 'Elektroenergetika';
+delete from kolegij where ime = 'Signali i sustavi';
+delete from kolegij where ime = 'Vjerojatnost i statistika';
+delete from kolegij where ime = 'Elektronika 2';
+delete from kolegij where ime = 'Komunikacijski sustavi';
+delete from kolegij where ime = 'Algoritmi i strukture podataka';
+delete from kolegij where ime = 'Digitalna logika';
+
 delete from registrirani_korisnik where id = -1;
 delete from registrirani_korisnik where id = -5;
 delete from registrirani_korisnik where id = -3;
@@ -51,7 +51,7 @@ delete from registrirani_korisnik where id = -4;
 delete from registrirani_korisnik where id = -6;
 delete from registrirani_korisnik where id = -7;
 
-insert into kolegij(ime, smjer) values ('Linearna Algebra', 'R');
+insert into kolegij(ime, smjer) values ('Linearna algebra', 'R');
 insert into kolegij(ime, smjer) values('Baze podataka', 'R');
 insert into kolegij(ime, smjer) values('Osnove elektrotehnike', 'R');
 insert into kolegij(ime, smjer) values('Fizika 1', 'R');
@@ -70,11 +70,11 @@ insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, emai
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-6, 'lucijat', 'Lucija', 'Toto', '1', 'lt@fer.hr', 'totolucija', 'false', 0, 0, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-7, 'tamarag', 'Tamara', 'Golub', '3', 'tg@fer.hr', 'pticagolub', 'false', 0, 0, true);
 
-insert into oglas(id, kreator_id, naslov, opis, aktivan, kategorija, trazim_pomoc) values (-2, -1, 'Zelim error', 'ovo je da izazove error', true, 'LABOS', true);
-insert into oglas(id, kreator_id, naslov, opis, aktivan, kategorija, trazim_pomoc) values (-3, -3, 'Matan1 instrukcije', 'Nudim pomoć oko rješavanja zadataka', true, 'GRADIVO', false);
-insert into oglas(id, kreator_id, naslov, opis, aktivan, kategorija, trazim_pomoc) values (-4, -4, 'Osnove prvi lab', 'Tražim pomoć za prvi labos iz osnova elektrotehnike', true, 'LABOS', true);
-insert into oglas(id, kreator_id, naslov, opis, aktivan, kategorija, trazim_pomoc) values (-5, -6, 'baze dz', 'Tražim pomoć za prvu domaću zadaću iz baza podataka', true, 'GRADIVO', true);
-insert into oglas(id, kreator_id, naslov, opis, aktivan, kategorija, trazim_pomoc) values (-6, -7, 'baze dz', 'Nudim pomoć oko rješavanja domaće zadaće iz baza podataka', true, 'GRADIVO', false);
+insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-2, -1, 'Zelim error', 'ovo je da izazove error', 'Algoritmi i strukture podataka', true, 'LABOS', true);
+insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-3, -3, 'Linalg instrukcije', 'Nudim pomoć oko rješavanja zadataka', 'Linearna algebra', true, 'GRADIVO', false);
+insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-4, -4, 'Osnove prvi lab', 'Tražim pomoć za prvi labos iz osnova elektrotehnike', 'Osnove elektrotehnike', true, 'LABOS', true);
+insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-5, -6, 'baze dz', 'Tražim pomoć za prvu domaću zadaću iz baza podataka', 'Baze podataka', true, 'GRADIVO', true);
+insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-6, -7, 'baze dz', 'Nudim pomoć oko rješavanja domaće zadaće iz baza podataka', 'Baze podataka', true, 'GRADIVO', false);
 
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-3, -1, -2, 'Ovo je poruka dobrog upita slovo č', 'U_TIJEKU');
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-4, -3, -6, 'Pomoć oko baza por favor', 'U_TIJEKU');

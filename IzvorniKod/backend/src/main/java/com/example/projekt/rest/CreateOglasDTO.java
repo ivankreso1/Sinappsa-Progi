@@ -1,41 +1,26 @@
 package com.example.projekt.rest;
 
 import com.example.projekt.domain.Kategorija;
-import com.example.projekt.domain.Kolegij;
-import com.example.projekt.domain.RegistriraniKorisnik;
 
 public class CreateOglasDTO {
-
-    private Long id;
     private String naslov;
     private String opis;
-    private Kolegij kolegij;
+    private String kolegij_ime;
     private Kategorija kategorija;
-    private RegistriraniKorisnik kreator;
-    private boolean aktivan;
+    private Long kreator_id;
     private boolean trazimPomoc;
 
     public CreateOglasDTO() {
     }
 
-    public CreateOglasDTO(Long id, String naslov, String opis, Kolegij kolegij, Kategorija kategorija,
-                          RegistriraniKorisnik kreator, boolean aktivan, boolean trazimPomoc) {
-        this.id = id;
+    public CreateOglasDTO(String naslov, String opis, String kolegij_ime, Kategorija kategorija, Long kreator_id,
+                          boolean trazimPomoc) {
         this.naslov = naslov;
         this.opis = opis;
-        this.kolegij = kolegij;
+        this.kolegij_ime = kolegij_ime;
         this.kategorija = kategorija;
-        this.kreator = kreator;
-        this.aktivan = aktivan;
+        this.kreator_id = kreator_id;
         this.trazimPomoc = trazimPomoc;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNaslov() {
@@ -54,12 +39,12 @@ public class CreateOglasDTO {
         this.opis = opis;
     }
 
-    public Kolegij getKolegij() {
-        return kolegij;
+    public String getKolegij_ime() {
+        return kolegij_ime;
     }
 
-    public void setKolegij(Kolegij kolegij) {
-        this.kolegij = kolegij;
+    public void setKolegij_ime(String kolegij_ime) {
+        this.kolegij_ime = kolegij_ime;
     }
 
     public Kategorija getKategorija() {
@@ -70,20 +55,12 @@ public class CreateOglasDTO {
         this.kategorija = kategorija;
     }
 
-    public RegistriraniKorisnik getKreator() {
-        return kreator;
+    public Long getKreator_id() {
+        return kreator_id;
     }
 
-    public void setKreator(RegistriraniKorisnik kreator) {
-        this.kreator = kreator;
-    }
-
-    public boolean isAktivan() {
-        return aktivan;
-    }
-
-    public void setAktivan(boolean aktivan) {
-        this.aktivan = aktivan;
+    public void setKreator_id(Long kreator_id) {
+        this.kreator_id = kreator_id;
     }
 
     public boolean isTrazimPomoc() {

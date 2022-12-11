@@ -1,11 +1,23 @@
 package com.example.projekt.rest;
 
-import com.example.projekt.domain.Oglas;
-import com.example.projekt.service.OglasService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.projekt.domain.Kolegij;
+import com.example.projekt.domain.Oglas;
+import com.example.projekt.domain.RegistriraniKorisnik;
+import com.example.projekt.service.KolegijService;
+import com.example.projekt.service.OglasService;
+import com.example.projekt.service.RegKorisnikService;
 
 @RestController
 @RequestMapping("/oglasi")
@@ -14,13 +26,30 @@ public class OglasController {
     @Autowired
     private OglasService oglasService;
 
+    @Autowired
+    private RegKorisnikService regKorisnikService;
+
+    @Autowired
+    private KolegijService kolegijService;
+
     @GetMapping
     public List<Oglas> listOglasi() {
         return oglasService.listSveOglase();
     }
 
     @PostMapping
-    public Oglas objaviOglas(@RequestBody Oglas oglas) {        // tip je Oglas, al to ne znaci da moraju svi atributi biti prisutni u JSON-u -> mozda napravit createOglas DTO
-        return oglasService.objaviOglas(oglas);                 // u createOglasDTO ce bit naslov, opis, username kreatora, boolean jel trazi pomoc, ime kategorije, ime kolegija
+    public ResponseEntity<Void> objaviOglas (@RequestBody CreateOglasDTO oglas) throws URISyntaxException{
+        oglasService.objaviOglas(toOglasEntity(oglas));
+        return ResponseEntity.created(new URI("/oglasi")).build(); // redirecta na oglase
+    }
+
+    public Oglas toOglasEntity(CreateOglasDTO oglas) {
+        RegistriraniKorisnik regKorisnik = new RegistriraniKorisnik();
+        Kolegij kolegij = new Kolegij();
+
+        regKorisnik = regKorisnikService.findById(oglas.getKreator_id()).get();
+        kolegij = kolegijService.findByImeKolegija(oglas.getKolegij_ime()).get();
+        return new Oglas(oglas.getNaslov(), oglas.getOpis(), kolegij, oglas.getKategorija(), regKorisnik, true,
+                oglas.isTrazimPomoc());
     }
 }
