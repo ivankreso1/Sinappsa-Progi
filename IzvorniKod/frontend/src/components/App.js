@@ -1,7 +1,8 @@
 import React from 'react';
 import '../cssFiles/App.css';
 import { useNavigate } from 'react-router-dom';
-
+import Filter from "./Filter"
+import Oglas from './Oglas';
 
 /**/
 
@@ -12,9 +13,14 @@ function App() {
     navigate("/login")
   }
   return (
-    <div>
+    <div className= "home-page">
       <h1>Home page</h1>
-      <button onClick={goToLogin}> Login </button>
+      <div>
+        <Filter />
+        <h3>Oglasi</h3>
+        <Oglas />
+        <button onClick={goToLogin}> Login </button>
+      </div>
     </div>
   );
 }

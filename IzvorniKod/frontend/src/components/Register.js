@@ -72,7 +72,7 @@ export default function Register() {
                 }
                 localStorage.setItem("personInfo", JSON.stringify(personInfo))
                 //console.log("ovdje")
-                navigate("/profile")
+                navigate("/login")
             }
         })
     }

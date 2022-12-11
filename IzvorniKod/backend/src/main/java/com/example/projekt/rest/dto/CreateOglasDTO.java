@@ -1,4 +1,4 @@
-package com.example.projekt.rest;
+package com.example.projekt.rest.dto;
 
 import com.example.projekt.domain.Kategorija;
 

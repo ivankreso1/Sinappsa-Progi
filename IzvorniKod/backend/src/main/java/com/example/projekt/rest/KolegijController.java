@@ -1,6 +1,7 @@
 package com.example.projekt.rest;
 
 import com.example.projekt.domain.Kolegij;
+import com.example.projekt.rest.dto.CreateKolegijDTO;
 import com.example.projekt.service.KolegijService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
