@@ -1,27 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from "react-bootstrap";
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import "../cssFiles/Filter.css"
 import configData from "./config.json";
-import kolegiji from '../kolegiji';
 
 
 export default function Filter() {
-    
-    /*Trebaju se na početku fetchati svi kolegiji
-    te se trebaju ponovno fetchati jednom kada se odabere smjer (ako se odabere)*/
 
+    const [kolegiji, setKolegiji] = useState([""])
     const [formInfo, setFormInfo] = useState({
         smjer: "",
         kolegij: "",
         kategorija: ""
     })
-    
-    //u ovoj funkciji treba fetchati sve kolegije s backenda koji postoje u bazi podataka
-    function dohvatiKolegije() {
 
-        console.log("U funkciji")
+    useEffect(() => {
+        fetch(`${configData.hostname}/kolegiji`)
+        .then(res => res.json()
+            .then(data => {
+                console.log(data)
+                setKolegiji(data)
+                console.log(kolegiji)
+            }))
+    }, [])
+    //u ovoj funkciji treba fetchati sve kolegije s backenda koji postoje u bazi podataka
+    function dohvatiKolegije(smjer) {
+        fetch(`${configData.hostname}/kolegiji/smjer/${smjer.toLowerCase()}`)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            setKolegiji(data)
+            console.log(kolegiji)
+        })
     }
 
     function handleFormSubmit(e) {
@@ -39,13 +50,11 @@ export default function Filter() {
             },
             body: JSON.stringify(data)
         }
-        //treba promijeniti putanju
-        //fetch(`${configData.hostname}/korisnik/registracija`, method)
+
     }
 
     function optionDropDownClick(e) {
         console.log(e.target.innerHTML)
-        //console.log("PRESSED ON DROPDOWN")
         setFormInfo(prevInfo => {
             return { ...prevInfo, [e.target.name]: e.target.innerHTML }
         })
@@ -54,8 +63,9 @@ export default function Filter() {
     function changeFormInfo(e) {
 
         /*ovdje se trebaju fetchati svi kolegiji za određen smjer*/
+        dohvatiKolegije(e.target.value)
         setFormInfo(prevInfo => {
-            return {...prevInfo, [e.target.name] : e.target.value}
+            return { ...prevInfo, [e.target.name]: e.target.value }
         })
     }
     //kada se klikne na dropdown, na backend ce se poslati zahtjev za dohvacanjem kolegija koji ce se nakon toga prikazati kao opcije u dropdownovima
@@ -94,12 +104,12 @@ export default function Filter() {
                     className="filter-kolegij-dropdown"
                     title="Kolegiji"
                     variant={!formInfo.kolegij ? "danger" : "success"}
-                    /*onSelect={dohvatiKolegije}*/
+                /*onSelect={dohvatiKolegije}*/
                 >
                     {kolegiji.map(kolegij => {
-                        return <DropdownItem 
-                        onClick = {optionDropDownClick}
-                        name = "kolegij">{kolegij.ime}</DropdownItem>
+                        return <DropdownItem
+                            onClick={optionDropDownClick}
+                            name="kolegij">{kolegij.ime}</DropdownItem>
                     })}
                 </DropdownButton>
                 {formInfo.kolegij}
@@ -133,7 +143,7 @@ export default function Filter() {
                     disabled={!formInfo.kategorija && !formInfo.kolegij
                         && !formInfo.smjer}>Filtriraj</Button>
             </Form>
-            
+
         </div>
     );
 }
