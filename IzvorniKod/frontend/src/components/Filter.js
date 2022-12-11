@@ -89,6 +89,7 @@ export default function Filter() {
                         onClick={changeFormInfo}
                     />
                 </Form.Group>
+                {formInfo.smjer}
                 <DropdownButton
                     className="filter-kolegij-dropdown"
                     title="Kolegiji"
@@ -101,7 +102,7 @@ export default function Filter() {
                         name = "kolegij">{kolegij.ime}</DropdownItem>
                     })}
                 </DropdownButton>
-
+                {formInfo.kolegij}
                 <DropdownButton
                     className="filter-kategorije-dropdown"
                     title="Kategorije"
@@ -123,6 +124,7 @@ export default function Filter() {
                         onClick={optionDropDownClick}
                         name="kategorija">ISPITNI_ROK</DropdownItem>
                 </DropdownButton>
+                {formInfo.kategorija}
                 <Button
                     type="submit"
                     className="filter-submit-button"

@@ -2,9 +2,10 @@ html,
 body {
   height: 100%;
   width: 100%;
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: scroll;
 }
 
-
-.home-page {
-  min-height: 100vh;
+.home-page h3 {
+  margin-left: 20px;
 }
