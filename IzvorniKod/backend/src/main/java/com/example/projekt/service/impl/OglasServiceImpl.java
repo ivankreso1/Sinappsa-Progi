@@ -71,15 +71,13 @@ public class OglasServiceImpl implements OglasService {
         if (smjer != null) {
             filtriranaLista = filtriranaLista.stream().filter(poSmjeru).collect(Collectors.toList());
         } else if (!smjer.equals(Smjer.R) && !smjer.equals(Smjer.E)) {
-            throw new RequestDeniedException("Smjer mora biti R ili E")
+            throw new RequestDeniedException("Smjer mora biti R ili E");
         }
         if (kategorija != null) {
             filtriranaLista = filtriranaLista.stream().filter(poKategoriji).collect(Collectors.toList());
-        } else if (Kategorija.values().)
+        }
         if (kolegij_ime != null) {
             filtriranaLista = filtriranaLista.stream().filter(poKolegiju).collect(Collectors.toList());
-        } else if () {
-
         }
         return filtriranaLista;
     }
