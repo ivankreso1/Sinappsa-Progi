@@ -1,0 +1,31 @@
+.filter-container {
+    display: flex;
+    justify-content: center;
+    max-width: 200px;
+    max-height: 300px;
+    border: 2px solid #adadad;
+    background-color: white;
+    border-radius: 5px;
+    margin: 20px 20px;
+}
+.form-filter {
+    display: grid;
+    width: 100%;
+}
+.filter-smjer-radio {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid gray;
+}
+.form-check{
+    margin-left: 10px;
+}
+
+.filter-kolegij-dropdown,
+.filter-kategorije-dropdown, 
+.filter-submit-button {
+    width: 90%;
+    margin: 10px 0px;
+    margin-left: 5%;    /*pošto su ti divovi širine 90%, onda se treba samo 5% staviti margine na jednu stranu jer je to polovica
+                        ukupne širine => bit će centrirano*/
+}
