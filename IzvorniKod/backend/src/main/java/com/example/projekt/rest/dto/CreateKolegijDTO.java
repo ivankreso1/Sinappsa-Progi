@@ -1,4 +1,4 @@
-package com.example.projekt.rest;
+package com.example.projekt.rest.dto;
 
 public class CreateKolegijDTO {
     private String nazivKolegija;

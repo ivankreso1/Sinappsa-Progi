@@ -16,7 +16,6 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class RegKorisnikServiceImpl implements RegKorisnikService {
@@ -140,5 +139,24 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
     @Override
     public Optional<RegistriraniKorisnik> findByKorisnickoIme(String korisnickoIme) {
         return regKorisnikRepository.findByKorisnickoIme(korisnickoIme);
+    }
+
+    @Override
+    public RegistriraniKorisnik promijeniKorisnickoIme(RegistriraniKorisnik registriraniKorisnik, String novoKorisnickoIme) {
+        registriraniKorisnik.setKorisnickoIme(novoKorisnickoIme);
+        return regKorisnikRepository.save(registriraniKorisnik);
+    }
+
+    @Override
+    public RegistriraniKorisnik promijeniLozinku(RegistriraniKorisnik registriraniKorisnik, String novaLozinka) {
+        String novaHashLozinka = passwordEncoder.encode(novaLozinka);
+        registriraniKorisnik.setLozinka(novaHashLozinka);
+        return regKorisnikRepository.save(registriraniKorisnik);
+    }
+
+    @Override
+    public RegistriraniKorisnik promijeniAvatar(RegistriraniKorisnik registriraniKorisnik, String noviAvatar) {
+        registriraniKorisnik.setAvatar(noviAvatar);
+        return regKorisnikRepository.save(registriraniKorisnik);
     }
 }

@@ -18,7 +18,7 @@
                 je da odete u application.properties i tamo spring.jpa.hibernate.ddl-auto=update promijenite na spring.jpa.hibernate.ddl-auto=create,
                 jednom onda pokrenete backend, to ce obrisat bazu od tih Postman dijelova koje ste dodali (al ce se opet stvorit ovi tu iz data.sql tak da nece
                 bit skroz prazna tablica), i onda samo vratite na update da radite dalje s lijepom cistom bazom
-bla*/
+*/
 
 delete from kolegij where ime = 'Linearna Algebra';
 delete from kolegij where ime = 'Baze podataka';
@@ -67,7 +67,7 @@ insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, emai
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-5, 'admin', 'a', 'a', '1', 'admin@fer.hr', '$2a$10$7dR1nXFoZCc1I9UMEWxWDO4AIC7CRh66h5O90YlcNk7wo0GqaHoI6', true, 0, 0, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-3, 'markop', 'Marko', 'Prosenjak', '3', 'mp@fer.hr', 'markopros', 'false', 0, 0, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-4, 'petarl', 'Petar', 'Lopović', '2', 'pl@fer.hr', 'petarlopov', 'false', 0, 0, true);
-insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-6, 'lucijat', 'Lucija', 'Toto', '1', 'lt@fer.hr', 'totolucija', 'false', 0, 0, true);
+insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-6, 'lucijat', 'Lucija', 'Toto', '1', 'lt@fer.hr', '$2a$10$nxYU1X0/oibYTqcAjelo0eL5a/wlHSkw47eMpl/LygbNnFjXzVDNa', 'false', 0, 0, true);     -- ova sifra je bbbbb, samo enkriptirano
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-7, 'tamarag', 'Tamara', 'Golub', '3', 'tg@fer.hr', 'pticagolub', 'false', 0, 0, true);
 
 insert into oglas(id, kreator_id, naslov, opis, aktivan, kategorija, trazim_pomoc) values (-2, -1, 'Zelim error', 'ovo je da izazove error', true, 'LABOS', true);

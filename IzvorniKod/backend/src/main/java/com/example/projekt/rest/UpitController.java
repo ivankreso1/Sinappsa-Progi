@@ -1,6 +1,7 @@
 package com.example.projekt.rest;
 
 import com.example.projekt.domain.*;
+import com.example.projekt.rest.dto.CreateUpitDTO;
 import com.example.projekt.service.OglasService;
 import com.example.projekt.service.RegKorisnikService;
 import com.example.projekt.service.RequestDeniedException;

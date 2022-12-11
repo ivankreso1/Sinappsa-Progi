@@ -6,14 +6,12 @@ import com.example.projekt.domain.Oglas;
 import com.example.projekt.domain.RegistriraniKorisnik;
 import com.example.projekt.domain.StanjeUpita;
 import com.example.projekt.domain.Upit;
-import com.example.projekt.rest.CreateUpitDTO;
 import com.example.projekt.service.RequestDeniedException;
 import com.example.projekt.service.UpitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UpitServiceImpl implements UpitService {
