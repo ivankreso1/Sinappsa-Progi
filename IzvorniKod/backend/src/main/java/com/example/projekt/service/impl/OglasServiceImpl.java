@@ -1,9 +1,7 @@
 package com.example.projekt.service.impl;
 
 import com.example.projekt.dao.OglasRepository;
-import com.example.projekt.domain.Kategorija;
-import com.example.projekt.domain.Oglas;
-import com.example.projekt.domain.RegistriraniKorisnik;
+import com.example.projekt.domain.*;
 import com.example.projekt.service.KolegijService;
 import com.example.projekt.service.OglasService;
 import com.example.projekt.service.RequestDeniedException;
@@ -13,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
 @Service
 public class OglasServiceImpl implements OglasService {
@@ -59,5 +59,28 @@ public class OglasServiceImpl implements OglasService {
     @Override
     public Optional<Oglas> dohvatiOglasPoId(Long id) {
         return oglasRepository.findById(id);
+    }
+
+    @Override
+    public List<Oglas> filtrirajOglase(Smjer smjer, Kategorija kategorija, String kolegij_ime) {
+        List<Oglas> filtriranaLista = oglasRepository.findAll();
+        Predicate<Oglas> poSmjeru = oglas -> oglas.getKolegij().getSmjer().equals(smjer);
+        Predicate<Oglas> poKategoriji = oglas -> oglas.getKategorija().equals(kategorija);
+        Predicate<Oglas> poKolegiju = oglas -> oglas.getKolegij().getIme().equals(kolegij_ime);
+
+        if (smjer != null) {
+            filtriranaLista = filtriranaLista.stream().filter(poSmjeru).collect(Collectors.toList());
+        } else if (!smjer.equals(Smjer.R) && !smjer.equals(Smjer.E)) {
+            throw new RequestDeniedException("Smjer mora biti R ili E")
+        }
+        if (kategorija != null) {
+            filtriranaLista = filtriranaLista.stream().filter(poKategoriji).collect(Collectors.toList());
+        } else if (Kategorija.values().)
+        if (kolegij_ime != null) {
+            filtriranaLista = filtriranaLista.stream().filter(poKolegiju).collect(Collectors.toList());
+        } else if () {
+
+        }
+        return filtriranaLista;
     }
 }

@@ -5,15 +5,13 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.projekt.domain.*;
 import com.example.projekt.rest.dto.CreateOglasDTO;
 import com.example.projekt.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.projekt.domain.Kolegij;
-import com.example.projekt.domain.Oglas;
-import com.example.projekt.domain.RegistriraniKorisnik;
 import com.example.projekt.service.KolegijService;
 import com.example.projekt.service.OglasService;
 import com.example.projekt.service.RegKorisnikService;
@@ -34,6 +32,13 @@ public class OglasController {
     @GetMapping
     public List<Oglas> listOglasi() {
         return oglasService.listSveOglase();
+    }
+
+    @GetMapping("/filter")
+    public List<Oglas> filtrirajOglase(@RequestParam(required = false, name = "smjer") Smjer smjer,
+                                       @RequestParam(required = false, name = "kategorija") Kategorija kategorija,
+                                       @RequestParam(required = false, name = "kolegij") String kolegij) {
+        return oglasService.filtrirajOglase(smjer, kategorija, kolegij);
     }
 
     @GetMapping("/{id}")
