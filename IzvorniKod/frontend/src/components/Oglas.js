@@ -4,9 +4,6 @@ import "../cssFiles/Oglas.css"
 
 export default function Oglas({ naslov, opis, kreator }) {
 
-    /*console.log("TU")
-    console.log(naslov)
-    console.log(kreator)*/
     return (
         <div className="oglas-container">
             <div className="oglas-korisnik-info-container">
