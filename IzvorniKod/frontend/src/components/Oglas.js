@@ -2,32 +2,38 @@ import React from "react";
 import avatars from "../avatars";
 import "../cssFiles/Oglas.css"
 
-export default function Oglas() {
+export default function Oglas({ naslov, opis, kreator }) {
 
-
+    /*console.log("TU")
+    console.log(naslov)
+    console.log(kreator)*/
     return (
         <div className="oglas-container">
             <div className="oglas-korisnik-info-container">
                 {avatars.map(avatar => {
-                    return <div className="oglas-korisnik-info">
-                        <img id={avatar.id} src={avatar.src}
-                            style={
-                                {
-                                    width: "40px",
-                                    height: "40px",
-                                    margin: "10px 5px",
-                                    borderRadius: "20px"
-                                }
-                            }></img>
-                        korisničko ime</div>
+                    console.log(avatar)
+                    if (avatar.id === kreator.avatar) {
+                        return <div className="oglas-korisnik-info">
+                            <img id={avatar.id} src={avatar.src}
+                                style={
+                                    {
+                                        width: "40px",
+                                        height: "40px",
+                                        margin: "10px 5px",
+                                        borderRadius: "20px"
+                                    }
+                                }></img>
+                            {kreator.korisnickoIme}</div>
+
+                    }
                 })}
             </div>
             <div className="oglas-info-container">
                 <div className="oglas-naslov">
-                    <h2>Naslov</h2>
+                    <h2>{naslov}</h2>
                 </div>
                 <div className="oglas-text-opis">
-                    Ovo je opis oglasa. Tu se navodi koja se usluga traži/pruža (davanje instrukcija, primanje instrukcija ...)
+                    {opis}
                 </div>
             </div>
         </div>

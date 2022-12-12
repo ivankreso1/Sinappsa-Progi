@@ -10,6 +10,10 @@
     margin: 20px;
 }
 
+.oglas-korisnik-info img {
+    border: 1px solid black;
+    border-radius: 20px;
+}
 .oglas-info-container{
     display: flex;
     flex-direction: column;

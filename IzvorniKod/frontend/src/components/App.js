@@ -18,7 +18,7 @@ function App() {
       <div>
         <Filter />
         <h3>Oglasi</h3>
-        <Oglas />
+
         <button onClick={goToLogin}> Login </button>
       </div>
     </div>

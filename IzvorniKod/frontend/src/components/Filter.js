@@ -4,6 +4,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import "../cssFiles/Filter.css"
 import configData from "./config.json";
+import Oglas from './Oglas';
 
 
 export default function Filter() {
@@ -16,15 +17,18 @@ export default function Filter() {
         kategorija: ""
     })
 
+
+    //useEffect(() => { }, [kolegiji, oglasi])    // stranica se rendera te se ne napravi nikakva posebna funkcija kad god se dogode promjene u kolegiju i oglasima kako bi se vrijednosti mijenjale u real time
+
     useEffect(() => {
         fetch(`${configData.hostname}/kolegiji`)
             .then(res => res.json()
                 .then(data => {
-                    console.log("DATA U USE-EFFECT")
+                    //console.log("DATA U USE-EFFECT")
                     console.log(data)
                     setKolegiji(data)
-                    console.log("KOLEGIJI U USE-EFFECT")
-                    console.log(kolegiji)
+                    //console.log("KOLEGIJI U USE-EFFECT")
+                    //console.log(kolegiji)
                 }))
         fetch(`${configData.hostname}/oglasi/filter?smjer=&kategorija=&kolegij=`)
             .then(res => res.json())
@@ -32,20 +36,23 @@ export default function Filter() {
                 //console.log("oglasi")
                 console.log(data)
                 setOglasi(data)
-                console.log("ovdje oglasi")
+                //console.log("ovdje oglasi")
                 //console.log(oglasi)
                 //localStorage.setItem("oglasi", JSON.stringify(oglasi))
             })
     }, [])
+
+
+
     //u ovoj funkciji treba fetchati sve kolegije s backenda koji postoje u bazi podataka
     function dohvatiKolegije(smjer) {
         fetch(`${configData.hostname}/kolegiji/smjer/${smjer.toLowerCase()}`)
             .then(res => res.json())
             .then(data => {
-                console.log("KOLEGIJI U SMJERU " + smjer + ":")
+                //console.log("KOLEGIJI U SMJERU " + smjer + ":")
                 console.log(data)
                 setKolegiji(data)
-                console.log("KOLEGIJI U USE-STATE") //JOŠ UVIJEK SE TU NALAZE KOLEGIJI S R I E SMJERA - NE UPDATEA SE ODMAH
+                //console.log("KOLEGIJI U USE-STATE") //JOŠ UVIJEK SE TU NALAZE KOLEGIJI S R I E SMJERA - NE UPDATEA SE ODMAH
                 console.log(kolegiji)
             })
     }
@@ -78,9 +85,7 @@ export default function Filter() {
             return { ...prevInfo, [e.target.name]: e.target.value }
         })
     }
-    //kada se klikne na dropdown, na backend ce se poslati zahtjev za dohvacanjem kolegija koji ce se nakon toga prikazati kao opcije u dropdownovima
-    //rezultate (kolegije) spremiti u useState varijablu
-    //treba napraviti dropdown komponentu Kolegij, mapirati nad useState i stvarati kolegij komponente koje su zapravo samo dropDownItem
+
 
     return (
         <div className="filter-container">
@@ -153,7 +158,17 @@ export default function Filter() {
                     disabled={!formInfo.kategorija && !formInfo.kolegij
                         && !formInfo.smjer}>Filtriraj</Button>
             </Form>
+            {console.log(oglasi)}
+            {console.log(oglasi.length)}
+            {oglasi.length > 0 ? oglasi.map(oglas => {
+                return <Oglas
+                    naslov={oglas.naslov}
+                    opis={oglas.opis}
+                    kreator={oglas.kreator}
+                
+                />
 
+            }) : "Nema oglasa za prikaz"}  
         </div>
     );
 }
