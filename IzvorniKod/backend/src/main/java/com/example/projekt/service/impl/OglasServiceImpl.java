@@ -68,16 +68,23 @@ public class OglasServiceImpl implements OglasService {
         Predicate<Oglas> poKategoriji = oglas -> oglas.getKategorija().equals(kategorija);
         Predicate<Oglas> poKolegiju = oglas -> oglas.getKolegij().getIme().equals(kolegij_ime);
 
-        if (smjer != null) {
+        if (smjer == null) {
+        } else if (smjer.equals(Smjer.R) || smjer.equals(Smjer.E)) {
             filtriranaLista = filtriranaLista.stream().filter(poSmjeru).collect(Collectors.toList());
-        } else if (!smjer.equals(Smjer.R) && !smjer.equals(Smjer.E)) {
-            throw new RequestDeniedException("Smjer mora biti R ili E");
+        } else {
+            throw new RequestDeniedException("Smjer mora biti E ili R");
         }
-        if (kategorija != null) {
+        if (Arrays.stream(Kategorija.values()).toList().contains(kategorija)) {
             filtriranaLista = filtriranaLista.stream().filter(poKategoriji).collect(Collectors.toList());
+        } else if (kategorija == null) {
+        } else {
+            throw new RequestDeniedException("Odabrana kategorija se ne nalazi na popisu dostupnih kategorija");
         }
-        if (kolegij_ime != null) {
+        if (kolegijService.getKolegiji().stream().map(Kolegij::getIme).toList().contains(kolegij_ime)) {
             filtriranaLista = filtriranaLista.stream().filter(poKolegiju).collect(Collectors.toList());
+        } else if (kolegij_ime.equals("")) {
+        } else {
+            throw new RequestDeniedException("Odabrani kolegij se ne nalazi na popisu dostupnih kolegija");
         }
         return filtriranaLista;
     }
