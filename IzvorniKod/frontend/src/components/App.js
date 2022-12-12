@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../cssFiles/App.css';
 import { useNavigate } from 'react-router-dom';
 import Filter from "./Filter"
@@ -8,9 +8,15 @@ import Oglas from './Oglas';
 
 function App() {
 
-  
-  const oglasiHelp = localStorage.getItem("oglasi")
-  const oglasi = oglasiHelp.length > 0 ? JSON.parse(oglasiHelp) : ""
+  const [oglasi, setOglasi] = useState([])
+
+  useEffect(() => {
+    const oglasiLocalStorage = localStorage.getItem("oglasi")
+    const oglasiHelper = oglasiLocalStorage.length > 0 ? JSON.parse(oglasiLocalStorage) : ""
+    setOglasi(oglasiHelper)
+  }, [oglasi])
+  //const oglasiHelp = localStorage.getItem("oglasi")
+  //const oglasi = oglasiHelp.length > 0 ? JSON.parse(oglasiHelp) : ""
   useEffect(() => { }, [oglasi])
   
   const navigate = useNavigate()

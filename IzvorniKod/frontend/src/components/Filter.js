@@ -16,27 +16,24 @@ export default function Filter() {
     })
 
 
-    useEffect(() => { }, [kolegiji, oglasi])    // stranica se rendera te se ne napravi nikakva posebna funkcija kad god se dogode promjene u kolegiju i oglasima kako bi se vrijednosti mijenjale u real time
+    // stranica se rendera te se ne napravi nikakva posebna funkcija kad god se dogode promjene u kolegiju i oglasima kako bi se vrijednosti mijenjale u real time
+
+    useEffect(() => {
+        localStorage.setItem("oglasi", JSON.stringify(oglasi))
+    }, [oglasi])
 
     useEffect(() => {
         fetch(`${configData.hostname}/kolegiji`)
             .then(res => res.json()
                 .then(data => {
-                    //console.log("DATA U USE-EFFECT")
                     console.log(data)
                     setKolegiji(data)
-                    //console.log("KOLEGIJI U USE-EFFECT")
-                    //console.log(kolegiji)
                 }))
         fetch(`${configData.hostname}/oglasi/filter?smjer=&kategorija=&kolegij=`)
             .then(res => res.json())
             .then(data => {
-                //console.log("oglasi")
                 console.log(data)
                 setOglasi(data)
-                //console.log("ovdje oglasi")
-                //console.log(oglasi)
-                localStorage.setItem("oglasi", JSON.stringify(oglasi))
             })
     }, [])
 
@@ -47,10 +44,8 @@ export default function Filter() {
         fetch(`${configData.hostname}/kolegiji/smjer/${smjer.toLowerCase()}`)
             .then(res => res.json())
             .then(data => {
-                //console.log("KOLEGIJI U SMJERU " + smjer + ":")
                 console.log(data)
                 setKolegiji(data)
-                //console.log("KOLEGIJI U USE-STATE") //JOŠ UVIJEK SE TU NALAZE KOLEGIJI S R I E SMJERA - NE UPDATEA SE ODMAH
                 console.log(kolegiji)
             })
     }
@@ -63,7 +58,6 @@ export default function Filter() {
             .then(data => {
                 console.log(data)
                 setOglasi(data)
-                localStorage.setItem("oglasi", JSON.stringify(oglasi))
             })
 
     }

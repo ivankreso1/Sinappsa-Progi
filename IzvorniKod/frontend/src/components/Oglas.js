@@ -11,7 +11,6 @@ export default function Oglas({ naslov, opis, kreator }) {
         <div className="oglas-container">
             <div className="oglas-korisnik-info-container">
                 {avatars.map(avatar => {
-                    console.log(avatar)
                     if (avatar.id === kreator.avatar) {
                         return <div className="oglas-korisnik-info">
                             <img id={avatar.id} src={avatar.src}
