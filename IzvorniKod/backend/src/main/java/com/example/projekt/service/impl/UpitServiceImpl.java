@@ -28,12 +28,12 @@ public class UpitServiceImpl implements UpitService {
     public List<Upit> listUpitByKreator(RegistriraniKorisnik registriraniKorisnik) {
         return upitRepository.findByAutorUpita(registriraniKorisnik);
     }
-    /*
+
     @Override
     public List<Upit> listUpitByOglas(Oglas oglas) {
         return upitRepository.findByOglas(oglas);
     }
-    */
+
     @Override
     public Upit objaviUpit(String poruka, RegistriraniKorisnik registriraniKorisnik, Oglas oglas) {
         if (poruka.isEmpty() ||poruka == null) {
