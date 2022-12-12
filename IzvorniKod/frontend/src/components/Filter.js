@@ -4,8 +4,6 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import "../cssFiles/Filter.css"
 import configData from "./config.json";
-import Oglas from './Oglas';
-
 
 export default function Filter() {
 
@@ -18,7 +16,7 @@ export default function Filter() {
     })
 
 
-    //useEffect(() => { }, [kolegiji, oglasi])    // stranica se rendera te se ne napravi nikakva posebna funkcija kad god se dogode promjene u kolegiju i oglasima kako bi se vrijednosti mijenjale u real time
+    useEffect(() => { }, [kolegiji, oglasi])    // stranica se rendera te se ne napravi nikakva posebna funkcija kad god se dogode promjene u kolegiju i oglasima kako bi se vrijednosti mijenjale u real time
 
     useEffect(() => {
         fetch(`${configData.hostname}/kolegiji`)
@@ -38,7 +36,7 @@ export default function Filter() {
                 setOglasi(data)
                 //console.log("ovdje oglasi")
                 //console.log(oglasi)
-                //localStorage.setItem("oglasi", JSON.stringify(oglasi))
+                localStorage.setItem("oglasi", JSON.stringify(oglasi))
             })
     }, [])
 
@@ -65,7 +63,7 @@ export default function Filter() {
             .then(data => {
                 console.log(data)
                 setOglasi(data)
-                //localStorage.setItem("oglasi", data)
+                localStorage.setItem("oglasi", JSON.stringify(oglasi))
             })
 
     }
@@ -158,17 +156,6 @@ export default function Filter() {
                     disabled={!formInfo.kategorija && !formInfo.kolegij
                         && !formInfo.smjer}>Filtriraj</Button>
             </Form>
-            {console.log(oglasi)}
-            {console.log(oglasi.length)}
-            {oglasi.length > 0 ? oglasi.map(oglas => {
-                return <Oglas
-                    naslov={oglas.naslov}
-                    opis={oglas.opis}
-                    kreator={oglas.kreator}
-                
-                />
-
-            }) : "Nema oglasa za prikaz"}  
         </div>
     );
 }
