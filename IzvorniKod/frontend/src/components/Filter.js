@@ -9,6 +9,7 @@ import configData from "./config.json";
 export default function Filter() {
 
     const [kolegiji, setKolegiji] = useState([""])
+    const [oglasi, setOglasi] = useState([])
     const [formInfo, setFormInfo] = useState({
         smjer: "",
         kolegij: "",
@@ -17,39 +18,48 @@ export default function Filter() {
 
     useEffect(() => {
         fetch(`${configData.hostname}/kolegiji`)
-        .then(res => res.json()
+            .then(res => res.json()
+                .then(data => {
+                    console.log("DATA U USE-EFFECT")
+                    console.log(data)
+                    setKolegiji(data)
+                    console.log("KOLEGIJI U USE-EFFECT")
+                    console.log(kolegiji)
+                }))
+        fetch(`${configData.hostname}/oglasi/filter?smjer=&kategorija=&kolegij=`)
+            .then(res => res.json())
             .then(data => {
+                //console.log("oglasi")
                 console.log(data)
-                setKolegiji(data)
-                console.log(kolegiji)
-            }))
+                setOglasi(data)
+                console.log("ovdje oglasi")
+                //console.log(oglasi)
+                //localStorage.setItem("oglasi", JSON.stringify(oglasi))
+            })
     }, [])
     //u ovoj funkciji treba fetchati sve kolegije s backenda koji postoje u bazi podataka
     function dohvatiKolegije(smjer) {
         fetch(`${configData.hostname}/kolegiji/smjer/${smjer.toLowerCase()}`)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            setKolegiji(data)
-            console.log(kolegiji)
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log("KOLEGIJI U SMJERU " + smjer + ":")
+                console.log(data)
+                setKolegiji(data)
+                console.log("KOLEGIJI U USE-STATE") //JOŠ UVIJEK SE TU NALAZE KOLEGIJI S R I E SMJERA - NE UPDATEA SE ODMAH
+                console.log(kolegiji)
+            })
     }
 
     function handleFormSubmit(e) {
         e.preventDefault()
         console.log(formInfo)       //target je cijela forma koja se submita
-        const data = {
-            smjer: formInfo.smjer,
-            kolegij: formInfo.kolegij,
-            kategorija: formInfo.kategorija
-        }
-        const method = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }
+        fetch(`${configData.hostname}/oglasi/filter?smjer=${formInfo.smjer}&kategorija=${formInfo.kategorija}&kolegij=${formInfo.kolegij.replace(/ /g, "+")}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setOglasi(data)
+                //localStorage.setItem("oglasi", data)
+            })
 
     }
 
