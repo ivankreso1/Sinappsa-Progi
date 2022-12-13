@@ -14,6 +14,8 @@ public interface OglasService {
 
     List<Oglas> listSveOglase();
 
+    List<Oglas> listSvihAktivnihOglasa();
+
     Oglas objaviOglas(Oglas oglas);
 
     List<Oglas> dohvatiOglasePoKorisniku(RegistriraniKorisnik registriraniKorisnik);

@@ -29,6 +29,11 @@ public class OglasServiceImpl implements OglasService {
     }
 
     @Override
+    public List<Oglas> listSvihAktivnihOglasa() {
+        return oglasRepository.findAllByAktivan(true);
+    }
+
+    @Override
     public List<Oglas> dohvatiOglasePoKorisniku(RegistriraniKorisnik registriraniKorisnik) {
         return oglasRepository.findByKreator(registriraniKorisnik);
     }

@@ -34,6 +34,11 @@ public class OglasController {
         return oglasService.listSveOglase();
     }
 
+    @GetMapping("/aktivni")
+    public List<Oglas> listAktivniOglasi() {
+        return oglasService.listSvihAktivnihOglasa();
+    }
+
     @GetMapping("/filter")
     public List<Oglas> filtrirajOglase(@RequestParam(required = false, name = "smjer") Smjer smjer,
                                        @RequestParam(required = false, name = "kategorija") Kategorija kategorija,
