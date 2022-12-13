@@ -18,7 +18,7 @@ export default function Oglas({ naslov, opis, kreator }) {
                                         margin: "10px 5px",
                                         borderRadius: "20px"
                                     }
-                                }></img>
+                                } alt="alt"></img>
                             {kreator.korisnickoIme}</div>
 
                     }

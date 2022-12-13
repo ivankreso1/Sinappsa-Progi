@@ -7,6 +7,7 @@ import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import configData from "./config.json";
 import '../cssFiles/App.css';
 import "../cssFiles/Filter.css";
+import RankList from './RankList';
 
 
 function App() {
@@ -163,6 +164,9 @@ function App() {
           />
         }) : "Nema oglasa za prikaz"}
         <button onClick={goToLogin}> Login </button>
+
+        <RankList />
+
       </div>
     </div>
   );
