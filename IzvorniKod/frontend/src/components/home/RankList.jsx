@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Rank from './Rank';
-import "../cssFiles/rank.css";
-import configData from "./config.json";
+import "../../cssFiles/rank.css";
+import configData from "../config.json";
 
 
 class RankList extends Component {

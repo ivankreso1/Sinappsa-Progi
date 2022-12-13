@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './cssFiles/index.css';
-import App from './components/App';
+import Home from './components/home/Home';
 import { BrowserRouter, Route, Routes, } from "react-router-dom";
 import Login from "./components/Login";
 import Profile from "./components/Profile"
@@ -15,7 +15,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<App />} />
+        <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="profile" element={<Profile />} />
         <Route path="register" element ={<Register />} />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "../cssFiles/rank.css";
+import "../../cssFiles/rank.css";
 
 
 class Rank extends Component {
