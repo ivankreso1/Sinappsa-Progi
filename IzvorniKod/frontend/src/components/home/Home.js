@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Oglas from './Oglas';
 import configData from "../config.json";
 import '../../cssFiles/App.css';
 import "../../cssFiles/Filter.css";
 import Filter from './Filter';
+import AdList from './AdList';
 import RankList from './RankList';
 
 
@@ -81,21 +81,11 @@ function App() {
   return (
     <div className="home-page">
       <h1>Home page</h1>
-      <div>
-        <Filter key="filter" kolegiji={kolegiji} formInfo={formInfo} onFormSubmit={handleFormSubmit} onFormInfo={changeFormInfo} onDropDownClick={optionDropDownClick} />
-        <h3>Oglasi</h3>
-        {oglasi.length > 0 ? oglasi.map(oglas => {
-          return <Oglas
-            naslov={oglas.naslov}
-            opis={oglas.opis}
-            kreator={oglas.kreator}
-          />
-        }) : "Nema oglasa za prikaz"}
-        <button onClick={goToLogin}> Login </button>
-
-        <RankList />
-
-      </div>
+      {/* NavBar here! */}
+      <Filter key="filter" kolegiji={kolegiji} formInfo={formInfo} onFormSubmit={handleFormSubmit} onFormInfo={changeFormInfo} onDropDownClick={optionDropDownClick} />
+      <AdList key="adList" oglasi={oglasi} />
+      <RankList key="rankList" />
+      <button onClick={goToLogin}> Login </button>    {/* Ovo će ići u NavBar */}
     </div>
   );
 }
