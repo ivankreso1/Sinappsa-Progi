@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Rank from './Rank';
-import rankListData from "./.ranklist.json";
 import "../cssFiles/rank.css";
+import configData from "./config.json";
 
 
 class RankList extends Component {
@@ -9,9 +9,20 @@ class RankList extends Component {
         rankList: []
     };
 
+    componentDidMount() {   
+        // lifecycle hook, kad se stvori komponenta (dakle mora se renderirati prvo), pozovemo handleRankList da fetcha i displaya podatke
+        this.handleRankList();
+    }
+
     handleRankList = () => {
-        // fetch rang
-        this.setState({ rankList: rankListData });
+        this.fetchData().then(data => this.setState({ rankList: data }));
+    }
+
+    fetchData = async () => {
+        // TODO: Ova metoda se može izdvojiti i postati globalna za sve uz dodatne parametre poput url i method objekta -> dodati to kasnije!
+        const response = await fetch(`${configData.hostname}/korisnik/rang`, { method: "GET" });
+
+        return response.json();
     }
 
     render() { 
@@ -24,7 +35,6 @@ class RankList extends Component {
                             <Rank id={user.korisnickoIme} rank={this.state.rankList.indexOf(user) + 1} user={user} />
                         ) : 
                         <h4>Nema rangiranih studenata</h4>}
-                    <button onClick={this.handleRankList}>Ažuriraj Rank Listu (temp)</button>
                 </div>
             </React.Fragment>
         );
