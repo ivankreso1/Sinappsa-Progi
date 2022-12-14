@@ -4,6 +4,8 @@ import com.example.projekt.domain.Kategorija;
 import com.example.projekt.domain.Oglas;
 import com.example.projekt.domain.RegistriraniKorisnik;
 import com.example.projekt.domain.Smjer;
+import com.example.projekt.rest.dto.CreateOglasDTO;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +18,7 @@ public interface OglasService {
 
     List<Oglas> listSvihAktivnihOglasa();
 
-    Oglas objaviOglas(Oglas oglas);
+    boolean objaviOglas(CreateOglasDTO oglas, User user);
 
     List<Oglas> dohvatiOglasePoKorisniku(RegistriraniKorisnik registriraniKorisnik);
 

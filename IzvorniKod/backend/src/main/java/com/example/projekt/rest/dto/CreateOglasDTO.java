@@ -7,19 +7,16 @@ public class CreateOglasDTO {
     private String opis;
     private String kolegij_ime;
     private Kategorija kategorija;
-    private Long kreator_id;
     private boolean trazimPomoc;
 
     public CreateOglasDTO() {
     }
 
-    public CreateOglasDTO(String naslov, String opis, String kolegij_ime, Kategorija kategorija, Long kreator_id,
-                          boolean trazimPomoc) {
+    public CreateOglasDTO(String naslov, String opis, String kolegij_ime, Kategorija kategorija, boolean trazimPomoc) {
         this.naslov = naslov;
         this.opis = opis;
         this.kolegij_ime = kolegij_ime;
         this.kategorija = kategorija;
-        this.kreator_id = kreator_id;
         this.trazimPomoc = trazimPomoc;
     }
 
@@ -53,14 +50,6 @@ public class CreateOglasDTO {
 
     public void setKategorija(Kategorija kategorija) {
         this.kategorija = kategorija;
-    }
-
-    public Long getKreator_id() {
-        return kreator_id;
-    }
-
-    public void setKreator_id(Long kreator_id) {
-        this.kreator_id = kreator_id;
     }
 
     public boolean isTrazimPomoc() {
