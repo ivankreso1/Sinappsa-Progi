@@ -4,11 +4,7 @@ import { useNavigate } from "react-router-dom";
 import avatars from "../avatars";
 import configData from "./config.json";
 
-/*
-Treba postojati nekakva procedura nakon sto se s backenda dohvate podaci - treba se pratiti je li forma dobro ispunjena => ako je, onda se preusmjerava na home page i cuvaju se upisani podaci
-Ukoliko je forma krivo ispunjena, ispisuje se odgovarajuca poruka
-onSubmit se salju upisani podaci na backend
-*/
+
 
 export default function EditProfile() {
 
@@ -17,7 +13,6 @@ export default function EditProfile() {
     const [editInfo, setEditInfo] = useState({
         korisnickoIme: "",
         lozinka: "",
-        email: currentInfo.email,
         avatar: ""
     })
    
@@ -35,7 +30,7 @@ export default function EditProfile() {
     }
 
 
-    function handleSubmit(e) {      //ovdje ide post zahtjev
+    function handleSubmit(e) {      //ovdje ide put zahtjev
         e.preventDefault()
         let data = {}
 
@@ -54,6 +49,27 @@ export default function EditProfile() {
         //console.log(editInfo.lozinka)
         console.log(data)
         console.log(httpData)
+
+        fetch(`${configData.hostname}/korisnik/uredi/${currentInfo.id}`, httpData)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
+            if (data.error) {
+                //console.log("U error")
+                console.log(data.message)
+                setError(data.message)
+            }
+            else {
+                const personInfo = {
+                    korisnickoIme: data.korisnickoIme,
+                    lozinka: !editInfo.lozinka ? currentInfo.lozinka : editInfo.lozinka,     //sprema se nehashana vrijednost
+                    id: data.id
+                }
+                localStorage.setItem("personInfo", JSON.stringify(personInfo))
+                //console.log("ovdje")
+                navigate("/profile")
+            }
+        })
     }
 
 
@@ -80,8 +96,7 @@ export default function EditProfile() {
                 }
             }>
                 <h1> Uredi profil </h1>
-                <span> Unesite novo korisničko ime, lozinku i/ili avatar.
-                     Polja koja ostavite prazna ostati će nepromijenjena.</span>
+                <span> Unesite novo korisničko ime, lozinku i/ili avatar.</span>
                 <Form
                     className="form"
                     onSubmit={handleSubmit}
@@ -128,7 +143,10 @@ export default function EditProfile() {
                     style={{
                         marginBottom: "10px"
                     }}
-                    type="submit"> Submit </Button>
+                    type="submit"
+                    disabled={(!editInfo.korisnickoIme &&
+                        !editInfo.avatar &&
+                        !editInfo.lozinka) ? true : false}> Submit </Button>
             </Form>
             <div className="error-message">
                     {error}
