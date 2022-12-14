@@ -2,31 +2,31 @@ package com.example.projekt.rest.dto;
 
 public class ChangeKorisnickiPodaciDTO {
 
-    private String novoKorisnickoIme;
-    private String novaLozinka;
-    private String noviAvatar;
+    private String korisnickoIme;
+    private String lozinka;
+    private String avatar;
 
-    public String getNovaLozinka() {
-        return novaLozinka;
+    public String getLozinka() {
+        return lozinka;
     }
 
-    public void setNovaLozinka(String novaLozinka) {
-        this.novaLozinka = novaLozinka;
+    public void setLozinka(String lozinka) {
+        this.lozinka = lozinka;
     }
 
-    public String getNoviAvatar() {
-        return noviAvatar;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setNoviAvatar(String noviAvatar) {
-        this.noviAvatar = noviAvatar;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public String getNovoKorisnickoIme() {
-        return novoKorisnickoIme;
+    public String getKorisnickoIme() {
+        return korisnickoIme;
     }
 
-    public void setNovoKorisnickoIme(String novoKorisnickoIme) {
-        this.novoKorisnickoIme = novoKorisnickoIme;
+    public void setKorisnickoIme(String korisnickoIme) {
+        this.korisnickoIme = korisnickoIme;
     }
 }
