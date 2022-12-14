@@ -35,6 +35,7 @@ function App() {
 
   //u ovoj funkciji treba fetchati sve kolegije s backenda koji postoje u bazi podataka
   function dohvatiKolegije(smjer) {
+    //console.log(smjer)
     fetch(`${configData.hostname}/kolegiji/smjer/${smjer.toLowerCase()}`)
       .then(res => res.json())
       .then(data => {
@@ -57,7 +58,6 @@ function App() {
   }
 
   function optionDropDownClick(e) {
-    // console.log(e.target.innerHTML)
     setFormInfo(prevInfo => {
       return { ...prevInfo, [e.target.name]: e.target.innerHTML }
     })
@@ -66,6 +66,7 @@ function App() {
   function changeFormInfo(e) {
 
     /*ovdje se trebaju fetchati svi kolegiji za određen smjer*/
+    console.log(e.target.value)
     dohvatiKolegije(e.target.value)
     setFormInfo(prevInfo => {
       return { ...prevInfo, [e.target.name]: e.target.value }
@@ -82,7 +83,7 @@ function App() {
     <div className="home-page">
       <h1>Home page</h1>
       {/* NavBar here! */}
-      <Filter key="filter" kolegiji={kolegiji} formInfo={formInfo} onFormSubmit={handleFormSubmit} onFormInfo={changeFormInfo} onDropDownClick={optionDropDownClick} />
+      <Filter key="filter" kolegiji={kolegiji} formInfo={formInfo} onFormSubmit={(e) => handleFormSubmit(e)} onFormInfo={(e) => changeFormInfo(e)} onDropDownClick={(e) => optionDropDownClick(e)} />
       <AdList key="adList" oglasi={oglasi} />
       <RankList key="rankList" />
       <button onClick={goToLogin}> Login </button>    {/* Ovo će ići u NavBar */}

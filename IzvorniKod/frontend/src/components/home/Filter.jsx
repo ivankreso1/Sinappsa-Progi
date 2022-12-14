@@ -13,8 +13,8 @@ class Filter extends Component {
             <div className="filter-container">
                 <Form className="form-filter" onSubmit={this.props.onFormSubmit}>
                     <Form.Group className="filter-smjer-radio">Smjer:
-                        <Form.Check type="radio" label="R" name="smjer" value="R" isValid={formInfo.smjer === "R" ? true : false} onClick={this.props.onChangeInfo}/>
-                        <Form.Check type="radio" label="E" name="smjer" value="E" isValid={formInfo.smjer === "E" ? true : false} onClick={this.props.onChangeInfo}/>
+                        <Form.Check type="radio" label="R" name="smjer" value="R" isValid={formInfo.smjer === "R" ? true : false} onClick={this.props.onFormInfo}/>
+                        <Form.Check type="radio" label="E" name="smjer" value="E" isValid={formInfo.smjer === "E" ? true : false} onClick={this.props.onFormInfo}/>
                     </Form.Group>
                     {formInfo.smjer}
                     <DropdownButton className="filter-kolegij-dropdown" title="Kolegiji" variant={!formInfo.kolegij ? "danger" : "success"} /*onSelect={dohvatiKolegije}*/>
