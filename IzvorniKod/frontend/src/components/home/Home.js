@@ -25,7 +25,7 @@ function App() {
           console.log(data)
           setKolegiji(data)
         }))
-    fetch(`${configData.hostname}/oglasi/filter?smjer=&kategorija=&kolegij=`)
+    fetch(`${configData.hostname}/oglasi/filter?smjer=&kategorija=&kolegij=`) /* fetch(`${configData.hostname}/oglasi/aktivni`)*/
       .then(res => res.json())
       .then(data => {
         console.log(data)

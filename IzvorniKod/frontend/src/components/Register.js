@@ -27,6 +27,7 @@ export default function Register() {
     const [chosenAvatar, setChosenAvatar] = useState("")
 
     function handleInfoChange(e) {
+        if (error) setError("")
         setRegisterInfo(prevInfo => {
             return { ...prevInfo, [e.target.name]: e.target.value }     //posto ima vise inputova, treba ih se razlikovati po name-u => to je jedan od parametara koji je sacuvan u event.target
         })
@@ -61,17 +62,7 @@ export default function Register() {
                 setError(data.message)
             }
             else {
-                const personInfo = {
-                    avatar: data.avatar,
-                    brojPrimljenihRecenzija: data.brojPrimljenihRecenzija,
-                    email: data.email,
-                    ime: data.ime,
-                    korisnickoIme: data.korisnickoIme,
-                    prezime: data.prezime,
-                    sumaPrimljenihRecenzija: data.sumaPrimljenihRecenzija
-                }
-                localStorage.setItem("personInfo", JSON.stringify(personInfo))
-                //console.log("ovdje")
+                alert("Uspješna registracija, provjerite mail")
                 navigate("/login")
             }
         })
