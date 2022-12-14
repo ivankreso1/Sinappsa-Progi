@@ -16,4 +16,5 @@ public interface KolegijService {
     List<Kolegij> getKolegijiPoSmjeru(String smjer);
 
     Optional<Kolegij> findByImeKolegija(String nazivKolegija);
+    void izbrisiKolegij(String ime);
 }
