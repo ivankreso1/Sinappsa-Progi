@@ -15,6 +15,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UpitServiceImpl implements UpitService {
@@ -38,17 +39,14 @@ public class UpitServiceImpl implements UpitService {
         return upitRepository.findByOglas(oglas);
     }
 
-
-
     @Override
     public Upit objaviUpit(String poruka, RegistriraniKorisnik registriraniKorisnik, Oglas oglas) throws MessagingException, UnsupportedEncodingException {
-        if (poruka.isEmpty() ||poruka == null) {
+        if (poruka.isEmpty()) {
             throw new RequestDeniedException("Poruka nije upisana");
         }
         var autorOglasa = oglas.getKreator();
-        var autorUpita = registriraniKorisnik;
 
-        posaljiMailAutoruOglasa(autorUpita, autorOglasa, poruka);
+        posaljiMailAutoruOglasa(registriraniKorisnik, autorOglasa, poruka);
 
         return upitRepository.save(new Upit(registriraniKorisnik, oglas, poruka, StanjeUpita.U_TIJEKU));
     }
@@ -80,5 +78,15 @@ public class UpitServiceImpl implements UpitService {
 
         helper.setText(content, true);
         mailSender.send(message);
+    }
+    @Override
+    public Optional<Upit> dohvatiUpitPoId(Long id) {
+        return upitRepository.findById(id);
+    }
+
+    @Override
+    public Upit promjeniStanjeUpita(Upit upit, StanjeUpita novoStanjeUpita){
+        upit.setStanjeUpita(novoStanjeUpita);
+        return upitRepository.save(upit);
     }
 }
