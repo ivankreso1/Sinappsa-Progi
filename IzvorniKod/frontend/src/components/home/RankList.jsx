@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Rank from './Rank';
+import { getData } from '../../scripts/util';
 import "../../cssFiles/home/rank.css";
 import "../../cssFiles/shared/shared.css";
-import configData from "../config.json";
 
 
 class RankList extends Component {
@@ -16,14 +16,7 @@ class RankList extends Component {
     }
 
     handleRankList = () => {
-        this.fetchData().then(data => this.setState({ rankList: data }));
-    }
-
-    fetchData = async () => {
-        // TODO: Ova metoda se može izdvojiti i postati globalna za sve uz dodatne parametre poput url i method objekta -> dodati to kasnije!
-        const response = await fetch(`${configData.hostname}/korisnik/rang`, { method: "GET" });
-
-        return response.json();
+        getData("korisnik/rang").then(data => this.setState({ rankList: data }));
     }
 
     render() { 
@@ -33,7 +26,7 @@ class RankList extends Component {
                 <div className="rank-list-container">
                     {this.state.rankList.length > 0 ? 
                         this.state.rankList.map(user =>
-                            <Rank id={user.korisnickoIme} rank={this.state.rankList.indexOf(user) + 1} user={user} />
+                            <Rank key={user.korisnickoIme} id={user.korisnickoIme} rank={this.state.rankList.indexOf(user) + 1} user={user} />
                         ) : 
                         <h4>Nema rangiranih studenata</h4>}
                 </div>

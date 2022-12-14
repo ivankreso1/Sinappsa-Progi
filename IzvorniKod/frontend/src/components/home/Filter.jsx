@@ -18,16 +18,16 @@ class Filter extends Component {
 
         return (
             <div className="filter-container">
-                <Form className="form-filter" onSubmit={this.props.onFormSubmit}>
+                <Form key="form" className="form-filter" onSubmit={this.props.onFormSubmit}>
                     <div className='form-filter-item'>
-                        <Form.Group className="filter-smjer-radio">Smjer:
+                        <Form.Group key="g1" className="filter-smjer-radio">Smjer:
                             <Form.Check type="radio" label="R" name="smjer" value="R" isValid={formInfo.smjer === "R" ? true : false} onClick={this.props.onFormInfo}/>
                             <Form.Check type="radio" label="E" name="smjer" value="E" isValid={formInfo.smjer === "E" ? true : false} onClick={this.props.onFormInfo}/>
                         </Form.Group>
                         {/* {formInfo.smjer === "" ? "" : <h6 className='selected-filter'>{formInfo.smjer}</h6>} */}
                     </div>
                     <div className="form-filter-item">
-                        <DropdownButton title="Kolegiji" variant={!formInfo.kolegij ? "danger" : "success"} /*onSelect={dohvatiKolegije}*/>
+                        <DropdownButton key="db1" title="Kolegiji" variant={!formInfo.kolegij ? "danger" : "success"} /*onSelect={dohvatiKolegije}*/>
                             {this.props.kolegiji.map(kolegij => {
                                 return <DropdownItem onClick={this.props.onDropDownClick} name="kolegij">{kolegij.ime}</DropdownItem>
                             })}
@@ -35,7 +35,7 @@ class Filter extends Component {
                         {formInfo.kolegij === "" ? "" : <h6 className='selected-filter'>{formInfo.kolegij}</h6>}
                     </div>
                     <div className="form-filter-item">
-                        <DropdownButton title="Kategorije" variant={!formInfo.kategorija ? "danger" : "success"} /*onClick={menuDropDownClick}*/>
+                        <DropdownButton key="db2" title="Kategorije" variant={!formInfo.kategorija ? "danger" : "success"} /*onClick={menuDropDownClick}*/>
                             {this.state.categories.map(category => 
                                 <DropdownItem onClick={this.props.onDropDownClick} name="kategorija">{category}</DropdownItem>                    
                             )}
@@ -43,7 +43,7 @@ class Filter extends Component {
                         {formInfo.kategorija === "" ? "" : <h6 className='selected-filter'>{formInfo.kategorija}</h6>}
                     </div>
                     <div className="form-filter-item">
-                        <Button 
+                        <Button key="btn1"
                             type="submit" 
                             variant={
                                 !formInfo.kategorija && !formInfo.kolegij && !formInfo.smjer ? "danger" : "success"

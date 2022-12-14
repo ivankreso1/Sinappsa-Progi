@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import configData from "../config.json";
+import configData from "../../resources/config.json";
 import '../../cssFiles/home/home.css';
 import "../../cssFiles/shared/shared.css";
 import Filter from './Filter';
@@ -22,13 +22,13 @@ function App() {
     fetch(`${configData.hostname}/kolegiji`)
       .then(res => res.json()
         .then(data => {
-          console.log(data)
+          // console.log(data)
           setKolegiji(data)
         }))
     fetch(`${configData.hostname}/oglasi/filter?smjer=&kategorija=&kolegij=`) /* fetch(`${configData.hostname}/oglasi/aktivni`)*/
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        // console.log(data)
         setOglasi(data)
       })
   }, [])

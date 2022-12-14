@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Card } from "react-bootstrap";
+import { postData } from "../scripts/util";
 import "../cssFiles/login.css"
-import configData from "./config.json";
+// import configData from "../resources/config.json";
 
 export default function Login() {
 
@@ -28,20 +29,23 @@ export default function Login() {
             lozinka: info.password
         }
 
-        let headers = new Headers()
-        headers.append("Content-Type", "application/json")
-        headers.append('Authorization', 'Basic ' + window.btoa(info.userName + ":" + info.password));
-        console.log("HEADERS:")
-        console.log(headers)
+        // let headers = new Headers()
+        // headers.append("Content-Type", "application/json")
+        // headers.append('Authorization', 'Basic ' + window.btoa(info.userName + ":" + info.password));
+        // console.log("HEADERS:")
+        // console.log(headers)
         
-        const banana = {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(data)
-        }
+        // const banana = {
+        //     method: "POST",
+        //     headers: headers,
+        //     body: JSON.stringify(data)
+        // }
 
-        fetch(`${configData.hostname}/korisnik/prijava`, banana)
-        .then(res => res.json())
+
+        // fetch(`${configData.hostname}/korisnik/prijava`, banana)
+        // .then(res => res.json())
+
+        postData("korisnik/prijava", data)  // Dakle ovdje nejde postDataAuth jer onda baca Unauthorized
         .then(data => {
             console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
             if (data.error) {
