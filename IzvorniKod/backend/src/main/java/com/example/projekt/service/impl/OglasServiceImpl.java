@@ -70,29 +70,18 @@ public class OglasServiceImpl implements OglasService {
         }
 
         Oglas oglas = new Oglas(oglasDTO.getNaslov(), oglasDTO.getOpis(), kolegij, kategorija, registriraniKorisnik, true, oglasDTO.isTrazimPomoc());
-        return oglasRepository.save(oglas) != null;
+        oglasRepository.save(oglas);
+        return true;
     }
 
     @Override
     public boolean promijeniOglas(Long id, PutOglasDTO noviOglas, User user) {
-        Optional<Oglas> postojiOglas = oglasRepository.findById(id);
-        RegistriraniKorisnik autorOglasa;
-        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        boolean pristup = provjeraPristupa(id, user, "Samo aktivnim oglasima možete mijenjati naslov i opis");
         Oglas stariOglas;
-
-        if (!postojiOglas.isPresent()) {
-            throw new RequestDeniedException("Ne postoji oglas s id: " + id);
+        if (pristup) {
+            stariOglas = oglasRepository.findById(id).get();
         } else {
-            stariOglas = postojiOglas.get();
-        }
-        if(stariOglas.isAktivan() == false) {
-            throw new RequestDeniedException("Ne možete promijeniti podatke oglasu jer oglas nije aktivan");
-        }
-
-        autorOglasa = stariOglas.getKreator();
-        if (!autorOglasa.equals(korisnikPoUsername)) {
-            throw new RequestDeniedException("Pokušali ste izmijeniti oglas korisnika " + autorOglasa.getKorisnickoIme()
-                    + " prijavljeni kao " + user.getUsername());
+            return false;
         }
         if (noviOglas.getNaslov().isBlank() || noviOglas.getNaslov() == null) {
             throw new RequestDeniedException("Naslov ne smije biti prazan");
@@ -103,7 +92,19 @@ public class OglasServiceImpl implements OglasService {
         stariOglas.setNaslov(noviOglas.getNaslov());
         stariOglas.setOpis(noviOglas.getOpis());
 
-        return oglasRepository.save(stariOglas) != null;
+        oglasRepository.save(stariOglas);
+        return true;
+    }
+
+    @Override
+    public boolean obrisiOglas (Long id, User user) {
+        boolean pristup = provjeraPristupa(id, user, "Samo aktivne oglase možete izbrisati");
+        if (pristup) {
+            oglasRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -124,7 +125,9 @@ public class OglasServiceImpl implements OglasService {
         } else {
             throw new RequestDeniedException("Smjer mora biti E ili R");
         }
-        // Java ima svoju provjeru za enum, 400 ako nije dobra kategorija
+        if (kategorija != null) {
+            filtriranaLista = filtriranaLista.stream().filter(poKategoriji).collect(Collectors.toList());
+        }
         if (kolegijService.getKolegiji().stream().map(Kolegij::getIme).toList().contains(kolegij_ime)) {
             filtriranaLista = filtriranaLista.stream().filter(poKolegiju).collect(Collectors.toList());
         } else if (kolegij_ime.equals("")) {
@@ -132,5 +135,26 @@ public class OglasServiceImpl implements OglasService {
             throw new RequestDeniedException("Odabrani kolegij se ne nalazi na popisu dostupnih kolegija");
         }
         return filtriranaLista;
+    }
+
+    public boolean provjeraPristupa (Long id, User user, String errMsg) {
+        Optional<Oglas> postojiOglas = oglasRepository.findById(id);
+        RegistriraniKorisnik autorOglasa;
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        Oglas stariOglas;
+        if (!postojiOglas.isPresent()) {
+            return false;
+        } else {
+            stariOglas = postojiOglas.get();
+        }
+        if (!stariOglas.isAktivan()) {
+            throw new RequestDeniedException(errMsg);
+        }
+        autorOglasa = stariOglas.getKreator();
+        if (!autorOglasa.equals(korisnikPoUsername)) {
+            throw new RequestDeniedException("Pokušali ste izmijeniti oglas korisnika " + autorOglasa.getKorisnickoIme()
+                    + " prijavljeni kao " + user.getUsername());
+        }
+        return true;
     }
 }

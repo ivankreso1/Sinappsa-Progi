@@ -23,6 +23,8 @@ public interface OglasService {
 
     boolean objaviOglas(CreateOglasDTO oglas, User user);
 
+    boolean obrisiOglas(Long id, User user);
+
     List<Oglas> dohvatiOglasePoKorisniku(RegistriraniKorisnik registriraniKorisnik);
 
     Optional<Oglas> dohvatiOglasPoId(Long id);

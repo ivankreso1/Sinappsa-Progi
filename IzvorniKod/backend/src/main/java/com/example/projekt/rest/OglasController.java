@@ -1,7 +1,5 @@
 package com.example.projekt.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +8,7 @@ import com.example.projekt.rest.dto.CreateOglasDTO;
 import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -53,26 +52,37 @@ public class OglasController {
 
     @PostMapping
     //@Secured("ROLE_STUDENT_KORISNIK")
-    public ResponseEntity<Void> objaviOglas (@RequestBody CreateOglasDTO oglas, @AuthenticationPrincipal User user) throws URISyntaxException {
-        if(user == null) {
-            throw new RequestDeniedException("Nema podataka o autentikaciji");
-        }
+    public ResponseEntity<Void> objaviOglas (@RequestBody CreateOglasDTO oglas, @AuthenticationPrincipal User user) {
+        userNull(user);
         if (oglasService.objaviOglas(oglas, user)) {
-            return ResponseEntity.created(new URI("/oglasi")).build(); // redirecta na oglase
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
             throw new RequestDeniedException("Neuspješno dodavanje novog oglasa");
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> promijeniOglas(@PathVariable Long id, @RequestBody PutOglasDTO noviOglas, @AuthenticationPrincipal User user) throws URISyntaxException {
+    public ResponseEntity<Void> promijeniOglas(@PathVariable Long id, @RequestBody PutOglasDTO noviOglas, @AuthenticationPrincipal User user) {
+        userNull(user);
+        if (oglasService.promijeniOglas(id, noviOglas, user)) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            throw new RequestDeniedException("Ne postoji oglas s id: " + id);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> obrisiOglas(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        userNull(user);
+        if (oglasService.obrisiOglas(id, user)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        throw new RequestDeniedException("Ne postoji oglas s id: " + id);
+    }
+
+    public void userNull (User user) {
         if (user == null) {
             throw new RequestDeniedException("Nema podataka o autentikaciji");
-        }
-        if (oglasService.promijeniOglas(id, noviOglas, user)) {
-            return ResponseEntity.created(new URI("/profil")).build();
-        } else {
-          throw new RequestDeniedException("Neuspješna izmjena podataka u oglasu");
         }
     }
 }
