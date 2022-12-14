@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import com.example.projekt.domain.*;
 import com.example.projekt.rest.dto.CreateOglasDTO;
+import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,10 +54,25 @@ public class OglasController {
     @PostMapping
     //@Secured("ROLE_STUDENT_KORISNIK")
     public ResponseEntity<Void> objaviOglas (@RequestBody CreateOglasDTO oglas, @AuthenticationPrincipal User user) throws URISyntaxException {
+        if(user == null) {
+            throw new RequestDeniedException("Nema podataka o autentikaciji");
+        }
         if (oglasService.objaviOglas(oglas, user)) {
             return ResponseEntity.created(new URI("/oglasi")).build(); // redirecta na oglase
         } else {
             throw new RequestDeniedException("Neuspješno dodavanje novog oglasa");
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> promijeniOglas(@PathVariable Long id, @RequestBody PutOglasDTO noviOglas, @AuthenticationPrincipal User user) throws URISyntaxException {
+        if (user == null) {
+            throw new RequestDeniedException("Nema podataka o autentikaciji");
+        }
+        if (oglasService.promijeniOglas(id, noviOglas, user)) {
+            return ResponseEntity.created(new URI("/profil")).build();
+        } else {
+          throw new RequestDeniedException("Neuspješna izmjena podataka u oglasu");
         }
     }
 }

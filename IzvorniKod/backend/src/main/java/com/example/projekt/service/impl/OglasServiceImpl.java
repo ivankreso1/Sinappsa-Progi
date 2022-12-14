@@ -3,6 +3,7 @@ package com.example.projekt.service.impl;
 import com.example.projekt.dao.OglasRepository;
 import com.example.projekt.domain.*;
 import com.example.projekt.rest.dto.CreateOglasDTO;
+import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.KolegijService;
 import com.example.projekt.service.OglasService;
 import com.example.projekt.service.RegKorisnikService;
@@ -70,6 +71,39 @@ public class OglasServiceImpl implements OglasService {
 
         Oglas oglas = new Oglas(oglasDTO.getNaslov(), oglasDTO.getOpis(), kolegij, kategorija, registriraniKorisnik, true, oglasDTO.isTrazimPomoc());
         return oglasRepository.save(oglas) != null;
+    }
+
+    @Override
+    public boolean promijeniOglas(Long id, PutOglasDTO noviOglas, User user) {
+        Optional<Oglas> postojiOglas = oglasRepository.findById(id);
+        RegistriraniKorisnik autorOglasa;
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        Oglas stariOglas;
+
+        if (!postojiOglas.isPresent()) {
+            throw new RequestDeniedException("Ne postoji oglas s id: " + id);
+        } else {
+            stariOglas = postojiOglas.get();
+        }
+        if(stariOglas.isAktivan() == false) {
+            throw new RequestDeniedException("Ne možete promijeniti podatke oglasu jer oglas nije aktivan");
+        }
+
+        autorOglasa = stariOglas.getKreator();
+        if (!autorOglasa.equals(korisnikPoUsername)) {
+            throw new RequestDeniedException("Pokušali ste izmijeniti oglas korisnika " + autorOglasa.getKorisnickoIme()
+                    + " prijavljeni kao " + user.getUsername());
+        }
+        if (noviOglas.getNaslov().isBlank() || noviOglas.getNaslov() == null) {
+            throw new RequestDeniedException("Naslov ne smije biti prazan");
+        }
+        if (noviOglas.getOpis().isBlank() || noviOglas.getOpis() == null) {
+            throw new RequestDeniedException("Opis ne smije biti prazan");
+        }
+        stariOglas.setNaslov(noviOglas.getNaslov());
+        stariOglas.setOpis(noviOglas.getOpis());
+
+        return oglasRepository.save(stariOglas) != null;
     }
 
     @Override
