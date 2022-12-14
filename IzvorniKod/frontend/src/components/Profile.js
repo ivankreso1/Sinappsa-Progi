@@ -1,8 +1,15 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 import avatars from "../avatars";
 import "../cssFiles/Profile.css"
 
 export default function Profile() {
+
+    const navigate = useNavigate()
+
+    function goToEdit() {
+      navigate("/editProfile")
+    }
 
     const personInfo = JSON.parse(localStorage.getItem("personInfo"))
     console.log(personInfo)
@@ -24,6 +31,7 @@ export default function Profile() {
                 })}
                 {personInfo.ime + " " + personInfo.prezime + " " + personInfo.korisnickoIme}
             </div>
+            <button onClick={goToEdit}>Uredi profil</button>
         </div>
     )
 }

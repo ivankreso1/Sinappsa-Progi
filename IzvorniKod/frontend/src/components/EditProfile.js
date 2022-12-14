@@ -34,7 +34,6 @@ export default function EditProfile() {
                      Polja koja ostavite prazna ostati će nepromijenjena.</span>
                 <Form
                     className="form"
-                    onSubmit={handleSubmit}
                 >
 
                     <Form.Group
@@ -54,9 +53,6 @@ export default function EditProfile() {
                                     key={avatar.id}
                                     src={avatar.src}
                                     alt=""
-                                    style={{
-                                        border: chosenAvatar === avatar.id ? "7.5px solid #5495E3" : "2px solid black"
-                                    }}
                                 ></img>
                         )}
                 </div>
@@ -77,9 +73,6 @@ export default function EditProfile() {
                     }}
                     type="submit"> Submit </Button>
             </Form>
-            <div className="error-message">
-                    {error}
-            </div>
         </Card>
         </div>
     )
