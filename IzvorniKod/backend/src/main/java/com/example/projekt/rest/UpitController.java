@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,19 +44,17 @@ public class UpitController {
     }
 
     @PostMapping("{idAutoraUpita}/{idOglasa}")
-    public Upit postUpit(@PathVariable("idAutoraUpita") Long idAutoraUpita, @PathVariable("idOglasa") Long idOglasa, @RequestBody CreateUpitDTO createUpitDTO) {
+    public Upit postUpit(@PathVariable("idAutoraUpita") Long idAutoraUpita, @PathVariable("idOglasa") Long idOglasa, @RequestBody CreateUpitDTO createUpitDTO) throws MessagingException, UnsupportedEncodingException {
         Optional<RegistriraniKorisnik> registriraniKorisnik = regKorisnikService.findById(idAutoraUpita);
         if(registriraniKorisnik.isEmpty()) {
             throw new RequestDeniedException("Nema korisnika sa id-om: " + idAutoraUpita);
         }
-        /*
-        Optional<Oglas> oglas = oglasService.findById(idOglasa);
+
+        Optional<Oglas> oglas = oglasService.dohvatiOglasPoId(idOglasa);
         if(oglas.isEmpty()) {
             throw new RequestDeniedException("Nema oglasa sa id-om: " + idOglasa);
         }
-        */
-        Oglas oglas = null;
-        return upitService.objaviUpit(createUpitDTO.getPoruka(), registriraniKorisnik.get(), oglas); //oglas.get()
-                                                                        // u oglas se treba napravit getOglasById(idOglasa)
+
+        return upitService.objaviUpit(createUpitDTO.getPoruka(), registriraniKorisnik.get(), oglas.get());
     }
 }
