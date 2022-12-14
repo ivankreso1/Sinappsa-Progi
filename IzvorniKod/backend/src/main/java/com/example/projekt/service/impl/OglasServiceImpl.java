@@ -2,13 +2,15 @@ package com.example.projekt.service.impl;
 
 import com.example.projekt.dao.OglasRepository;
 import com.example.projekt.domain.*;
+import com.example.projekt.rest.dto.CreateOglasDTO;
 import com.example.projekt.service.KolegijService;
 import com.example.projekt.service.OglasService;
+import com.example.projekt.service.RegKorisnikService;
 import com.example.projekt.service.RequestDeniedException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,6 +23,9 @@ public class OglasServiceImpl implements OglasService {
     private OglasRepository oglasRepository;
 
     @Autowired
+    private RegKorisnikService regKorisnikService;
+
+    @Autowired
     private KolegijService kolegijService;
 
     @Override
@@ -29,31 +34,42 @@ public class OglasServiceImpl implements OglasService {
     }
 
     @Override
+    public List<Oglas> listSvihAktivnihOglasa() {
+        return oglasRepository.findAllByAktivan(true);
+    }
+
+    @Override
     public List<Oglas> dohvatiOglasePoKorisniku(RegistriraniKorisnik registriraniKorisnik) {
         return oglasRepository.findByKreator(registriraniKorisnik);
     }
 
     @Override
-    public Oglas objaviOglas(Oglas oglas) {
-        if (oglas.getNaslov() == null || oglas.getOpis() == null || oglas.getKolegij() == null || oglas.getKategorija() == null) {
+    public boolean objaviOglas(CreateOglasDTO oglasDTO, User user) {
+        RegistriraniKorisnik registriraniKorisnik;
+        Kolegij kolegij;
+        Kategorija kategorija = oglasDTO.getKategorija();
+        Optional<RegistriraniKorisnik> postojiKorisnik = regKorisnikService.findByKorisnickoIme(user.getUsername());
+        Optional<Kolegij> postojiKolegij = kolegijService.findByImeKolegija(oglasDTO.getKolegij_ime());
+
+        if (!postojiKorisnik.isPresent()) {
+            throw new RequestDeniedException("Ne postoji korisnik s korisničkim imenom: " + user.getUsername());
+        } else {
+            registriraniKorisnik = postojiKorisnik.get();
+        }
+        if (oglasDTO.getNaslov() == null || oglasDTO.getOpis() == null || oglasDTO.getKolegij_ime() == null || oglasDTO.getKategorija() == null) {
             throw new RequestDeniedException("Sva polja moraju biti ispunjena");
         }
-        if (oglas.getNaslov().isEmpty() || oglas.getOpis().isEmpty()
-        ) {
+        if (oglasDTO.getNaslov().isBlank() || oglasDTO.getOpis().isBlank()) {
             throw new RequestDeniedException("Polja ne smiju biti prazna");
         }
-        /* provjera je li korisnik ulogiran
-            * if () {
-            * throw
-            * }
-        */
-        if (!kolegijService.getKolegiji().contains(oglas.getKolegij())) {
-            throw new RequestDeniedException("Odabrani kolegij se ne nalazi na popisu dostupnih kolegija");
+        if (!postojiKolegij.isPresent()) {
+            throw new RequestDeniedException("Ne postoji kolegij s imenom: " + oglasDTO.getKolegij_ime());
+        } else {
+            kolegij = postojiKolegij.get();
         }
-        if (!Arrays.stream(Kategorija.values()).toList().contains(oglas.getKategorija())) {
-            throw new RequestDeniedException("Odabrana kategorija se ne nalazi na popisu dostupnih kategorija");
-        }
-        return oglasRepository.save(oglas);
+
+        Oglas oglas = new Oglas(oglasDTO.getNaslov(), oglasDTO.getOpis(), kolegij, kategorija, registriraniKorisnik, true, oglasDTO.isTrazimPomoc());
+        return oglasRepository.save(oglas) != null;
     }
 
     @Override
@@ -74,12 +90,7 @@ public class OglasServiceImpl implements OglasService {
         } else {
             throw new RequestDeniedException("Smjer mora biti E ili R");
         }
-        if (Arrays.stream(Kategorija.values()).toList().contains(kategorija)) {
-            filtriranaLista = filtriranaLista.stream().filter(poKategoriji).collect(Collectors.toList());
-        } else if (kategorija == null) {
-        } else {
-            throw new RequestDeniedException("Odabrana kategorija se ne nalazi na popisu dostupnih kategorija");
-        }
+        // Java ima svoju provjeru za enum, 400 ako nije dobra kategorija
         if (kolegijService.getKolegiji().stream().map(Kolegij::getIme).toList().contains(kolegij_ime)) {
             filtriranaLista = filtriranaLista.stream().filter(poKolegiju).collect(Collectors.toList());
         } else if (kolegij_ime.equals("")) {

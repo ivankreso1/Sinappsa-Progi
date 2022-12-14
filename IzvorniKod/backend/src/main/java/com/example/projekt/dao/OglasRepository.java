@@ -10,6 +10,8 @@ import java.util.List;
 public interface OglasRepository extends JpaRepository<Oglas, Long> {
     List<Oglas> findByKreator(RegistriraniKorisnik registriraniKorisnik);
 
+    List<Oglas> findAllByAktivan(boolean aktivan);
+
     @Query(value = "SELECT * FROM oglas JOIN kolegij ON oglas.kolegij_ime = kolegij.ime", nativeQuery = true)
     List<Oglas> listOglasJoinKolegijByKolegijName();
 }
