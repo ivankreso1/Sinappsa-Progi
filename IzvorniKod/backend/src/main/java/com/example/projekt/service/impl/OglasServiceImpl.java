@@ -3,10 +3,8 @@ package com.example.projekt.service.impl;
 import com.example.projekt.dao.OglasRepository;
 import com.example.projekt.domain.*;
 import com.example.projekt.rest.dto.CreateOglasDTO;
-import com.example.projekt.service.KolegijService;
-import com.example.projekt.service.OglasService;
-import com.example.projekt.service.RegKorisnikService;
-import com.example.projekt.service.RequestDeniedException;
+import com.example.projekt.rest.dto.PutOglasDTO;
+import com.example.projekt.service.*;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +50,7 @@ public class OglasServiceImpl implements OglasService {
         Optional<Kolegij> postojiKolegij = kolegijService.findByImeKolegija(oglasDTO.getKolegij_ime());
 
         if (!postojiKorisnik.isPresent()) {
-            throw new RequestDeniedException("Ne postoji korisnik s korisničkim imenom: " + user.getUsername());
+            throw new NotFoundException("Ne postoji korisnik s korisničkim imenom: " + user.getUsername());
         } else {
             registriraniKorisnik = postojiKorisnik.get();
         }
@@ -63,13 +61,48 @@ public class OglasServiceImpl implements OglasService {
             throw new RequestDeniedException("Polja ne smiju biti prazna");
         }
         if (!postojiKolegij.isPresent()) {
-            throw new RequestDeniedException("Ne postoji kolegij s imenom: " + oglasDTO.getKolegij_ime());
+            throw new NotFoundException("Ne postoji kolegij s imenom: " + oglasDTO.getKolegij_ime());
         } else {
             kolegij = postojiKolegij.get();
         }
-
         Oglas oglas = new Oglas(oglasDTO.getNaslov(), oglasDTO.getOpis(), kolegij, kategorija, registriraniKorisnik, true, oglasDTO.isTrazimPomoc());
-        return oglasRepository.save(oglas) != null;
+
+        oglasRepository.save(oglas);
+        return true;
+    }
+
+    @Override
+    public boolean promijeniOglas(Long id, PutOglasDTO noviOglas, User user) {
+        boolean pristup = provjeraPristupa(id, user, "Samo aktivnim oglasima možete mijenjati naslov i opis");
+        Oglas stariOglas;
+
+        if (pristup) {
+            stariOglas = oglasRepository.findById(id).get();
+        } else {
+            return false;
+        }
+        if (noviOglas.getNaslov().isBlank() || noviOglas.getNaslov() == null) {
+            throw new RequestDeniedException("Naslov ne smije biti prazan");
+        }
+        if (noviOglas.getOpis().isBlank() || noviOglas.getOpis() == null) {
+            throw new RequestDeniedException("Opis ne smije biti prazan");
+        }
+        stariOglas.setNaslov(noviOglas.getNaslov());
+        stariOglas.setOpis(noviOglas.getOpis());
+
+        oglasRepository.save(stariOglas);
+        return true;
+    }
+
+    @Override
+    public boolean obrisiOglas (Long id, User user) {
+        boolean pristup = provjeraPristupa(id, user, "Samo aktivne oglase možete izbrisati");
+        if (pristup) {
+            oglasRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -79,7 +112,7 @@ public class OglasServiceImpl implements OglasService {
 
     @Override
     public List<Oglas> filtrirajOglase(Smjer smjer, Kategorija kategorija, String kolegij_ime) {
-        List<Oglas> filtriranaLista = oglasRepository.findAll();
+        List<Oglas> filtriranaLista = oglasRepository.findAllByAktivan(true);
         Predicate<Oglas> poSmjeru = oglas -> oglas.getKolegij().getSmjer().equals(smjer);
         Predicate<Oglas> poKategoriji = oglas -> oglas.getKategorija().equals(kategorija);
         Predicate<Oglas> poKolegiju = oglas -> oglas.getKolegij().getIme().equals(kolegij_ime);
@@ -90,13 +123,39 @@ public class OglasServiceImpl implements OglasService {
         } else {
             throw new RequestDeniedException("Smjer mora biti E ili R");
         }
-        // Java ima svoju provjeru za enum, 400 ako nije dobra kategorija
+        if (kategorija != null) {
+            filtriranaLista = filtriranaLista.stream().filter(poKategoriji).collect(Collectors.toList());
+        }
         if (kolegijService.getKolegiji().stream().map(Kolegij::getIme).toList().contains(kolegij_ime)) {
             filtriranaLista = filtriranaLista.stream().filter(poKolegiju).collect(Collectors.toList());
         } else if (kolegij_ime.equals("")) {
         } else {
-            throw new RequestDeniedException("Odabrani kolegij se ne nalazi na popisu dostupnih kolegija");
+            throw new NotFoundException("Odabrani kolegij se ne nalazi na popisu dostupnih kolegija");
         }
+
         return filtriranaLista;
+    }
+
+    public boolean provjeraPristupa (Long id, User user, String errMsg) {
+        Optional<Oglas> postojiOglas = oglasRepository.findById(id);
+        RegistriraniKorisnik autorOglasa;
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        Oglas stariOglas;
+
+        if (!postojiOglas.isPresent()) {
+            return false;
+        } else {
+            stariOglas = postojiOglas.get();
+        }
+        if (!stariOglas.isAktivan()) {
+            throw new RequestDeniedException(errMsg);
+        }
+        autorOglasa = stariOglas.getKreator();
+        if (!autorOglasa.equals(korisnikPoUsername)) {
+            throw new RequestDeniedException("Pokušali ste izmijeniti oglas korisnika " + autorOglasa.getKorisnickoIme()
+                    + " prijavljeni kao " + user.getUsername());
+        }
+
+        return true;
     }
 }

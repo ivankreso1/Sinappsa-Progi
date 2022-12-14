@@ -90,7 +90,7 @@ insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, emai
 insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-2, -1, 'Zelim error', 'ovo je da izazove error', 'Algoritmi i strukture podataka', true, 'LABOS', true);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-3, -3, 'Linalg instrukcije', 'Nudim pomoć oko rješavanja zadataka', 'Linearna algebra', true, 'GRADIVO', false);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-4, -4, 'Osnove prvi lab', 'Tražim pomoć za prvi labos iz osnova elektrotehnike', 'Osnove elektrotehnike', true, 'LABOS', true);
-insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-5, -6, 'baze dz', 'Tražim pomoć za prvu domaću zadaću iz baza podataka', 'Baze podataka', true, 'GRADIVO', true);
+insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-5, -6, 'baze dz', 'Tražim pomoć za prvu domaću zadaću iz baza podataka', 'Baze podataka', false, 'GRADIVO', true);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_ime, aktivan, kategorija, trazim_pomoc) values (-6, -7, 'baze dz', 'Nudim pomoć oko rješavanja domaće zadaće iz baza podataka', 'Baze podataka', true, 'GRADIVO', false);
 
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-3, -1, -2, 'Ovo je poruka dobrog upita slovo č', 'U_TIJEKU');
