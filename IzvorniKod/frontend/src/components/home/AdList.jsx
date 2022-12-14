@@ -7,7 +7,6 @@ class AdList extends Component {
     render() { 
         return (
             <React.Fragment>
-                <h3>Oglasi</h3>
                 {this.props.oglasi.length > 0 ? this.props.oglasi.map(oglas => {
                     return <Oglas naslov={oglas.naslov} opis={oglas.opis} kreator={oglas.kreator} trazimPomoc = {oglas.trazimPomoc}/>
                 }) : "Nema oglasa za prikaz"}

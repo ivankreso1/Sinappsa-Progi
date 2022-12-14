@@ -1,6 +1,6 @@
 import React from "react";
 import avatars from "../../avatars";
-import "../../cssFiles/Oglas.css";
+import "../../cssFiles/home/oglas.css";
 
 export default function Oglas({ naslov, opis, kreator, trazimPomoc }) {
 
