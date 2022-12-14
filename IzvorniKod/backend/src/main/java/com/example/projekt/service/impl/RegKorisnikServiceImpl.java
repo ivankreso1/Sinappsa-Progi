@@ -159,21 +159,17 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
     }
 
     @Override
-    public RegistriraniKorisnik promijeniKorisnickoIme(RegistriraniKorisnik registriraniKorisnik, String novoKorisnickoIme) {
-        registriraniKorisnik.setKorisnickoIme(novoKorisnickoIme);
-        return regKorisnikRepository.save(registriraniKorisnik);
-    }
-
-    @Override
-    public RegistriraniKorisnik promijeniLozinku(RegistriraniKorisnik registriraniKorisnik, String novaLozinka) {
-        String novaHashLozinka = passwordEncoder.encode(novaLozinka);
-        registriraniKorisnik.setLozinka(novaHashLozinka);
-        return regKorisnikRepository.save(registriraniKorisnik);
-    }
-
-    @Override
-    public RegistriraniKorisnik promijeniAvatar(RegistriraniKorisnik registriraniKorisnik, String noviAvatar) {
-        registriraniKorisnik.setAvatar(noviAvatar);
+    public RegistriraniKorisnik promijeniPodatke(RegistriraniKorisnik registriraniKorisnik, String novoKorisnickoIme, String novaLozinka, String noviAvatar) {
+        if(novoKorisnickoIme != null) {
+            registriraniKorisnik.setKorisnickoIme(novoKorisnickoIme);
+        }
+        if(novaLozinka != null) {
+            String novaHashLozinka = passwordEncoder.encode(novaLozinka);
+            registriraniKorisnik.setLozinka(novaHashLozinka);
+        }
+        if(noviAvatar != null) {
+            registriraniKorisnik.setAvatar(noviAvatar);
+        }
         return regKorisnikRepository.save(registriraniKorisnik);
     }
 }

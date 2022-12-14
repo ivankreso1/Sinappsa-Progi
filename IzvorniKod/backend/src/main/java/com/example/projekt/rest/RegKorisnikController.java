@@ -34,8 +34,8 @@ public class RegKorisnikController {
     }
 
     @PostMapping("registracija")
-    public RegistriraniKorisnik registriraj(@RequestBody CreateRegKorisnikDTO regKorisnikDTO, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
-        return regKorisnikService.registriraj(regKorisnikDTO.getEmail(),regKorisnikDTO.getKorisnickoIme(), regKorisnikDTO.getIme(), regKorisnikDTO.getPrezime(), regKorisnikDTO.getLozinka(), regKorisnikDTO.getAvatar(), getSiteURL(request));
+    public void registriraj(@RequestBody CreateRegKorisnikDTO regKorisnikDTO, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
+        regKorisnikService.registriraj(regKorisnikDTO.getEmail(),regKorisnikDTO.getKorisnickoIme(), regKorisnikDTO.getIme(), regKorisnikDTO.getPrezime(), regKorisnikDTO.getLozinka(), regKorisnikDTO.getAvatar(), getSiteURL(request));
     }
 
     @GetMapping("/verify")
@@ -75,68 +75,31 @@ public class RegKorisnikController {
         return regKorisnikService.dohvatiNajboljih10();
     }
 
-    @PutMapping("/promijeni/username/{id}")
-    public RegistriraniKorisnik promijeniKorisnickoIme(@PathVariable("id") Long id, @AuthenticationPrincipal User u, @RequestBody ChangeKorisnickiPodaciDTO changeKorisnickiPodaciDTO) {
-        String novoKorisnickoIme = changeKorisnickiPodaciDTO.getNovoKorisnickoIme();
+    @PutMapping("/uredi/{id}")
+    public RegistriraniKorisnik promijeniPodatke(@PathVariable("id") Long id, @AuthenticationPrincipal User u, @RequestBody ChangeKorisnickiPodaciDTO changeKorisnickiPodaciDTO) {
+        String novoKorisnickoIme = changeKorisnickiPodaciDTO.getKorisnickoIme();
+        String novaLozinka = changeKorisnickiPodaciDTO.getLozinka();
+        String noviAvatar = changeKorisnickiPodaciDTO.getAvatar();
 
         if(u == null) {
             throw new RequestDeniedException("Ne postoje podaci o autentikaciji");
         }
-        if(novoKorisnickoIme == null) {
-            throw new RequestDeniedException("Nije upisano novo korisničko ime");
+        if(novoKorisnickoIme != null) {
+            Optional<RegistriraniKorisnik> vecPostojeceKorisnickoImeKorisnik = regKorisnikService.findByKorisnickoIme(novoKorisnickoIme);
+            if(vecPostojeceKorisnickoImeKorisnik.isPresent()) {
+                throw new RequestDeniedException("Korisnicko ime " + novoKorisnickoIme + " je već zauzeto");
+            }
         }
-
-        Optional<RegistriraniKorisnik> korisnikPrekoId = regKorisnikService.findById(id);
-        Optional<RegistriraniKorisnik> korisnikPrekoAutentikacije = regKorisnikService.findByKorisnickoIme(u.getUsername());
-        Optional<RegistriraniKorisnik> vecPostojeceKorisnickoImeKorisnik = regKorisnikService.findByKorisnickoIme(novoKorisnickoIme);
-
-        autentikacijaKorisnika(korisnikPrekoId, korisnikPrekoAutentikacije);
-
-        if(vecPostojeceKorisnickoImeKorisnik.isPresent()) {
-            throw new RequestDeniedException("Korisnicko ime " + novoKorisnickoIme + " je već zauzeto");
-        }
-
-        return regKorisnikService.promijeniKorisnickoIme(korisnikPrekoId.get(), novoKorisnickoIme);
-    }
-
-    @PutMapping("/promijeni/lozinka/{id}")
-    public RegistriraniKorisnik promijeniLozinku(@PathVariable("id") Long id, @AuthenticationPrincipal User u, @RequestBody ChangeKorisnickiPodaciDTO changeKorisnickiPodaciDTO) {
-        String novaLozinka = changeKorisnickiPodaciDTO.getNovaLozinka();
-
-        if(u == null) {
-            throw new RequestDeniedException("Ne postoje podaci o autentikaciji");
-        }
-        if(novaLozinka == null) {
-            throw new RequestDeniedException("Nije upisana nova lozinka");
-        }
-        if(novaLozinka.length() < 5) {
+        if(novaLozinka != null && novaLozinka.length() < 5) {
             throw new RequestDeniedException("Lozinka mora imati bar 5 znakova");
         }
 
         Optional<RegistriraniKorisnik> korisnikPrekoId = regKorisnikService.findById(id);
         Optional<RegistriraniKorisnik> korisnikPrekoAutentikacije = regKorisnikService.findByKorisnickoIme(u.getUsername());
+
         autentikacijaKorisnika(korisnikPrekoId, korisnikPrekoAutentikacije);
 
-
-        return regKorisnikService.promijeniLozinku(korisnikPrekoId.get(), novaLozinka);
-    }
-
-    @PutMapping("/promijeni/avatar/{id}")
-    public RegistriraniKorisnik promijeniAvatar(@PathVariable("id") Long id, @AuthenticationPrincipal User u, @RequestBody ChangeKorisnickiPodaciDTO changeKorisnickiPodaciDTO) {
-        String noviAvatar = changeKorisnickiPodaciDTO.getNoviAvatar();
-
-        if(u == null) {
-            throw new RequestDeniedException("Ne postoje podaci o autentikaciji");
-        }
-        if(noviAvatar == null) {
-            throw new RequestDeniedException("Nije izabran novi avatar");
-        }
-
-        Optional<RegistriraniKorisnik> korisnikPrekoId = regKorisnikService.findById(id);
-        Optional<RegistriraniKorisnik> korisnikPrekoAutentikacije = regKorisnikService.findByKorisnickoIme(u.getUsername());
-        autentikacijaKorisnika(korisnikPrekoId, korisnikPrekoAutentikacije);
-
-        return regKorisnikService.promijeniAvatar(korisnikPrekoId.get(), noviAvatar);
+        return regKorisnikService.promijeniPodatke(korisnikPrekoId.get(), novoKorisnickoIme, novaLozinka, noviAvatar);
     }
 
     private void autentikacijaKorisnika(Optional<RegistriraniKorisnik> korisnikPrekoId, Optional<RegistriraniKorisnik> korisnikPrekoAutentikacije) {

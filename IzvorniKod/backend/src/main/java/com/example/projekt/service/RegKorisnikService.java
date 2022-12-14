@@ -21,13 +21,9 @@ public interface RegKorisnikService {
 
     Optional<RegistriraniKorisnik> findById(Long id);
 
-    public boolean verify(String verificationCode);
-
-    RegistriraniKorisnik promijeniKorisnickoIme(RegistriraniKorisnik registriraniKorisnik, String novoKorisnickoIme);
-
-    RegistriraniKorisnik promijeniLozinku(RegistriraniKorisnik registriraniKorisnik, String novaLozinka);
-
-    RegistriraniKorisnik promijeniAvatar(RegistriraniKorisnik registriraniKorisnik, String noviAvatar);
+    boolean verify(String verificationCode);
 
     List<RangiraniKorisnikDTO> dohvatiNajboljih10();
+
+    RegistriraniKorisnik promijeniPodatke(RegistriraniKorisnik registriraniKorisnik, String novoKorisnickoIme, String novaLozinka, String noviAvatar);
 }
