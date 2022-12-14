@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './cssFiles/index.css';
-import Home from './components/home/Home';
+import App from './components/App';
 import { BrowserRouter, Route, Routes, } from "react-router-dom";
 import Login from "./components/Login";
 import Profile from "./components/Profile"
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Register from "./components/Register"
+import Register from "./components/Register";
+import EditProfile from './components/EditProfile';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,10 +16,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<Home />} />
+        <Route index element={<App />} />
         <Route path="login" element={<Login />} />
         <Route path="profile" element={<Profile />} />
         <Route path="register" element ={<Register />} />
+        <Route path="editProfile" element ={<EditProfile />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
