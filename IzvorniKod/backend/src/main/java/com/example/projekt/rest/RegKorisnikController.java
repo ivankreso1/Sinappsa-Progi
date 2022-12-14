@@ -34,8 +34,8 @@ public class RegKorisnikController {
     }
 
     @PostMapping("registracija")
-    public void registriraj(@RequestBody CreateRegKorisnikDTO regKorisnikDTO, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
-        regKorisnikService.registriraj(regKorisnikDTO.getEmail(),regKorisnikDTO.getKorisnickoIme(), regKorisnikDTO.getIme(), regKorisnikDTO.getPrezime(), regKorisnikDTO.getLozinka(), regKorisnikDTO.getAvatar(), getSiteURL(request));
+    public RegistriraniKorisnik registriraj(@RequestBody CreateRegKorisnikDTO regKorisnikDTO, HttpServletRequest request) throws UnsupportedEncodingException, MessagingException {
+        return regKorisnikService.registriraj(regKorisnikDTO.getEmail(),regKorisnikDTO.getKorisnickoIme(), regKorisnikDTO.getIme(), regKorisnikDTO.getPrezime(), regKorisnikDTO.getLozinka(), regKorisnikDTO.getAvatar(), getSiteURL(request));
     }
 
     @GetMapping("/verify")

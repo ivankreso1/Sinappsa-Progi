@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Rank from './Rank';
-import "../../cssFiles/rank.css";
+import "../../cssFiles/home/rank.css";
+import "../../cssFiles/shared/shared.css";
 import configData from "../config.json";
 
 
@@ -28,7 +29,7 @@ class RankList extends Component {
     render() { 
         return (
             <React.Fragment>
-                <h1>Rank List</h1>
+                <h1 className='section-title section-title-secondary-color'>Rank List</h1>
                 <div className="rank-list-container">
                     {this.state.rankList.length > 0 ? 
                         this.state.rankList.map(user =>

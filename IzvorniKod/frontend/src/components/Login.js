@@ -14,7 +14,8 @@ export default function Login() {
     const [error, setError] = useState("")
     const navigate = useNavigate()
 
-    function handleInfoChange(e) {      
+    function handleInfoChange(e) {     
+        if (error) setError("") 
         setInfo(prevInfo => {
             return { ...prevInfo, [e.target.name]: e.target.value }     //posto ima vise inputova, treba ih se razlikovati po name-u => to je jedan od parametara koji je sacuvan u 
         })   
@@ -26,11 +27,16 @@ export default function Login() {
             korisnickoIme: info.userName,
             lozinka: info.password
         }
+
+        let headers = new Headers()
+        headers.append("Content-Type", "application/json")
+        headers.append('Authorization', 'Basic ' + window.btoa(info.userName + ":" + info.password));
+        console.log("HEADERS:")
+        console.log(headers)
+        
         const banana = {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: headers,
             body: JSON.stringify(data)
         }
 
@@ -45,13 +51,9 @@ export default function Login() {
             }
             else {
                 const personInfo = {
-                    avatar: data.avatar,
-                    brojPrimljenihRecenzija: data.brojPrimljenihRecenzija,
-                    email: data.email,
-                    ime: data.ime,
                     korisnickoIme: data.korisnickoIme,
-                    prezime: data.prezime,
-                    sumaPrimljenihRecenzija: data.sumaPrimljenihRecenzija
+                    lozinka: info.password,     //sprema se nehashana vrijednost
+                    id: data.id
                 }
                 localStorage.setItem("personInfo", JSON.stringify(personInfo))
                 //console.log("ovdje")

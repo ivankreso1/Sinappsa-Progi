@@ -1,0 +1,27 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: auto;
+}
+
+.home-page {
+  height: 100%;
+  overflow-y: auto;
+  
+}
+
+.home-page h1 {
+  text-align: center;
+  margin-top: 1%;
+}
+
+.body-wrapper {
+  display: grid;
+  grid-template-columns: 75% 25%;
+  margin: 0 10% 0 10%; /* Odmakne sve nekako malo u centar */
+}
+
+.body-wrapper-child {
+  margin: 0 5% 0 5%;    /* odmakne oglase i rang listu jedno od drugog */
+}

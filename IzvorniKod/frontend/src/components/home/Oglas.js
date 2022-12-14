@@ -1,9 +1,10 @@
 import React from "react";
 import avatars from "../../avatars";
-import "../../cssFiles/Oglas.css";
+import "../../cssFiles/home/oglas.css";
 
-export default function Oglas({ naslov, opis, kreator }) {
+export default function Oglas({ naslov, opis, kreator, trazimPomoc }) {
 
+    //console.log(trazimPomoc)
     return (
         <div className="oglas-container">
             <div className="oglas-korisnik-info-container">
@@ -11,14 +12,7 @@ export default function Oglas({ naslov, opis, kreator }) {
                     if (avatar.id === kreator.avatar) {
                         return <div className="oglas-korisnik-info">
                             <img id={avatar.id} src={avatar.src}
-                                style={
-                                    {
-                                        width: "40px",
-                                        height: "40px",
-                                        margin: "10px 5px",
-                                        borderRadius: "20px"
-                                    }
-                                } alt="alt"></img>
+                                 alt="alt"></img>
                             {kreator.korisnickoIme}</div>
 
                     }

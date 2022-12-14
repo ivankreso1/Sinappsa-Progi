@@ -1,0 +1,35 @@
+.filter-container {
+    display: grid;
+    border: 2px solid #adadad;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.form-filter {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    /* padding: 1%; */
+}
+
+.form-filter-item {
+    margin: 2% auto;
+    width: 90%;
+}
+
+.selected-filter {
+    background-color: greenyellow;
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.filter-smjer-radio {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-bottom: 1px solid gray;
+}
+
+.form-check{
+    margin-left: 10px;
+}
