@@ -19,7 +19,6 @@
                 jednom onda pokrenete backend, to ce obrisat bazu od tih Postman dijelova koje ste dodali (al ce se opet stvorit ovi tu iz data.sql tak da nece
                 bit skroz prazna tablica), i onda samo vratite na update da radite dalje s lijepom cistom bazom
 */
-
 delete from upit where id = -3;
 delete from upit where id = -4;
 delete from upit where id = -5;
@@ -77,7 +76,7 @@ insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, emai
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-3, 'markop', 'Marko', 'Prosenjak', '3', 'mp@fer.hr', '$2a$12$Ax6JajgkLV9vIsfsjDdKvuVn8GKh06LCUXl13IjFx7iQ/kxeMSYGm', 'false', 4, 9, true);  -- sifra = markopros
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-4, 'petarl', 'Petar', 'Lopović', '2', 'pl@fer.hr', '$2a$12$/kHrBqy4gH5XEUgr7Q9Jue0b9uFaTr/DM5cPkiR6opDOv1df1uf2a', 'false', 0, 0, true);   -- sifra = petarlopov
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-6, 'lucijat', 'Lucija', 'Toto', '1', 'lt@fer.hr', '$2a$10$nxYU1X0/oibYTqcAjelo0eL5a/wlHSkw47eMpl/LygbNnFjXzVDNa', 'false', 0, 0, true);     -- ova sifra je bbbbb, samo enkriptirano
-insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-7, 'tamarag', 'Tamara', 'Golub', '3', 'tg@fer.hr', 'pticagolub', 'false', 0, 0, true);
+insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-7, 'tamarag', 'Tamara', 'Golub', '3', 'bk53409@fer.hr', 'pticagolub', 'false', 0, 0, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-8, 'ivank8', 'Ivan', 'Krešo', '2', 'ivan8@fer.hr', 'ivanivan', 'false', 5, 12, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-9, 'ivank9', 'Ivan', 'Krešo', '2', 'ivan9@fer.hr', 'ivanivan', 'false', 4, 17, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-10, 'ivank10', 'Ivan', 'Krešo', '2', 'ivan10@fer.hr', 'ivanivan', 'false', 2, 10, true);

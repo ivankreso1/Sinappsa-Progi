@@ -57,4 +57,11 @@ public class KolegijServiceImpl implements KolegijService {
         }
         return kolegijRepository.findAll().stream().filter((kolegij) -> kolegij.getSmjer().equals(smjer)).collect(Collectors.toList());
     }
+    @Override
+    public void izbrisiKolegij(String ime) {
+        if (findByImeKolegija(ime).isEmpty()) {
+            throw new RequestDeniedException("Ne postoji kolegij koji želite obrisati");
+        }
+        kolegijRepository.deleteById(ime);
+    }
 }
