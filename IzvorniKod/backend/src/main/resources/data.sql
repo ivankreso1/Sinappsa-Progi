@@ -19,7 +19,6 @@
                 jednom onda pokrenete backend, to ce obrisat bazu od tih Postman dijelova koje ste dodali (al ce se opet stvorit ovi tu iz data.sql tak da nece
                 bit skroz prazna tablica), i onda samo vratite na update da radite dalje s lijepom cistom bazom
 */
-delete from upit where id = 7;
 delete from upit where id = -3;
 delete from upit where id = -4;
 delete from upit where id = -5;
