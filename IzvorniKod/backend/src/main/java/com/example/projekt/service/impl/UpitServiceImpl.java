@@ -4,11 +4,14 @@ import com.example.projekt.domain.Oglas;
 import com.example.projekt.domain.RegistriraniKorisnik;
 import com.example.projekt.domain.StanjeUpita;
 import com.example.projekt.domain.Upit;
+import com.example.projekt.rest.dto.CreateOcjenaDTO;
+import com.example.projekt.service.RegKorisnikService;
 import com.example.projekt.service.RequestDeniedException;
 import com.example.projekt.service.UpitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -24,6 +27,8 @@ public class UpitServiceImpl implements UpitService {
     private UpitRepository upitRepository;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private RegKorisnikService regKorisnikService;
 //    @Override
 //    public List<Upit> getUpiti() {
 //        return upitRepository.findAll();
@@ -88,5 +93,11 @@ public class UpitServiceImpl implements UpitService {
     public Upit promjeniStanjeUpita(Upit upit, StanjeUpita novoStanjeUpita){
         upit.setStanjeUpita(novoStanjeUpita);
         return upitRepository.save(upit);
+    }
+
+    @Override
+    public boolean ocijeniStudentPomagaca(CreateOcjenaDTO createOcjenaDTO, User user) {
+
+        return true;
     }
 }
