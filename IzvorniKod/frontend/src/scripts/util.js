@@ -11,9 +11,10 @@ Funkcije koje su namijenjene vanjskoj uporabi (dakle, one koje se mogu importati
     postData(url, data) -> šalje predani 'data' na server na lokaciju 'url'
     *postDataAuth(url, data) -> šalje predani 'data' na server na lokaciju 'url' uz uvijet da je korisnik prijavljen u sustav
     *putData(url, data) -> šalje predani 'data' na server na lokaciju 'url'
-    *putDataAuth(url, data) -> šalje predani 'data' na server na lokaciju 'url' uz uvijet da je korisnik prijavljen u sustav
+    putDataAuth(url, data) -> šalje predani 'data' na server na lokaciju 'url' uz uvijet da je korisnik prijavljen u sustav
     *deleteData(url, data) -> briše predani 'data' na server na lokaciju 'url'
     *deleteDataAuth(url, data) -> briše predani 'data' na server na lokaciju 'url' uz uvijet da je korisnik prijavljen u sustav
+    getPersonInfo() -> dohvaća podatke iz localstoragea za trenutno prijavljenog korisnika
 
 Napomena:   funkcije prefiksirane s '*' nisu još testirane; 
             sve ostale bi trebale raditi, ali bugovi su uvijek mogući, pa prijavljujte čudna ponašanja :)
@@ -146,6 +147,7 @@ function initOptions(method, auth, data) {
     if (auth === true) {
         const personInfo = getPersonInfo();
 
+        // console.log(`Basic ${personInfo.userName}:${personInfo.password}`);
         headers.append('Authorization', 'Basic ' + window.btoa(personInfo.userName + ":" + personInfo.password));
     }
 
@@ -162,11 +164,11 @@ function initOptions(method, auth, data) {
 }
 
 
-function getPersonInfo() {
+export function getPersonInfo() {
     const personInfo = localStorage.getItem(PERSON_INFO_KEY);
     // console.log("Person info: " + personInfo);
 
-    return personInfo ? personInfo : PERSON_INFO_TEMPLATE;
+    return personInfo ? JSON.parse(personInfo) : PERSON_INFO_TEMPLATE;
 }
 
 
