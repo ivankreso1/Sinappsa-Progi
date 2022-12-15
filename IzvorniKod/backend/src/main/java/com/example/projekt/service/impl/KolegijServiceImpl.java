@@ -43,7 +43,7 @@ public class KolegijServiceImpl implements KolegijService {
 
     @Override
     public Optional<Kolegij> findByImeKolegija(String nazivKolegija) {
-        return kolegijRepository.findById(nazivKolegija);
+        return kolegijRepository.findByIme(nazivKolegija);
     }
 
     @Override
