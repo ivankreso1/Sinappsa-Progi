@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import configData from "../../resources/config.json";
 import '../../cssFiles/home/home.css';
 import "../../cssFiles/shared/shared.css";
 import Filter from './Filter';
 import AdList from './AdList';
 import RankList from './RankList';
+import Navbar from './Navbar';
+import { getPersonInfo } from '../../scripts/util';
 
 
 function App() {
@@ -89,15 +90,12 @@ function App() {
     fetchNotFiltered()
     setCheckedRadioButton("")
   }
-  const navigate = useNavigate()
 
-  function goToLogin() {
-    navigate("/login")
-  }
+
 
   return (
     <div className="home-page">
-      <h1>Home page</h1>    {/* NavBar here! i onda on može imati u tipa lijevom kutu ime stranice: Home Page, Profile, Login, Register ,... ;) */}
+      <Navbar getPersonInfo={getPersonInfo}></Navbar>
       <div className='body-wrapper'>
         <div className='body-wrapper-child'>
           <h2 className='section-title section-title-primary-color'>Oglasi</h2>
@@ -108,7 +106,6 @@ function App() {
           <RankList key="rankList" />
         </div>
       </div>
-      <button onClick={goToLogin}> Login </button>    {/* Ovo će ići u NavBar */}
     </div>
   );
 }

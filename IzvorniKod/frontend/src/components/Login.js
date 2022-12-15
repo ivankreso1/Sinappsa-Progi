@@ -45,7 +45,7 @@ export default function Login() {
 
                 localStorage.setItem(PERSON_INFO_KEY, JSON.stringify(personInfo));
                 
-                navigate("/profile")
+                navigate("/")
             }
         })
     }
