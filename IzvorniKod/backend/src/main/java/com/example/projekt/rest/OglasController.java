@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.example.projekt.domain.*;
 import com.example.projekt.rest.dto.CreateOglasDTO;
+import com.example.projekt.rest.dto.OglasUpitUpitOglasDTO;
 import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.NotFoundException;
 import com.example.projekt.service.RequestDeniedException;
@@ -89,5 +90,20 @@ public class OglasController {
         if (user == null) {
             throw new RequestDeniedException("Nema podataka o autentikaciji");
         }
+    }
+
+    @GetMapping("/aktivni/{idKreatora}")
+    public List<OglasUpitUpitOglasDTO> getAktivniKorisnikoviOglasi(@PathVariable Long idKreatora) {
+        return oglasService.aktivniOglasiUpiti(idKreatora, true);
+    }
+
+    @GetMapping("/neaktivni/{idKreatora}")
+    public List<OglasUpitUpitOglasDTO> getNeaktivniKorisnikoviOglasi(@PathVariable Long idKreatora) {
+        return oglasService.aktivniOglasiUpiti(idKreatora, false);
+    }
+
+    @PutMapping("{id}/promjeniAktivnost")
+    public Oglas switchAktivnost(@PathVariable Long id) {
+        return oglasService.promijeniAktivnost(id);
     }
 }

@@ -1,14 +1,17 @@
 package com.example.projekt.service.impl;
 
 import com.example.projekt.dao.OglasRepository;
+import com.example.projekt.dao.UpitRepository;
 import com.example.projekt.domain.*;
 import com.example.projekt.rest.dto.CreateOglasDTO;
+import com.example.projekt.rest.dto.OglasUpitUpitOglasDTO;
 import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.*;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +28,10 @@ public class OglasServiceImpl implements OglasService {
 
     @Autowired
     private KolegijService kolegijService;
+    @Autowired
+    private UpitRepository upitRepository;
+    @Autowired
+    private UpitService upitService;
 
     @Override
     public List<Oglas> listSveOglase() {
@@ -34,6 +41,11 @@ public class OglasServiceImpl implements OglasService {
     @Override
     public List<Oglas> listSvihAktivnihOglasa() {
         return oglasRepository.findAllByAktivan(true);
+    }
+
+    @Override
+    public List<Oglas> listSvihNeaktivnihOglasa() {
+        return oglasRepository.findAllByAktivan(false);
     }
 
     @Override
@@ -157,5 +169,56 @@ public class OglasServiceImpl implements OglasService {
         }
 
         return true;
+    }
+
+    public List<OglasUpitUpitOglasDTO> aktivniOglasiUpiti(Long idKreatora, boolean aktivnost) {
+        List<OglasUpitUpitOglasDTO> oglasiUpiti = new ArrayList<>();
+        List<Oglas> aktivniOglasi = new ArrayList<>();
+        if (aktivnost) {
+            aktivniOglasi = listSvihAktivnihOglasa();
+        } else {
+            aktivniOglasi = listSvihNeaktivnihOglasa();
+        }
+        Optional<RegistriraniKorisnik> kreator = regKorisnikService.findById(idKreatora);
+        List<Oglas> korisnikoviAktivni = new ArrayList<>();
+        if (kreator.isEmpty()) {
+            throw new RequestDeniedException("Ne postoji kreator oglasa!");
+        }
+        for(Oglas aktivniOglas : aktivniOglasi) {
+            if (aktivniOglas.getKreator() == kreator.get()) {
+                korisnikoviAktivni.add(aktivniOglas);
+            }
+        }
+        if (korisnikoviAktivni == null) {
+            throw new RequestDeniedException("Korisnik nema ni jedan aktivni oglas!");
+        }
+        for (Oglas korisnikovAktivan: korisnikoviAktivni) {
+            List<Upit> upitiZaOglas = upitService.listUpitByOglas(korisnikovAktivan);
+            OglasUpitUpitOglasDTO jedanOglas = new OglasUpitUpitOglasDTO();
+            jedanOglas.setAktivan(aktivnost);
+            jedanOglas.setId(korisnikovAktivan.getId());
+            jedanOglas.setKategorija(korisnikovAktivan.getKategorija());
+            jedanOglas.setKolegij(korisnikovAktivan.getKolegij());
+            jedanOglas.setNaslov(korisnikovAktivan.getNaslov());
+            jedanOglas.setKreator(korisnikovAktivan.getKreator());
+            jedanOglas.setOpis(korisnikovAktivan.getOpis());
+            jedanOglas.setTrazimPomoc(korisnikovAktivan.isTrazimPomoc());
+            jedanOglas.setListaUpita(upitiZaOglas);
+            oglasiUpiti.add(jedanOglas);
+        }
+        return oglasiUpiti;
+    }
+
+    public Oglas promijeniAktivnost(Long id) {
+        Optional<Oglas> oglas = dohvatiOglasPoId(id);
+        if (oglas.isEmpty()) {
+            throw new RequestDeniedException("Ne postoji oglasa!");
+        }
+        if (oglas.get().isAktivan()) {
+            oglas.get().setAktivan(false);
+        } else {
+            oglas.get().setAktivan(true);
+        }
+        return oglasRepository.save(oglas.get());
     }
 }
