@@ -1,15 +1,16 @@
 package com.example.projekt.rest;
 
 import com.example.projekt.domain.*;
+import com.example.projekt.rest.dto.CreateOcjenaDTO;
 import com.example.projekt.rest.dto.CreateUpitDTO;
-import com.example.projekt.service.OglasService;
-import com.example.projekt.service.RegKorisnikService;
-import com.example.projekt.service.RequestDeniedException;
-import com.example.projekt.service.UpitService;
+import com.example.projekt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.security.core.userdetails.User;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
@@ -73,5 +74,17 @@ public class UpitController {
             throw new RequestDeniedException("Nema upita sa id-om: " + idUpita);
         }
         return upitService.promjeniStanjeUpita(upit.get(), stanjeUpita);
+    }
+
+    @PutMapping("/ocijeni")
+    @Secured("ROLE_STUDENT_KORISNIK")
+    public ResponseEntity<Void> ocijeniStudentPomagaca(@RequestBody CreateOcjenaDTO createOcjenaDTO, @AuthenticationPrincipal User user) {
+        if (user == null) {
+            throw new RequestDeniedException("Nema podataka o autentikaciji");
+        }
+        if (upitService.ocijeniStudentPomagaca(createOcjenaDTO, user)) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        throw new NotFoundException("Ne postoj upit s id: " + createOcjenaDTO.getIdUpita());
     }
 }

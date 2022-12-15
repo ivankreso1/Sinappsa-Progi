@@ -26,4 +26,6 @@ public interface RegKorisnikService {
     List<RangiraniKorisnikDTO> dohvatiNajboljih10();
 
     RegistriraniKorisnik promijeniPodatke(RegistriraniKorisnik registriraniKorisnik, String novoKorisnickoIme, String novaLozinka, String noviAvatar);
+
+    void ocijeni (RegistriraniKorisnik registriraniKorisnik, int ocjena);
 }
