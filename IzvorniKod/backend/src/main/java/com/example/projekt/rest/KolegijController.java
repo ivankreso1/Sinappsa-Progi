@@ -37,9 +37,4 @@ public class KolegijController {
     public List<Kolegij> getKolegijiPoSmjeru(@PathVariable String smjer) {
         return kolegijService.getKolegijiPoSmjeru(smjer);
     }
-
-    @DeleteMapping("/{ime}")
-    public void deleteKolegij(@PathVariable String ime) {
-        kolegijService.izbrisiKolegij(ime);
-    }
 }

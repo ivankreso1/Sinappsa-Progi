@@ -6,6 +6,8 @@ import javax.persistence.*;
 public class Kolegij {
 
     @Id
+    @GeneratedValue
+    private Long id;
     @Column(nullable = false)
     private String ime;
 
