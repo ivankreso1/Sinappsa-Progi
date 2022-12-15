@@ -97,6 +97,41 @@ public class UpitServiceImpl implements UpitService {
 
     @Override
     public boolean ocijeniStudentPomagaca(CreateOcjenaDTO createOcjenaDTO, User user) {
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+
+        if (createOcjenaDTO.getIdUpita() == null) {
+            throw new RequestDeniedException("Id polje mora biti ispunjeno");
+        }
+        if (createOcjenaDTO.getOcjena() < 1 || createOcjenaDTO.getOcjena() > 5) {
+            throw new RequestDeniedException("Ocjena mora biti od 1 do 5");
+        }
+
+        if (!upitRepository.findById(createOcjenaDTO.getIdUpita()).isPresent()) {
+            return false;
+        }
+        Upit upit = upitRepository.findById(createOcjenaDTO.getIdUpita()).get();
+        Oglas oglas = upit.getOglas();
+
+        if (upit.getStanjeUpita() != StanjeUpita.CEKA_OCJENJIVANJE) {
+            throw new RequestDeniedException("Stanje upita vam ne dozvoljava ocjenjivanje trenutno");
+        }
+        if (oglas.isTrazimPomoc()) {
+            if (oglas.getKreator().equals(korisnikPoUsername)) {
+                // ocijeni
+                regKorisnikService.ocijeni(oglas.getKreator(), createOcjenaDTO.getOcjena());
+            } else {
+                throw new RequestDeniedException("Nemate prava ocijeniti");
+            }
+        } else {
+            if (upit.getAutorUpita().equals(korisnikPoUsername)) {
+                // ocijeni
+                regKorisnikService.ocijeni(upit.getAutorUpita(), createOcjenaDTO.getOcjena());
+            } else {
+                throw new RequestDeniedException("Nemate prava ocijeniti");
+            }
+        }
+        upit.setStanjeUpita(StanjeUpita.PRIHVACEN);
+        upitRepository.save(upit);
 
         return true;
     }

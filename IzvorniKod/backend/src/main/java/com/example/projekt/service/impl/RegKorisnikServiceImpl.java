@@ -172,4 +172,19 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
         }
         return regKorisnikRepository.save(registriraniKorisnik);
     }
+
+    @Override
+    public boolean ocijeni (RegistriraniKorisnik registriraniKorisnik, int ocjena) {
+        if (registriraniKorisnik == null) {
+            return false;
+        }
+
+        int sumaPrimljenihRecenzija = registriraniKorisnik.getSumaPrimljenihRecenzija();
+        int brojPrimljenihRecenzija = registriraniKorisnik.getBrojPrimljenihRecenzija();
+        registriraniKorisnik.setSumaPrimljenihRecenzija(sumaPrimljenihRecenzija + ocjena);
+        registriraniKorisnik.setBrojPrimljenihRecenzija(brojPrimljenihRecenzija + 1);
+        regKorisnikRepository.save(registriraniKorisnik);
+
+        return true;
+    }
 }
