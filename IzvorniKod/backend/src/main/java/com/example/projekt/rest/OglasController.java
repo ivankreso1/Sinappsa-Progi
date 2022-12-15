@@ -102,4 +102,8 @@ public class OglasController {
         return oglasService.aktivniOglasiUpiti(idKreatora, false);
     }
 
+    @PutMapping("{id}/promjeniAktivnost")
+    public Oglas switchAktivnost(@PathVariable Long id) {
+        return oglasService.promijeniAktivnost(id);
+    }
 }

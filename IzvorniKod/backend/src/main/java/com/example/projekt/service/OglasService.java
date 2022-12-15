@@ -34,4 +34,6 @@ public interface OglasService {
     List<Oglas> filtrirajOglase(Smjer smjer, Kategorija kategorija, String kolegij_ime);
 
     List<OglasUpitUpitOglasDTO> aktivniOglasiUpiti(Long idKreatora, boolean aktivnost);
+
+    Oglas promijeniAktivnost(Long id);
 }

@@ -208,4 +208,17 @@ public class OglasServiceImpl implements OglasService {
         }
         return oglasiUpiti;
     }
+
+    public Oglas promijeniAktivnost(Long id) {
+        Optional<Oglas> oglas = dohvatiOglasPoId(id);
+        if (oglas.isEmpty()) {
+            throw new RequestDeniedException("Ne postoji oglasa!");
+        }
+        if (oglas.get().isAktivan()) {
+            oglas.get().setAktivan(false);
+        } else {
+            oglas.get().setAktivan(true);
+        }
+        return oglasRepository.save(oglas.get());
+    }
 }
