@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import avatars from "../avatars";
-import configData from "../resources/config.json";
-
+import { PERSON_INFO_KEY, PERSON_INFO_TEMPLATE, putDataAuth } from "../scripts/util";
 
 export default function EditProfile() {
 
@@ -37,20 +36,8 @@ export default function EditProfile() {
         if (editInfo.avatar) data.avatar = editInfo.avatar
         if (editInfo.lozinka) data.lozinka = editInfo.lozinka
 
-        const httpData = {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }
-        //console.log(editInfo.korisnickoIme)
-        //console.log(editInfo.lozinka)
-        console.log(data)
-        console.log(httpData)
 
-        fetch(`${configData.hostname}/korisnik/uredi/${currentInfo.id}`, httpData)
-        .then(res => res.json())
+        putDataAuth("korisnik/uredi/" + currentInfo.id, data) 
         .then(data => {
             console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
             if (data.error) {
@@ -59,12 +46,13 @@ export default function EditProfile() {
                 setError(data.message)
             }
             else {
-                const personInfo = {
-                    korisnickoIme: data.korisnickoIme,
-                    lozinka: !editInfo.lozinka ? currentInfo.lozinka : editInfo.lozinka,     //sprema se nehashana vrijednost
-                    id: data.id
-                }
-                localStorage.setItem("personInfo", JSON.stringify(personInfo))
+                const personInfo = PERSON_INFO_TEMPLATE
+
+                personInfo.userName = !editInfo.korisnickoIme ? currentInfo.userName : editInfo.korisnickoIme
+                personInfo.password = !editInfo.lozinka ? currentInfo.password : editInfo.lozinka     //sprema se nehashana vrijednost
+                personInfo.id = currentInfo.id
+                
+                localStorage.setItem(PERSON_INFO_KEY, JSON.stringify(personInfo))
                 //console.log("ovdje")
                 navigate("/profile")
             }
@@ -95,7 +83,7 @@ export default function EditProfile() {
                 }
             }>
                 <h1> Uredi profil </h1>
-                <span> Unesite novo korisničko ime, lozinku i/ili avatar.</span>
+                <span> Unesite novo korisničko ime, lozinku i/ili avatar. Podaci koje ne upišete ostaju nepromijenjeni.</span>
                 <Form
                     className="form"
                     onSubmit={handleSubmit}
@@ -145,7 +133,7 @@ export default function EditProfile() {
                     type="submit"
                     disabled={(!editInfo.korisnickoIme &&
                         !editInfo.avatar &&
-                        !editInfo.lozinka) ? true : false}> Submit </Button>
+                        !editInfo.lozinka) ? true : false}> Spremi </Button>
             </Form>
             <div className="error-message">
                     {error}
