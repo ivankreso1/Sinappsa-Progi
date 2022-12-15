@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Register from "./components/Register";
 import EditProfile from './components/EditProfile';
+import CreateAd from './components/CreateAd';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,6 +22,7 @@ root.render(
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element ={<Register />} />
         <Route path="/editProfile" element ={<EditProfile />} />
+        <Route path="/create-ad" element ={<CreateAd />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
