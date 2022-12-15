@@ -12,13 +12,15 @@ function App() {
 
   const [kolegiji, setKolegiji] = useState([""])
   const [oglasi, setOglasi] = useState([])
+  const [checkedRadioButton, setCheckedRadioButton] = useState("")
   const [formInfo, setFormInfo] = useState({
     smjer: "",
     kolegij: "",
     kategorija: ""
   })
 
-  useEffect(() => {
+
+  function fetchNotFiltered() {
     fetch(`${configData.hostname}/kolegiji`)
       .then(res => res.json()
         .then(data => {
@@ -31,6 +33,10 @@ function App() {
         // console.log(data)
         setOglasi(data)
       })
+  } /*ovaj dio je izdvojen u funkciju jer se koristi u useeffectu i kada se očiste opcije filtriranja (resetFilterOption)*/ 
+
+  useEffect(() => {
+    fetchNotFiltered()
   }, [])
 
   //u ovoj funkciji treba fetchati sve kolegije s backenda koji postoje u bazi podataka
@@ -71,8 +77,18 @@ function App() {
     setFormInfo(prevInfo => {
       return { ...prevInfo, [e.target.name]: e.target.value }
     })
+    setCheckedRadioButton(e.target.value)
   }
 
+  function resetFilterOption() {
+    setFormInfo({
+      smjer: "",
+      kolegij: "",
+      kategorija: ""
+    })
+    fetchNotFiltered()
+    setCheckedRadioButton("")
+  }
   const navigate = useNavigate()
 
   function goToLogin() {
@@ -85,7 +101,7 @@ function App() {
       <div className='body-wrapper'>
         <div className='body-wrapper-child'>
           <h2 className='section-title section-title-primary-color'>Oglasi</h2>
-          <Filter key="filter" kolegiji={kolegiji} formInfo={formInfo} onFormSubmit={(e) => handleFormSubmit(e)} onFormInfo={(e) => changeFormInfo(e)} onDropDownClick={(e) => optionDropDownClick(e)} />
+          <Filter key="filter" kolegiji={kolegiji} formInfo={formInfo} checkedRadioButton = {checkedRadioButton} resetFilterOption={resetFilterOption} onFormSubmit={(e) => handleFormSubmit(e)} onFormInfo={(e) => changeFormInfo(e)} onDropDownClick={(e) => optionDropDownClick(e)} />
           <AdList key="adList" oglasi={oglasi} />
         </div>
         <div className='body-wrapper-child'>

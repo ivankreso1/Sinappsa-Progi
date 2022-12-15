@@ -21,12 +21,12 @@ class Filter extends Component {
                 <Form key="form" className="form-filter" onSubmit={this.props.onFormSubmit}>
                     <div className='form-filter-item'>
                         <Form.Group key="g1" className="filter-smjer-radio">Smjer:
-                            <Form.Check type="radio" label="R" name="smjer" value="R" isValid={formInfo.smjer === "R" ? true : false} onClick={this.props.onFormInfo}/>
-                            <Form.Check type="radio" label="E" name="smjer" value="E" isValid={formInfo.smjer === "E" ? true : false} onClick={this.props.onFormInfo}/>
+                            <Form.Check type="radio" label="R" name="smjer" value="R" isValid={formInfo.smjer === "R" ? true : false} onChange={this.props.onFormInfo} checked={this.props.checkedRadioButton === "R" ? true : false} />  {/*stavljen onChange umjesto onClick kako bi se riješio "You provided 'checked' prop to a form field without onChange handler" error u konzoli */}
+                            <Form.Check type="radio" label="E" name="smjer" value="E" isValid={formInfo.smjer === "E" ? true : false} onChange={this.props.onFormInfo} checked={this.props.checkedRadioButton === "E" ? true : false} />   {/*stavljen onChange umjesto onClick kako bi se riješio "You provided 'checked' prop to a form field without onChange handler" error u konzoli */}
                         </Form.Group>
                         {/* {formInfo.smjer === "" ? "" : <h6 className='selected-filter'>{formInfo.smjer}</h6>} */}
                     </div>
-                    <div className="form-filter-item">
+                    <div className="form-filter-item">  
                         <DropdownButton key="db1" title="Kolegiji" variant={!formInfo.kolegij ? "danger" : "success"} /*onSelect={dohvatiKolegije}*/>
                             {this.props.kolegiji.map(kolegij => {
                                 return <DropdownItem onClick={this.props.onDropDownClick} name="kolegij">{kolegij.ime}</DropdownItem>
@@ -52,6 +52,12 @@ class Filter extends Component {
                                 !formInfo.kategorija && !formInfo.kolegij && !formInfo.smjer
                             }
                         >Filtriraj</Button>
+                        <Button key="btn2"
+                            disabled={
+                                !formInfo.kategorija && !formInfo.kolegij && !formInfo.smjer
+                            }
+                            onClick={this.props.resetFilterOption}
+                        >Očisti filtere</Button>
                     </div>
                 </Form>
             </div>
