@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Form, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { postData } from "../scripts/util";
 import avatars from "../avatars";
-import configData from "./config.json";
 
 /*
 Treba postojati nekakva procedura nakon sto se s backenda dohvate podaci - treba se pratiti je li forma dobro ispunjena => ako je, onda se preusmjerava na home page i cuvaju se upisani podaci
@@ -35,6 +35,7 @@ export default function Register() {
 
     function handleSubmit(e) {      //ovdje ide post zahtjev
         e.preventDefault()
+        
         const data = {
             korisnickoIme: registerInfo.korisnickoIme,
             email: registerInfo.email,
@@ -44,21 +45,13 @@ export default function Register() {
             avatar: registerInfo.avatar,
 
         }
-        const method = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }
 
-        fetch(`${configData.hostname}/korisnik/registracija`, method)
-        .then(res => res.json())
+        postData("korisnik/registracija", data)
         .then(data => {
-            console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
+            // console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
             if (data.error) {
                 //console.log("U error")
-                console.log(data.message)
+                // console.log(data.message)
                 setError(data.message)
             }
             else {
