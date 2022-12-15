@@ -34,7 +34,7 @@ public class KolegijServiceImpl implements KolegijService {
         } else {
             throw new RequestDeniedException("Smjer mora biti E ili R");
         }
-        Optional<Kolegij> vecPostojeci = kolegijRepository.findById(nazivKolegija);
+        Optional<Kolegij> vecPostojeci = kolegijRepository.findByIme(nazivKolegija);
         if(vecPostojeci.isPresent()) {
             throw new RequestDeniedException("Vec postoji kolegij s tim imenom");
         }
@@ -56,12 +56,5 @@ public class KolegijServiceImpl implements KolegijService {
             throw new RequestDeniedException("Smjer mora biti E ili R");
         }
         return kolegijRepository.findAll().stream().filter((kolegij) -> kolegij.getSmjer().equals(smjer)).collect(Collectors.toList());
-    }
-    @Override
-    public void izbrisiKolegij(String ime) {
-        if (findByImeKolegija(ime).isEmpty()) {
-            throw new RequestDeniedException("Ne postoji kolegij koji želite obrisati");
-        }
-        kolegijRepository.deleteById(ime);
     }
 }
