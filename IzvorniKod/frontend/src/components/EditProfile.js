@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import avatars from "../avatars";
-import configData from "./config.json";
-
+import configData from "../resources/config.json";
 
 
 export default function EditProfile() {
