@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './cssFiles/index.css';
-import App from './components/home/Home';
+import Home from './components/home/Home';
 import { BrowserRouter, Route, Routes, } from "react-router-dom";
 import Login from "./components/Login";
 import Profile from "./components/Profile"
@@ -16,11 +16,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<App />} />
-        <Route path="login" element={<Login />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="register" element ={<Register />} />
-        <Route path="editProfile" element ={<EditProfile />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/register" element ={<Register />} />
+        <Route path="/editProfile" element ={<EditProfile />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
