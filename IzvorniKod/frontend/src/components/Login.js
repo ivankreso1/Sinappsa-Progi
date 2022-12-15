@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Card } from "react-bootstrap";
-import { postData } from "../scripts/util";
+import { PERSON_INFO_KEY, PERSON_INFO_TEMPLATE, postData } from "../scripts/util";
 import "../cssFiles/login.css"
-// import configData from "../resources/config.json";
 
 export default function Login() {
 
@@ -29,38 +28,23 @@ export default function Login() {
             lozinka: info.password
         }
 
-        // let headers = new Headers()
-        // headers.append("Content-Type", "application/json")
-        // headers.append('Authorization', 'Basic ' + window.btoa(info.userName + ":" + info.password));
-        // console.log("HEADERS:")
-        // console.log(headers)
-        
-        // const banana = {
-        //     method: "POST",
-        //     headers: headers,
-        //     body: JSON.stringify(data)
-        // }
-
-
-        // fetch(`${configData.hostname}/korisnik/prijava`, banana)
-        // .then(res => res.json())
-
         postData("korisnik/prijava", data)  // Dakle ovdje nejde postDataAuth jer onda baca Unauthorized
         .then(data => {
-            console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
+            // console.log(data)   //ne smije pisati console.log("Data: " + data) jer se onda ne ispise data kak se spada
             if (data.error) {
                 //console.log("U error")
-                console.log(data.message)
+                // console.log(data.message)
                 setError(data.message)
             }
             else {
-                const personInfo = {
-                    korisnickoIme: data.korisnickoIme,
-                    lozinka: info.password,     //sprema se nehashana vrijednost
-                    id: data.id
-                }
-                localStorage.setItem("personInfo", JSON.stringify(personInfo))
-                //console.log("ovdje")
+                const personInfo = PERSON_INFO_TEMPLATE;
+
+                personInfo.userName = info.userName;
+                personInfo.password = info.password;
+                personInfo.id = data.id;
+
+                localStorage.setItem(PERSON_INFO_KEY, JSON.stringify(personInfo));
+                
                 navigate("/profile")
             }
         })
