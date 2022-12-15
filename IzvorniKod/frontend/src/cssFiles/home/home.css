@@ -8,7 +8,7 @@ html, body {
 .home-page {
   height: 100%;
   overflow-y: auto;
-  
+  min-height: 100vh;  /*s ovime je popravljen slučaj kada nema oglasa za prikaz - onda bi dio stranice na dnu bio bijel, ovako je cijelo vrijeme plavo*/
 }
 
 .home-page h1 {
@@ -19,7 +19,7 @@ html, body {
 .body-wrapper {
   display: grid;
   grid-template-columns: 75% 25%;
-  margin: 0 10% 0 10%; /* Odmakne sve nekako malo u centar */
+  margin: 2% 10% 0 10%; /* Odmakne sve nekako malo u centar */
 }
 
 .body-wrapper-child {
