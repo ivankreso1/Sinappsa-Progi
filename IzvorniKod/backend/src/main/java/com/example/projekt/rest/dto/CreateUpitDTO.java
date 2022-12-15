@@ -1,4 +1,3 @@
-// ovo mozda ni ne treba --> diskutirati s ostalima
 package com.example.projekt.rest.dto;
 
 public class CreateUpitDTO {

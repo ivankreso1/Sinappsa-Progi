@@ -47,7 +47,7 @@ public class OglasServiceImpl implements OglasService {
         Kolegij kolegij;
         Kategorija kategorija = oglasDTO.getKategorija();
         Optional<RegistriraniKorisnik> postojiKorisnik = regKorisnikService.findByKorisnickoIme(user.getUsername());
-        Optional<Kolegij> postojiKolegij = kolegijService.findByImeKolegija(oglasDTO.getKolegij_ime());
+        Optional<Kolegij> postojiKolegijSImenom = kolegijService.findByImeKolegija(oglasDTO.getKolegij_ime());
 
         if (!postojiKorisnik.isPresent()) {
             throw new NotFoundException("Ne postoji korisnik s korisničkim imenom: " + user.getUsername());
@@ -60,10 +60,10 @@ public class OglasServiceImpl implements OglasService {
         if (oglasDTO.getNaslov().isBlank() || oglasDTO.getOpis().isBlank()) {
             throw new RequestDeniedException("Polja ne smiju biti prazna");
         }
-        if (!postojiKolegij.isPresent()) {
+        if (!postojiKolegijSImenom.isPresent()) {
             throw new NotFoundException("Ne postoji kolegij s imenom: " + oglasDTO.getKolegij_ime());
         } else {
-            kolegij = postojiKolegij.get();
+            kolegij = postojiKolegijSImenom.get();
         }
         Oglas oglas = new Oglas(oglasDTO.getNaslov(), oglasDTO.getOpis(), kolegij, kategorija, registriraniKorisnik, true, oglasDTO.isTrazimPomoc());
 
