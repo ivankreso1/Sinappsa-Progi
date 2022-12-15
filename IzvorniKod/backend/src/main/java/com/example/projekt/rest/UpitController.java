@@ -7,6 +7,7 @@ import com.example.projekt.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.userdetails.User;
@@ -76,6 +77,7 @@ public class UpitController {
     }
 
     @PutMapping("/ocijeni")
+    @Secured("ROLE_STUDENT_KORISNIK")
     public ResponseEntity<Void> ocijeniStudentPomagaca(@RequestBody CreateOcjenaDTO createOcjenaDTO, @AuthenticationPrincipal User user) {
         if (user == null) {
             throw new RequestDeniedException("Nema podataka o autentikaciji");
