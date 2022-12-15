@@ -172,4 +172,14 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
         }
         return regKorisnikRepository.save(registriraniKorisnik);
     }
+
+    @Override
+    public void ocijeni (RegistriraniKorisnik registriraniKorisnik, int ocjena) {
+        int sumaPrimljenihRecenzija = registriraniKorisnik.getSumaPrimljenihRecenzija();
+        int brojPrimljenihRecenzija = registriraniKorisnik.getBrojPrimljenihRecenzija();
+        registriraniKorisnik.setSumaPrimljenihRecenzija(sumaPrimljenihRecenzija + ocjena);
+        registriraniKorisnik.setBrojPrimljenihRecenzija(brojPrimljenihRecenzija + 1);
+
+        regKorisnikRepository.save(registriraniKorisnik);
+    }
 }

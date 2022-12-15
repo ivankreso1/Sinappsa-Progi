@@ -4,11 +4,14 @@ import com.example.projekt.domain.Oglas;
 import com.example.projekt.domain.RegistriraniKorisnik;
 import com.example.projekt.domain.StanjeUpita;
 import com.example.projekt.domain.Upit;
+import com.example.projekt.rest.dto.CreateOcjenaDTO;
+import com.example.projekt.service.RegKorisnikService;
 import com.example.projekt.service.RequestDeniedException;
 import com.example.projekt.service.UpitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -24,6 +27,8 @@ public class UpitServiceImpl implements UpitService {
     private UpitRepository upitRepository;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private RegKorisnikService regKorisnikService;
 //    @Override
 //    public List<Upit> getUpiti() {
 //        return upitRepository.findAll();
@@ -88,5 +93,42 @@ public class UpitServiceImpl implements UpitService {
     public Upit promjeniStanjeUpita(Upit upit, StanjeUpita novoStanjeUpita){
         upit.setStanjeUpita(novoStanjeUpita);
         return upitRepository.save(upit);
+    }
+
+    @Override
+    public boolean ocijeniStudentPomagaca(CreateOcjenaDTO createOcjenaDTO, User user) {
+        if (createOcjenaDTO.getIdUpita() == null) {
+            throw new RequestDeniedException("Id polje mora biti ispunjeno");
+        }
+        if (!upitRepository.findById(createOcjenaDTO.getIdUpita()).isPresent()) {
+            return false;
+        }
+        if (createOcjenaDTO.getOcjena() < 1 || createOcjenaDTO.getOcjena() > 5) {
+            throw new RequestDeniedException("Ocjena mora biti od 1 do 5");
+        }
+        Upit upit = upitRepository.findById(createOcjenaDTO.getIdUpita()).get();
+        Oglas oglas = upit.getOglas();
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+
+        if (upit.getStanjeUpita() != StanjeUpita.CEKA_OCJENJIVANJE) {
+            throw new RequestDeniedException("Stanje upita vam ne dozvoljava ocjenjivanje trenutno");
+        }
+        if (oglas.isTrazimPomoc()) {
+            if (oglas.getKreator().equals(korisnikPoUsername)) {
+                regKorisnikService.ocijeni(oglas.getKreator(), createOcjenaDTO.getOcjena());
+            } else {
+                throw new RequestDeniedException("Nemate prava ocijeniti");
+            }
+        } else {
+            if (upit.getAutorUpita().equals(korisnikPoUsername)) {
+                regKorisnikService.ocijeni(upit.getAutorUpita(), createOcjenaDTO.getOcjena());
+            } else {
+                throw new RequestDeniedException("Nemate prava ocijeniti");
+            }
+        }
+        upit.setStanjeUpita(StanjeUpita.PRIHVACEN);
+        upitRepository.save(upit);
+
+        return true;
     }
 }
