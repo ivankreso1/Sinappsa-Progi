@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Button, Form, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import avatars from "../avatars";
-import { PERSON_INFO_KEY, PERSON_INFO_TEMPLATE, putDataAuth } from "../scripts/util";
+import { PERSON_INFO_KEY, PERSON_INFO_TEMPLATE, putDataAuth, getPersonInfo } from "../scripts/util";
+import Navbar from './home/Navbar';
+import '../cssFiles/editProfile.css';
 
 export default function EditProfile() {
 
@@ -70,7 +72,8 @@ export default function EditProfile() {
 
 
     return (
-        <div className="container">
+        <div className="editContainer">
+            <Navbar getPersonInfo={getPersonInfo}></Navbar>
             <Card style={
                 {
                     boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
@@ -79,6 +82,7 @@ export default function EditProfile() {
                     display: "flex",
                     alignContent: "center",
                     alignItems: "center",
+                    alignSelf: "center",
                     borderRadius: "10px"
                 }
             }>
