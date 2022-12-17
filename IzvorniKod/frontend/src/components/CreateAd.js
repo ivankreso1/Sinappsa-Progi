@@ -1,15 +1,7 @@
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  DropdownButton,
-  Form,
-} from "react-bootstrap";
-import DropdownItem from "react-bootstrap/esm/DropdownItem";
+import { Button, ButtonGroup, Card, Form } from "react-bootstrap";
 import React, { useState } from "react";
-import configData from "../resources/config.json";
 import Navbar from "./home/Navbar";
-import { getPersonInfo } from "../scripts/util";
+import { getData, getPersonInfo, postDataAuth } from "../scripts/util";
 
 export default function CreateAd() {
   const formStyle = {
@@ -35,11 +27,9 @@ export default function CreateAd() {
   ];
 
   React.useEffect(() => {
-    fetch(`${configData.hostname}/kolegiji`).then((res) =>
-      res.json().then((data) => {
-        setKolegiji(data);
-      })
-    );
+    getData("/kolegiji").then((data) => {
+      setKolegiji(data);
+    });
   }, []);
 
   function handleAdChange(event) {
@@ -52,14 +42,21 @@ export default function CreateAd() {
     event.preventDefault();
 
     const data = {
-      radnja: ad.radnja,
-      kolegij: ad.kolegij,
-      kategorija: ad.kategorija,
       naslov: ad.naslov,
       opis: ad.opis,
+      kolegij_ime: ad.kolegij,
+      kategorija: ad.kategorija,
+      trazimPomoc: ad.radnja,
     };
 
     console.log(data);
+
+    postDataAuth("oglasi", data).then((res) => {
+      console.log(res);
+      if (res.error) {
+        console.log(res.message);
+      }
+    });
   }
 
   return (
