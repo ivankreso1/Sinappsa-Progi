@@ -36,7 +36,7 @@
 .page-links a {
     color: #464963;
     font-size: 25px;
-    font-weight: 200;
+    /*font-weight: 200;*/
 }
 
 a, a label {

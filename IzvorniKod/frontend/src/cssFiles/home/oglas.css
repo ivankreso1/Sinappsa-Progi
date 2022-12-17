@@ -7,36 +7,41 @@
 }
 
 .oglas-korisnik-info-container {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
     margin: 20px;
 }
 
 .oglas-korisnik-info img {
     border: 1px solid black;
-    border-radius: 20px;
     width: 75px;
     height: 75px;
-    margin: 10px 5px;
-    border-radius: 35px;
+    margin: 10px 15px 10px 5px;
+    border-radius: 50px;
 }
-.oglas-info-container{
+.oglas-korisnik-info {
+    font-size: 20px;
+    font-weight: 400;
+}
+/*.oglas-info-container{
     display: flex;
     flex-direction: column;
-}
+}*/
 
-.oglas-naslov {
+.oglas-naslov h2 {
     margin: 20px;
     min-width: 100px;   /*ovime je osigurano to da nema overflowa*/
     max-width: 100%; /*ovime je osigurano to da nema overflowa*/
-    border-bottom: 1px solid black;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-self: center;
-    overflow: none;
+    font-weight: 400;
 }
 
 .oglas-text-opis {
     margin: 20px;
-    border: 1px solid black;
+    font-size: 20px;
+    /*border: 1px solid black;*/
     border-radius: 10px;
     padding: 20px;
 }
