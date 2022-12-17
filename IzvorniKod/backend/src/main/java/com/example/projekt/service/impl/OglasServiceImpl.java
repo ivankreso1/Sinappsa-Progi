@@ -7,10 +7,15 @@ import com.example.projekt.rest.dto.CreateOglasDTO;
 import com.example.projekt.rest.dto.OglasUpitiDTO;
 import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.*;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +30,8 @@ public class OglasServiceImpl implements OglasService {
 
     @Autowired
     private RegKorisnikService regKorisnikService;
-
+    @Autowired
+    private JavaMailSender mailSender;
     @Autowired
     private KolegijService kolegijService;
     @Autowired
@@ -216,5 +222,30 @@ public class OglasServiceImpl implements OglasService {
             oglas.get().setAktivan(true);
         }
         return oglasRepository.save(oglas.get());
+    }
+
+    private void mailNakonObrisanog(Oglas idOglasa) throws MessagingException, UnsupportedEncodingException {
+
+        String fromAddress = "sinappsa.team@gmail.com";
+        String senderName = "Sinappsa";
+        String subject = "UKLONJEN POSTAVLJENI OGLAS";
+        String content = "Dragi/a [[autorOglasa]],<br>"
+                + "Obavještavamo Vas da je oglas <i>[[naslovOglasa]]<i> uklonjen od strane moderatora.<br>"
+                + "Moderator oglas smatra nepravilnim ili neprikladnim te je iz tog razloga uklonjen.<br><br>"
+                + "LP,<br>"
+                + "Tvoj Sinappsa tim";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(idOglasa.getKreator().getEmail());
+        helper.setSubject(subject);
+
+        content = content.replace("[[autorOglasa]]", idOglasa.getKreator().getIme() + " " + idOglasa.getKreator().getPrezime());
+        content = content.replace("[[naslovOglasa]]", idOglasa.getNaslov());
+
+        helper.setText(content, true);
+        mailSender.send(message);
     }
 }
