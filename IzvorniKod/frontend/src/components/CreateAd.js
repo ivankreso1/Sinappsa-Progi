@@ -2,12 +2,11 @@ import { Button, ButtonGroup, Card, Form } from "react-bootstrap";
 import React, { useState } from "react";
 import Navbar from "./home/Navbar";
 import { getData, getPersonInfo, postDataAuth } from "../scripts/util";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateAd() {
-  const formStyle = {
-    margin: "auto",
-    marginBottom: "1%",
-  };
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   const [ad, setAd] = useState({
     radnja: "",
@@ -52,9 +51,12 @@ export default function CreateAd() {
     console.log(data);
 
     postDataAuth("oglasi", data).then((res) => {
-      console.log(res);
+      //  console.log(res);
       if (res.error) {
         console.log(res.message);
+        setError(res.message);
+      } else {
+        navigate("/");
       }
     });
   }
@@ -142,12 +144,11 @@ export default function CreateAd() {
                 onChange={handleAdChange}
               ></Form.Control>
             </div>
-            <ButtonGroup className="mb-3 d-flex flex-row">
+            <ButtonGroup className="mb-3 d-flex ">
               <Button type="reset" variant="danger">
                 Očisti
               </Button>
               <Button
-                style={{ marginRight: "auto" }}
                 type="submit"
                 disabled={
                   !ad.radnja ||
@@ -163,6 +164,7 @@ export default function CreateAd() {
               </Button>
             </ButtonGroup>
           </Form>
+          <div className="error-message">{error}</div>
         </Card>
       </div>
     </div>
