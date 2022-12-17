@@ -4,7 +4,7 @@ import com.example.projekt.dao.OglasRepository;
 import com.example.projekt.dao.UpitRepository;
 import com.example.projekt.domain.*;
 import com.example.projekt.rest.dto.CreateOglasDTO;
-import com.example.projekt.rest.dto.OglasUpitUpitOglasDTO;
+import com.example.projekt.rest.dto.OglasUpitiDTO;
 import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.*;
 import org.springframework.security.core.userdetails.User;
@@ -171,9 +171,11 @@ public class OglasServiceImpl implements OglasService {
         return true;
     }
 
-    public List<OglasUpitUpitOglasDTO> aktivniOglasiUpiti(Long idKreatora, boolean aktivnost) {
-        List<OglasUpitUpitOglasDTO> oglasiUpiti = new ArrayList<>();
+    public List<OglasUpitiDTO> aktivniOglasiUpiti(Long idKreatora, boolean aktivnost) {
         List<Oglas> aktivniOglasi = new ArrayList<>();
+
+        List<OglasUpitiDTO> oglasiPlusUpiti = new ArrayList<>();
+
         if (aktivnost) {
             aktivniOglasi = listSvihAktivnihOglasa();
         } else {
@@ -194,19 +196,13 @@ public class OglasServiceImpl implements OglasService {
         }
         for (Oglas korisnikovAktivan: korisnikoviAktivni) {
             List<Upit> upitiZaOglas = upitService.listUpitByOglas(korisnikovAktivan);
-            OglasUpitUpitOglasDTO jedanOglas = new OglasUpitUpitOglasDTO();
-            jedanOglas.setAktivan(aktivnost);
-            jedanOglas.setId(korisnikovAktivan.getId());
-            jedanOglas.setKategorija(korisnikovAktivan.getKategorija());
-            jedanOglas.setKolegij(korisnikovAktivan.getKolegij());
-            jedanOglas.setNaslov(korisnikovAktivan.getNaslov());
-            jedanOglas.setKreator(korisnikovAktivan.getKreator());
-            jedanOglas.setOpis(korisnikovAktivan.getOpis());
-            jedanOglas.setTrazimPomoc(korisnikovAktivan.isTrazimPomoc());
-            jedanOglas.setListaUpita(upitiZaOglas);
-            oglasiUpiti.add(jedanOglas);
+            OglasUpitiDTO zaJedanOglas = new OglasUpitiDTO();
+            zaJedanOglas.setOglas(korisnikovAktivan);
+            zaJedanOglas.setListaUpita(upitiZaOglas);
+            oglasiPlusUpiti.add(zaJedanOglas);
+
         }
-        return oglasiUpiti;
+        return oglasiPlusUpiti;
     }
 
     public Oglas promijeniAktivnost(Long id) {

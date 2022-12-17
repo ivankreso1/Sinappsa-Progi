@@ -5,7 +5,7 @@ import com.example.projekt.domain.Oglas;
 import com.example.projekt.domain.RegistriraniKorisnik;
 import com.example.projekt.domain.Smjer;
 import com.example.projekt.rest.dto.CreateOglasDTO;
-import com.example.projekt.rest.dto.OglasUpitUpitOglasDTO;
+import com.example.projekt.rest.dto.OglasUpitiDTO;
 import com.example.projekt.rest.dto.PutOglasDTO;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public interface OglasService {
 
     List<Oglas> filtrirajOglase(Smjer smjer, Kategorija kategorija, String kolegij_ime);
 
-    List<OglasUpitUpitOglasDTO> aktivniOglasiUpiti(Long idKreatora, boolean aktivnost);
+    List<OglasUpitiDTO> aktivniOglasiUpiti(Long idKreatora, boolean aktivnost);
 
     Oglas promijeniAktivnost(Long id);
 }
