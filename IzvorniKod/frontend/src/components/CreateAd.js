@@ -5,6 +5,18 @@ import { getData, getPersonInfo, postDataAuth } from "../scripts/util";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateAd() {
+  function optionCreateAd() {
+    let currentInfo = JSON.parse(localStorage.getItem("personInfo")); // za onemogucavanje neulogiranog odlaska na /create-ad
+    console.log(currentInfo.userName);
+    if (!currentInfo.userName) {
+      navigate("/login");
+    } else {
+      navigate("/create-ad");
+    }
+  }
+
+  const [count, setCount] = React.useState(0);
+
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
@@ -35,6 +47,15 @@ export default function CreateAd() {
     setAd((prevAd) => {
       return { ...prevAd, [event.target.name]: event.target.value }; //posto ima vise inputova, treba ih se razlikovati po name-u => to je jedan od parametara koji je sacuvan u event.target
     });
+  }
+
+  function handleCount(event) {
+    setCount(event.target.value.length);
+  }
+
+  function handleMultipleFun(event) {
+    handleCount(event);
+    handleAdChange(event);
   }
 
   function onSubmit(event) {
@@ -79,7 +100,7 @@ export default function CreateAd() {
           }}
         >
           <h1> Kreiraj novi oglas! </h1>
-          <Form className="form" onSubmit={onSubmit}>
+          <Form className="form" onSubmit={onSubmit} required="true">
             <div className="mb-3">
               <Form.Check
                 inline
@@ -101,6 +122,7 @@ export default function CreateAd() {
 
             <div className="mb-3">
               <Form.Select
+                required="true"
                 aria-label="Default select example"
                 name="kolegij"
                 onChange={handleAdChange}
@@ -114,6 +136,7 @@ export default function CreateAd() {
 
             <div className="mb-3">
               <Form.Select
+                required="true"
                 aria-label="Default select example"
                 name="kategorija"
                 onChange={handleAdChange}
@@ -131,6 +154,9 @@ export default function CreateAd() {
                 type="text"
                 placeholder="Naslov"
                 name="naslov"
+                required="true"
+                maxLength={255}
+                minLength={5}
                 onChange={handleAdChange}
               ></Form.Control>
             </div>
@@ -141,14 +167,26 @@ export default function CreateAd() {
                 as="textarea"
                 rows="3"
                 name="opis"
-                onChange={handleAdChange}
+                onChange={handleMultipleFun}
+                maxLength={255}
+                minLength={20}
+                required="true"
               ></Form.Control>
+              <div>
+                <p>
+                  {count}/{255}
+                </p>
+              </div>
             </div>
             <ButtonGroup className="mb-3 d-flex ">
-              <Button type="reset" variant="danger">
-                Očisti
+              <Button variant="danger" href="/">
+                Cancel
+              </Button>
+              <Button variant="secondary" type="reset">
+                Clear
               </Button>
               <Button
+                variant="success"
                 type="submit"
                 disabled={
                   !ad.radnja ||
@@ -160,7 +198,7 @@ export default function CreateAd() {
                     : false
                 }
               >
-                Podnesi
+                Submit
               </Button>
             </ButtonGroup>
           </Form>
