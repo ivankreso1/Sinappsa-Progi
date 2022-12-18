@@ -4,13 +4,18 @@ import com.example.projekt.dao.OglasRepository;
 import com.example.projekt.dao.UpitRepository;
 import com.example.projekt.domain.*;
 import com.example.projekt.rest.dto.CreateOglasDTO;
-import com.example.projekt.rest.dto.OglasUpitUpitOglasDTO;
+import com.example.projekt.rest.dto.OglasUpitiDTO;
 import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.*;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +30,8 @@ public class OglasServiceImpl implements OglasService {
 
     @Autowired
     private RegKorisnikService regKorisnikService;
-
+    @Autowired
+    private JavaMailSender mailSender;
     @Autowired
     private KolegijService kolegijService;
     @Autowired
@@ -171,9 +177,11 @@ public class OglasServiceImpl implements OglasService {
         return true;
     }
 
-    public List<OglasUpitUpitOglasDTO> aktivniOglasiUpiti(Long idKreatora, boolean aktivnost) {
-        List<OglasUpitUpitOglasDTO> oglasiUpiti = new ArrayList<>();
+    public List<OglasUpitiDTO> aktivniOglasiUpiti(Long idKreatora, boolean aktivnost) {
         List<Oglas> aktivniOglasi = new ArrayList<>();
+
+        List<OglasUpitiDTO> oglasiPlusUpiti = new ArrayList<>();
+
         if (aktivnost) {
             aktivniOglasi = listSvihAktivnihOglasa();
         } else {
@@ -194,19 +202,13 @@ public class OglasServiceImpl implements OglasService {
         }
         for (Oglas korisnikovAktivan: korisnikoviAktivni) {
             List<Upit> upitiZaOglas = upitService.listUpitByOglas(korisnikovAktivan);
-            OglasUpitUpitOglasDTO jedanOglas = new OglasUpitUpitOglasDTO();
-            jedanOglas.setAktivan(aktivnost);
-            jedanOglas.setId(korisnikovAktivan.getId());
-            jedanOglas.setKategorija(korisnikovAktivan.getKategorija());
-            jedanOglas.setKolegij(korisnikovAktivan.getKolegij());
-            jedanOglas.setNaslov(korisnikovAktivan.getNaslov());
-            jedanOglas.setKreator(korisnikovAktivan.getKreator());
-            jedanOglas.setOpis(korisnikovAktivan.getOpis());
-            jedanOglas.setTrazimPomoc(korisnikovAktivan.isTrazimPomoc());
-            jedanOglas.setListaUpita(upitiZaOglas);
-            oglasiUpiti.add(jedanOglas);
+            OglasUpitiDTO zaJedanOglas = new OglasUpitiDTO();
+            zaJedanOglas.setOglas(korisnikovAktivan);
+            zaJedanOglas.setListaUpita(upitiZaOglas);
+            oglasiPlusUpiti.add(zaJedanOglas);
+
         }
-        return oglasiUpiti;
+        return oglasiPlusUpiti;
     }
 
     public Oglas promijeniAktivnost(Long id) {
@@ -220,5 +222,30 @@ public class OglasServiceImpl implements OglasService {
             oglas.get().setAktivan(true);
         }
         return oglasRepository.save(oglas.get());
+    }
+
+    private void mailNakonObrisanog(Oglas idOglasa) throws MessagingException, UnsupportedEncodingException {
+
+        String fromAddress = "sinappsa.team@gmail.com";
+        String senderName = "Sinappsa";
+        String subject = "UKLONJEN POSTAVLJENI OGLAS";
+        String content = "Dragi/a [[autorOglasa]],<br>"
+                + "Obavještavamo Vas da je oglas <i>[[naslovOglasa]]<i> uklonjen od strane moderatora.<br>"
+                + "Moderator oglas smatra nepravilnim ili neprikladnim te je iz tog razloga uklonjen.<br><br>"
+                + "LP,<br>"
+                + "Tvoj Sinappsa tim";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(idOglasa.getKreator().getEmail());
+        helper.setSubject(subject);
+
+        content = content.replace("[[autorOglasa]]", idOglasa.getKreator().getIme() + " " + idOglasa.getKreator().getPrezime());
+        content = content.replace("[[naslovOglasa]]", idOglasa.getNaslov());
+
+        helper.setText(content, true);
+        mailSender.send(message);
     }
 }
