@@ -2,7 +2,14 @@ import avatars from "../../avatars";
 import "../../cssFiles/home/oglas.css";
 import CreateQuery from "./CreateQuery";
 
-export default function Oglas({ naslov, opis, kreator, trazimPomoc, kolegij }) {
+export default function Oglas({
+  naslov,
+  opis,
+  kreator,
+  trazimPomoc,
+  kolegij,
+  id,
+}) {
   return (
     <div className="oglas-container">
       <div className="oglas-korisnik-info-container">
@@ -24,7 +31,7 @@ export default function Oglas({ naslov, opis, kreator, trazimPomoc, kolegij }) {
             <p style={{ color: "green", fontSize: "20px" }}>Nudim pomoć</p>
           )}
           <p>
-            <CreateQuery />
+            <CreateQuery id={id} />
           </p>
         </div>
       </div>

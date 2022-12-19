@@ -114,7 +114,12 @@ function App() {
       <div className="body-wrapper">
         <div className="body-wrapper-child">
           <h2 className="section-title section-title-primary-color">Oglasi</h2>
-          <Button onClick={optionCreateAd} className="mb-3" size="lg">
+          <Button
+            onClick={optionCreateAd}
+            className="mb-3"
+            size="lg"
+            variant="light"
+          >
             Kreiraj oglas!
           </Button>
           <Filter

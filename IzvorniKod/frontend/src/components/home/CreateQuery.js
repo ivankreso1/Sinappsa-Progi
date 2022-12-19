@@ -2,17 +2,26 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { postDataAuth } from "../../scripts/util";
 
-export default function CreateQuery() {
+export default function CreateQuery(id) {
+  let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
+  const [count, setCount] = React.useState(0);
+  const [show, setShow] = useState(false);
   const [query, setQuery] = useState({
     opis: "",
   });
+  const navigate = useNavigate();
 
-  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    if (!currentInfo.userName) {
+      navigate("/login");
+    }
+    setShow(true);
+  };
 
-  const [count, setCount] = React.useState(0);
   function handleCount(event) {
     setCount(event.target.value.length);
   }
@@ -20,18 +29,25 @@ export default function CreateQuery() {
   function handleMultipleFun(event) {
     handleCount(event);
     setQuery((prevQuery) => {
-      return { ...prevQuery, [event.target.name]: event.target.value }; //posto ima vise inputova, treba ih se razlikovati po name-u => to je jedan od parametara koji je sacuvan u event.target
+      return { ...prevQuery, [event.target.name]: event.target.value };
     });
   }
 
-  function optionSubmitForm() {
-    setShow(false);
+  function optionSubmitForm(event) {
+    event.preventDefault();
 
     const data = {
       poruka: query.opis,
     };
 
-    console.log(data);
+    postDataAuth("upiti/" + currentInfo.id + "/" + id.id, data).then((res) => {
+      if (res.error) {
+        alert(res.message);
+      }
+    });
+
+    setCount(0);
+    setShow(false);
   }
 
   return (
@@ -54,8 +70,8 @@ export default function CreateQuery() {
             Kreiraj upit!
           </Modal.Title>
         </Modal.Header>
-        <Form onSubmit={optionSubmitForm}>
-          <Modal.Body>
+        <Modal.Body>
+          <Form onSubmit={optionSubmitForm}>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
@@ -67,7 +83,8 @@ export default function CreateQuery() {
                 rows="3"
                 onChange={handleMultipleFun}
                 maxLength={255}
-                minLength={20}
+                minLength={10}
+                required="true"
               />
             </Form.Group>
             <div>
@@ -85,8 +102,8 @@ export default function CreateQuery() {
                 </Button>
               </ButtonGroup>
             </ModalFooter>
-          </Modal.Body>
-        </Form>
+          </Form>
+        </Modal.Body>
       </Modal>
     </>
   );
