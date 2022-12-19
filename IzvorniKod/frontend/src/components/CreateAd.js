@@ -5,15 +5,7 @@ import { getData, getPersonInfo, postDataAuth } from "../scripts/util";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateAd() {
-  function optionCreateAd() {
-    let currentInfo = JSON.parse(localStorage.getItem("personInfo")); // za onemogucavanje neulogiranog odlaska na /create-ad
-    console.log(currentInfo.userName);
-    if (!currentInfo.userName) {
-      navigate("/login");
-    } else {
-      navigate("/create-ad");
-    }
-  }
+  // za onemogucavanje neulogiranog odlaska na /create-ad
 
   const [count, setCount] = React.useState(0);
 
@@ -45,7 +37,7 @@ export default function CreateAd() {
 
   function handleAdChange(event) {
     setAd((prevAd) => {
-      return { ...prevAd, [event.target.name]: event.target.value }; //posto ima vise inputova, treba ih se razlikovati po name-u => to je jedan od parametara koji je sacuvan u event.target
+      return { ...prevAd, [event.target.name]: event.target.value };
     });
   }
 
@@ -69,12 +61,8 @@ export default function CreateAd() {
       trazimPomoc: ad.radnja,
     };
 
-    console.log(data);
-
     postDataAuth("oglasi", data).then((res) => {
-      //  console.log(res);
       if (res.error) {
-        console.log(res.message);
         setError(res.message);
       } else {
         navigate("/");
@@ -100,7 +88,7 @@ export default function CreateAd() {
           }}
         >
           <h1> Kreiraj novi oglas! </h1>
-          <Form className="form" onSubmit={onSubmit} required="true">
+          <Form className="form" onSubmit={onSubmit}>
             <div className="mb-3">
               <Form.Check
                 inline
