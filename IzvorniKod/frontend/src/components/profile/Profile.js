@@ -5,6 +5,7 @@ import avatars from "../../avatars";
 import "../../cssFiles/Profile.css";
 import Navbar from "../home/Navbar";
 import ProfileInfo from './ProfileInfo'
+import UserAds from './UserAds'
 import { getPersonInfo } from "../../scripts/util";
 
 export default function Profile() {
@@ -23,6 +24,7 @@ export default function Profile() {
         <div className="profile-container">
             <Navbar getPersonInfo={getPersonInfo}></Navbar>
             <ProfileInfo key="profileInfo"></ProfileInfo>
+            <UserAds key="userAds"></UserAds>
         </div>
     )
 }
