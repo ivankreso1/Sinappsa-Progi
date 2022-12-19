@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { useNavigate } from 'react-router-dom';
 import avatars from '../../avatars';
-import { PERSON_INFO_KEY, PERSON_INFO_TEMPLATE, getDataAuth, getPersonInfo } from "../../scripts/util";
+import { getDataAuth, getPersonInfo } from "../../scripts/util";
 import { Button} from "react-bootstrap";
 import "../../cssFiles/Profile.css";
 import "../../cssFiles/shared/shared.css";
@@ -29,8 +28,9 @@ class ProfileInfo extends Component {
     render() { 
         return (
             <React.Fragment>
+                <div className="profile-section">
+                <h2 className="section-title section-title-primary-color"> Moji korisnički podaci</h2>
                 <div className="profile-info-container">
-                    <h1>Moj profil</h1>
                     {avatars.map(avatar => {
                         if (avatar.id === this.state.profileInfo.avatar) {
                             return <img id={avatar.id} src={avatar.src} alt="alt"></img>
@@ -44,6 +44,7 @@ class ProfileInfo extends Component {
                         this.state.profileInfo.brojPrimljenihRecenzija == 0 ? 0 : this.state.profileInfo.sumaPrimljenihRecenzija / this.state.profileInfo.brojPrimljenihRecenzija
                     }</span>
                     <Button style={{marginBottom: "10px"}} href="/editProfile">Uredi profil</Button>
+                </div>
                 </div>
             </React.Fragment>
         );
