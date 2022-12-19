@@ -1,13 +1,38 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { ButtonGroup, Form } from "react-bootstrap";
+import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
 
 export default function CreateQuery() {
-  const [show, setShow] = useState(false);
+  const [query, setQuery] = useState({
+    opis: "",
+  });
 
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [count, setCount] = React.useState(0);
+  function handleCount(event) {
+    setCount(event.target.value.length);
+  }
+
+  function handleMultipleFun(event) {
+    handleCount(event);
+    setQuery((prevQuery) => {
+      return { ...prevQuery, [event.target.name]: event.target.value }; //posto ima vise inputova, treba ih se razlikovati po name-u => to je jedan od parametara koji je sacuvan u event.target
+    });
+  }
+
+  function optionSubmitForm() {
+    setShow(false);
+
+    const data = {
+      poruka: query.opis,
+    };
+
+    console.log(data);
+  }
 
   return (
     <>
@@ -29,27 +54,39 @@ export default function CreateQuery() {
             Kreiraj upit!
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Form>
+        <Form onSubmit={optionSubmitForm}>
+          <Modal.Body>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>Poruka upita</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Label>Poruka vlasniku oglasa:</Form.Label>
+              <Form.Control
+                name="opis"
+                as="textarea"
+                rows="3"
+                onChange={handleMultipleFun}
+                maxLength={255}
+                minLength={20}
+              />
             </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <ButtonGroup>
-            <Button variant="danger" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button variant="success" type="submit">
-              Submit
-            </Button>
-          </ButtonGroup>
-        </Modal.Footer>
+            <div>
+              <p>
+                {count}/{255}
+              </p>
+            </div>
+            <ModalFooter>
+              <ButtonGroup>
+                <Button variant="danger" onClick={handleClose}>
+                  Cancel
+                </Button>
+                <Button variant="success" type="submit">
+                  Submit
+                </Button>
+              </ButtonGroup>
+            </ModalFooter>
+          </Modal.Body>
+        </Form>
       </Modal>
     </>
   );
