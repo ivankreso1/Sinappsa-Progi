@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { useNavigate } from 'react-router-dom';
 import avatars from '../../avatars';
 import { PERSON_INFO_KEY, PERSON_INFO_TEMPLATE, getDataAuth, getPersonInfo } from "../../scripts/util";
-import { Button, Form, Card } from "react-bootstrap";
-import "../../cssFiles/profile.css";
+import { Button} from "react-bootstrap";
+import "../../cssFiles/Profile.css";
 import "../../cssFiles/shared/shared.css";
 
 
@@ -22,7 +22,8 @@ class ProfileInfo extends Component {
         console.log(personInfo);
         getDataAuth("korisnik/podaci/" + personInfo.id)
         .then(data => this.setState({ profileInfo: data }));
-        console.log(this.state);
+        //console.log("4" / "2");
+        console.log(this.state.profileInfo);
     }
 
     render() { 
@@ -38,8 +39,11 @@ class ProfileInfo extends Component {
                     <span>Ime i prezime: {this.state.profileInfo.ime} {this.state.profileInfo.prezime}</span>
                     <span>E-mail adresa: {this.state.profileInfo.email}</span>
                     <span>Korisničko ime: {this.state.profileInfo.korisnickoIme}</span>
-                    <span>Prosjek ocjena: {(this.state.profileInfo.sumaPrimljenihRecenzija / this.state.profileInfo.brojPrimljenihRecenzija)}</span>
-                    <Button style={{marginBottom: "10px"}}>Uredi profil</Button>
+                    <span>Broj primljenih ocjena: {this.state.profileInfo.brojPrimljenihRecenzija}</span>
+                    <span>Prosjek ocjena: {
+                        this.state.profileInfo.brojPrimljenihRecenzija == 0 ? 0 : this.state.profileInfo.sumaPrimljenihRecenzija / this.state.profileInfo.brojPrimljenihRecenzija
+                    }</span>
+                    <Button style={{marginBottom: "10px"}} href="/editProfile">Uredi profil</Button>
                 </div>
             </React.Fragment>
         );

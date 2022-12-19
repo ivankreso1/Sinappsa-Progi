@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Card } from "react-bootstrap";
 import avatars from "../../avatars";
-import "../../cssFiles/profile.css";
+import "../../cssFiles/Profile.css";
 import Navbar from "../home/Navbar";
 import ProfileInfo from './ProfileInfo'
 import { getPersonInfo } from "../../scripts/util";
