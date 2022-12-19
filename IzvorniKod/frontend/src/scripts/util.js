@@ -1,6 +1,5 @@
 import configData from "../resources/config.json";
 
-
 /* 
 ================================================KAKO KORISTITI OVE UTILITY FUNKCIJE================================================
 
@@ -71,109 +70,98 @@ Za sva ostala pitanja -> WhatsApp ;)
             
  */
 
-
 export const PERSON_INFO_TEMPLATE = {
-    id: undefined,
-    userName: "",
-    password: ""
-}
+  id: undefined,
+  userName: "",
+  password: "",
+};
 export const PERSON_INFO_KEY = "personInfo";
 
-
 export async function getData(url) {
-    return await getDataHelper(url, false);
+  return await getDataHelper(url, false);
 }
-
 
 export async function getDataAuth(url) {
-    return await getDataHelper(url, true);
+  return await getDataHelper(url, true);
 }
-
 
 export async function postData(url, data) {
-    return await postDataHelper(url, data, false);
+  return await postDataHelper(url, data, false);
 }
-
 
 export async function postDataAuth(url, data) {
-    return await postDataHelper(url, data, true);
+  return await postDataHelper(url, data, true);
 }
-
 
 export async function putData(url, data) {
-    return await putDataHelper(url, data, false);
+  return await putDataHelper(url, data, false);
 }
-
 
 export async function putDataAuth(url, data) {
-    return await putDataHelper(url, data, true);
+  return await putDataHelper(url, data, true);
 }
-
 
 export async function deleteData(url, data) {
-    return await deleteDataHelper(url, data, false);
+  return await deleteDataHelper(url, data, false);
 }
-
 
 export async function deleteDataAuth(url, data) {
-    return await deleteDataHelper(url, data, true);
+  return await deleteDataHelper(url, data, true);
 }
-
 
 async function getDataHelper(url, auth) {
-    return await fetchData(url, initOptions("GET", auth, undefined));
+  return await fetchData(url, initOptions("GET", auth, undefined));
 }
-
 
 async function postDataHelper(url, data, auth) {
-    return await fetchData(url, initOptions("POST", auth, data));
+  return await fetchData(url, initOptions("POST", auth, data));
 }
-
 
 async function putDataHelper(url, data, auth) {
-    return await fetchData(url, initOptions("PUT", auth, data));
+  return await fetchData(url, initOptions("PUT", auth, data));
 }
-
 
 async function deleteDataHelper(url, data, auth) {
-    return await fetchData(url, initOptions("DELETE", auth, data));
+  return await fetchData(url, initOptions("DELETE", auth, data));
 }
-
 
 function initOptions(method, auth, data) {
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
+  let headers = new Headers();
+  headers.append("Content-Type", "application/json");
 
-    if (auth === true) {
-        const personInfo = getPersonInfo();
+  if (auth === true) {
+    const personInfo = getPersonInfo();
 
-        // console.log(`Basic ${personInfo.userName}:${personInfo.password}`);
-        headers.append('Authorization', 'Basic ' + window.btoa(personInfo.userName + ":" + personInfo.password));
-    }
+    // console.log(`Basic ${personInfo.userName}:${personInfo.password}`);
+    headers.append(
+      "Authorization",
+      "Basic " + window.btoa(personInfo.userName + ":" + personInfo.password)
+    );
+  }
 
-    const options = {
-        method: method, 
-        headers: headers
-    };
+  const options = {
+    method: method,
+    headers: headers,
+  };
 
-    if (data !== undefined) {
-        options.body = JSON.stringify(data);
-    }
-    
-    return options;
+  if (data !== undefined) {
+    options.body = JSON.stringify(data);
+  }
+
+  return options;
 }
-
 
 export function getPersonInfo() {
-    const personInfo = localStorage.getItem(PERSON_INFO_KEY);
-    // console.log("Person info: " + personInfo);
+  const personInfo = localStorage.getItem(PERSON_INFO_KEY);
+  // console.log("Person info: " + personInfo);
 
-    return personInfo ? JSON.parse(personInfo) : PERSON_INFO_TEMPLATE;
+  return personInfo ? JSON.parse(personInfo) : PERSON_INFO_TEMPLATE;
 }
 
-
 async function fetchData(url, options) {
-    const response = await fetch(`${configData.hostname}/${url}`, options);
+  const response = await fetch(`${configData.hostname}/${url}`, options);
+  const string = await response.text();
+  const json = string === "" ? { error: !response.ok } : JSON.parse(string);
 
-    return response.json();
+  return json;
 }

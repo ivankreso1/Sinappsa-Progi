@@ -5,10 +5,12 @@ import com.example.projekt.rest.dto.ChangeKorisnickiPodaciDTO;
 import com.example.projekt.rest.dto.CreateRegKorisnikDTO;
 import com.example.projekt.rest.dto.LoginDTO;
 import com.example.projekt.rest.dto.RangiraniKorisnikDTO;
+import com.example.projekt.service.NotFoundException;
 import com.example.projekt.service.RegKorisnikService;
 import com.example.projekt.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -58,11 +60,8 @@ public class RegKorisnikController {
     }
 
     @GetMapping("podaci/{id}")
+    @Secured("ROLE_STUDENT_KORISNIK")
     public RegistriraniKorisnik dohvatiPodatkeProfila(@PathVariable("id") Long id, @AuthenticationPrincipal User u) {
-        if(u == null) {
-            throw new RequestDeniedException("Ne postoje podaci o autentikaciji");
-        }
-
         Optional<RegistriraniKorisnik> korisnikPrekoId = regKorisnikService.findById(id);
         Optional<RegistriraniKorisnik> korisnikPrekoAutentikacije = regKorisnikService.findByKorisnickoIme(u.getUsername());
         autentikacijaKorisnika(korisnikPrekoId, korisnikPrekoAutentikacije);
@@ -76,14 +75,12 @@ public class RegKorisnikController {
     }
 
     @PutMapping("/uredi/{id}")
+    @Secured("ROLE_STUDENT_KORISNIK")
     public RegistriraniKorisnik promijeniPodatke(@PathVariable("id") Long id, @AuthenticationPrincipal User u, @RequestBody ChangeKorisnickiPodaciDTO changeKorisnickiPodaciDTO) {
         String novoKorisnickoIme = changeKorisnickiPodaciDTO.getKorisnickoIme();
         String novaLozinka = changeKorisnickiPodaciDTO.getLozinka();
         String noviAvatar = changeKorisnickiPodaciDTO.getAvatar();
 
-        if(u == null) {
-            throw new RequestDeniedException("Ne postoje podaci o autentikaciji");
-        }
         if(novoKorisnickoIme != null) {
             Optional<RegistriraniKorisnik> vecPostojeceKorisnickoImeKorisnik = regKorisnikService.findByKorisnickoIme(novoKorisnickoIme);
             if(vecPostojeceKorisnickoImeKorisnik.isPresent()) {
@@ -104,10 +101,10 @@ public class RegKorisnikController {
 
     private void autentikacijaKorisnika(Optional<RegistriraniKorisnik> korisnikPrekoId, Optional<RegistriraniKorisnik> korisnikPrekoAutentikacije) {
         if(korisnikPrekoId.isEmpty()) {
-            throw new RequestDeniedException("Nema korisnika sa tim id-om");
+            throw new NotFoundException("Nema korisnika sa tim id-om");
         }
         if(korisnikPrekoAutentikacije.isEmpty()) {
-            throw new RequestDeniedException("Ne postoje podaci o autentikaciji");
+            throw new NotFoundException("Ne postoje podaci o autentikaciji");
         }
         if(!korisnikPrekoAutentikacije.get().equals(korisnikPrekoId.get())) {
             throw new RequestDeniedException("Moze se pristupiti samo svojim podacima.");
