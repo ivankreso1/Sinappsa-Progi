@@ -3,6 +3,7 @@ package com.example.projekt.service.impl;
 import com.example.projekt.dao.RegKorisnikRepository;
 import com.example.projekt.domain.RegistriraniKorisnik;
 import com.example.projekt.rest.dto.RangiraniKorisnikDTO;
+import com.example.projekt.service.NotFoundException;
 import com.example.projekt.service.RegKorisnikService;
 import com.example.projekt.service.RequestDeniedException;
 import net.bytebuddy.utility.RandomString;
@@ -48,7 +49,7 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
             throw new RequestDeniedException("Moraju biti upisana oba podatka");
         }
         if(registriraniKorisnik.isEmpty()) {
-            throw new RequestDeniedException("Ne postoji korisnik s korisnickim imenom: " + korisnickoIme);
+            throw new NotFoundException("Ne postoji korisnik s korisnickim imenom: " + korisnickoIme);
         }
         if(!passwordEncoder.matches(lozinka, registriraniKorisnik.get().getLozinka())) {
             throw new RequestDeniedException("Pogresna lozinka");
@@ -99,11 +100,11 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
         String toAddress = registriraniKorisnik.getEmail();
         String fromAddress = "sinappsa.team@gmail.com";
         String senderName = "Sinappsa";
-        String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
+        String subject = "Potvrdite svoju registraciju";
+        String content = "Dragi/a [[name]],<br>"
+                + "Kliknite na donji link kako bi potvrdili svoju registraciju:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">POTVRDI</a></h3>"
+                + "Hvala,<br>"
                 + "Sinappsa team";
 
         MimeMessage message = mailSender.createMimeMessage();
