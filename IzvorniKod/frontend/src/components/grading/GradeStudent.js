@@ -6,8 +6,8 @@ import { putDataAuth } from "../../scripts/util";
 
 export default function CreateQuery(id) {
   const [show, setShow] = useState(false);
-  const [queryResponse, setQueryResponse] = useState({
-    odgovor: "",
+  const [grade, setGrade] = useState({
+    ocjena: "",
   });
 
   const handleClose = () => setShow(false);
@@ -15,9 +15,9 @@ export default function CreateQuery(id) {
     setShow(true);
   };
 
-  function handleQueryResponseChange(event) {
-    setQueryResponse((prevQueryResponse) => {
-      return { ...prevQueryResponse, [event.target.name]: event.target.value };
+  function handleGradeChange(event) {
+    setGrade((prevGrade) => {
+      return { ...prevGrade, [event.target.name]: event.target.value };
     });
   }
 
@@ -25,15 +25,9 @@ export default function CreateQuery(id) {
     event.preventDefault();
 
     const data = {
-      odgovor: queryResponse.odgovor,
+      ocjena: grade.ocjena,
     };
-
-    var uriZaSlanje =
-      "/upiti/" + id.id + "/novoStanje?stanjeUpita=" + data.odgovor;
-
-    putDataAuth(uriZaSlanje, {});
-    //setShow(false);
-    window.location.reload(false);
+    console.log(data);
   }
 
   return (
@@ -44,7 +38,7 @@ export default function CreateQuery(id) {
         variant="secondary"
         onClick={handleShow}
       >
-        Odgovori na upit!
+        Ocijeni uslugu!
       </Button>
 
       <Modal
@@ -59,7 +53,7 @@ export default function CreateQuery(id) {
       >
         <Modal.Header key="header" closeButton>
           <Modal.Title key="naslov" id="contained-modal-title-vcenter">
-            Odgovor na upit!
+            Ocijeni uslugu studenta - pomagača!
           </Modal.Title>
         </Modal.Header>
         <Modal.Body key="tijelo">
@@ -68,20 +62,47 @@ export default function CreateQuery(id) {
               <Form.Check
                 key="ocjena"
                 inline
-                label="Ocjenjivanje"
-                name="odgovor"
+                label="1"
+                name="ocjena"
                 type="radio"
-                value="CEKA_OCJENJIVANJE"
-                onChange={handleQueryResponseChange}
+                value="1"
+                onChange={handleGradeChange}
               />
               <Form.Check
-                key="odbijeno"
+                key="ocjena"
                 inline
-                label="Odbijanje"
-                name="odgovor"
+                label="2"
+                name="ocjena"
                 type="radio"
-                value="ODBIJEN"
-                onChange={handleQueryResponseChange}
+                value="2"
+                onChange={handleGradeChange}
+              />{" "}
+              <Form.Check
+                key="ocjena"
+                inline
+                label="3"
+                name="ocjena"
+                type="radio"
+                value="3"
+                onChange={handleGradeChange}
+              />{" "}
+              <Form.Check
+                key="ocjena"
+                inline
+                label="4"
+                name="ocjena"
+                type="radio"
+                value="4"
+                onChange={handleGradeChange}
+              />{" "}
+              <Form.Check
+                key="ocjena"
+                inline
+                label="5"
+                name="ocjena"
+                type="radio"
+                value="5"
+                onChange={handleGradeChange}
               />
             </div>
 
@@ -94,7 +115,7 @@ export default function CreateQuery(id) {
                   key="gumbic2"
                   variant="success"
                   type="submit"
-                  disabled={!queryResponse.odgovor ? true : false}
+                  disabled={!grade.ocjena ? true : false}
                 >
                   Submit
                 </Button>
