@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
+import { putDataAuth } from "../../scripts/util";
 
 export default function CreateQuery(id) {
   const [show, setShow] = useState(false);
@@ -27,17 +28,29 @@ export default function CreateQuery(id) {
       odgovor: queryResponse.odgovor,
     };
 
-    console.log(data);
+    var uriZaSlanje =
+      "/upiti/" + id.id + "/novoStanje?stanjeUpita=" + data.odgovor;
+
+    putDataAuth(uriZaSlanje, {}).then((data) => {
+      console.log(data);
+    });
     setShow(false);
+    window.location.reload(false);
   }
 
   return (
     <>
-      <Button className="mb-3" variant="secondary" onClick={handleShow}>
+      <Button
+        key="gumb1"
+        className="mb-3"
+        variant="secondary"
+        onClick={handleShow}
+      >
         Odgovori na upit!
       </Button>
 
       <Modal
+        key="modal"
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -46,15 +59,16 @@ export default function CreateQuery(id) {
         backdrop="static" //onemogucen izlaz klikom na pozadinu
         keyboard={false} //onemogucen izlaz pomocu escape key-a
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Header key="header" closeButton>
+          <Modal.Title key="naslov" id="contained-modal-title-vcenter">
             Odgovor na upit!
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={optionSubmitForm}>
-            <div className="mb-3">
+        <Modal.Body key="tijelo">
+          <Form key="forma" onSubmit={optionSubmitForm}>
+            <div key="div" className="mb-3">
               <Form.Check
+                key="ocjena"
                 inline
                 label="Ocjenjivanje"
                 name="odgovor"
@@ -63,6 +77,7 @@ export default function CreateQuery(id) {
                 onChange={handleQueryResponseChange}
               />
               <Form.Check
+                key="odbijeno"
                 inline
                 label="Odbijanje"
                 name="odgovor"
@@ -72,12 +87,13 @@ export default function CreateQuery(id) {
               />
             </div>
 
-            <ModalFooter>
-              <ButtonGroup>
-                <Button variant="danger" onClick={handleClose}>
+            <ModalFooter key="podnozje">
+              <ButtonGroup key="gumbici">
+                <Button key="gumbic1" variant="danger" onClick={handleClose}>
                   Cancel
                 </Button>
                 <Button
+                  key="gumbic2"
                   variant="success"
                   type="submit"
                   disabled={!queryResponse.odgovor ? true : false}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UserTag from "../shared/UserTag";
 import QueryResponse from "../grading/QueryResponse";
+import { putDataAuth } from "../../scripts/util";
 
 class Query extends Component {
   render() {
@@ -15,7 +16,11 @@ class Query extends Component {
         />
         <p>{this.props.query.poruka}</p>
         <p>{this.props.query.stanjeUpita}</p>
-        <QueryResponse />
+        {this.props.query.stanjeUpita === "U_TIJEKU" ? (
+          <QueryResponse id={this.props.query.id} />
+        ) : (
+          ""
+        )}
       </div>
     );
   }
