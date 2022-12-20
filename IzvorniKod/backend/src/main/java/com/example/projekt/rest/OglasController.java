@@ -1,5 +1,6 @@
 package com.example.projekt.rest;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.projekt.service.OglasService;
+
+import javax.mail.MessagingException;
 
 @RestController
 @RequestMapping("/oglasi")
@@ -78,7 +81,7 @@ public class OglasController {
 
     @DeleteMapping("/{id}")
     @Secured({"ROLE_STUDENT_KORISNIK", "ROLE_ADMIN"})
-    public ResponseEntity<Void> obrisiOglas(@PathVariable Long id, @AuthenticationPrincipal User user) {
+    public ResponseEntity<Void> obrisiOglas(@PathVariable Long id, @AuthenticationPrincipal User user) throws MessagingException, UnsupportedEncodingException {
         userNull(user);
         if (oglasService.obrisiOglas(id, user)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

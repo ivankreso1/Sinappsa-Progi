@@ -113,13 +113,27 @@ public class OglasServiceImpl implements OglasService {
     }
 
     @Override
-    public boolean obrisiOglas (Long id, User user) {
-        boolean pristup = provjeraPristupa(id, user, "Samo aktivne oglase možete izbrisati");
-        if (pristup) {
+    public boolean obrisiOglas (Long id, User user) throws MessagingException, UnsupportedEncodingException {
+        Optional<Oglas> optionalOglas = oglasRepository.findById(id);
+
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        if (korisnikPoUsername.isModerator()) {
+            var upiti = upitService.listUpitByOglas(optionalOglas.get());
+            for (Upit upit : upiti) {
+                upitRepository.deleteById(upit.getId());
+            }
+            oglasRepository.deleteById(id);
+            mailNakonObrisanog(optionalOglas.get());
+            return true;
+        }
+        else {
+            boolean pristup = provjeraPristupa(id, user, "Samo aktivne oglase možete izbrisati");
+            if (pristup) {
             oglasRepository.deleteById(id);
             return true;
-        } else {
-            return false;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -230,7 +244,7 @@ public class OglasServiceImpl implements OglasService {
         String senderName = "Sinappsa";
         String subject = "UKLONJEN POSTAVLJENI OGLAS";
         String content = "Dragi/a [[autorOglasa]],<br>"
-                + "Obavještavamo Vas da je oglas <i>[[naslovOglasa]]<i> uklonjen od strane moderatora.<br>"
+                + "Obavještavamo Vas da je oglas <i>[[naslovOglasa]]</i> uklonjen od strane moderatora.<br>"
                 + "Moderator oglas smatra nepravilnim ili neprikladnim te je iz tog razloga uklonjen.<br><br>"
                 + "LP,<br>"
                 + "Tvoj Sinappsa tim";
