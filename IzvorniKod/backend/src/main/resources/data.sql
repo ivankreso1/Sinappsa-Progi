@@ -75,7 +75,7 @@ insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, emai
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-5, 'admin', 'a', 'a', '1', 'admin@fer.hr', '$2a$10$7dR1nXFoZCc1I9UMEWxWDO4AIC7CRh66h5O90YlcNk7wo0GqaHoI6', true, 3, 10, true);     -- sifra = ivanivan
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-3, 'markop', 'Marko', 'Prosenjak', '3', 'lg53332@fer.hr', '$2a$12$Ax6JajgkLV9vIsfsjDdKvuVn8GKh06LCUXl13IjFx7iQ/kxeMSYGm', 'false', 4, 9, true);  -- sifra = markopros
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-4, 'petarl', 'Petar', 'Lopović', '2', 'Lovro.Gacina@fer.hr', '$2a$12$/kHrBqy4gH5XEUgr7Q9Jue0b9uFaTr/DM5cPkiR6opDOv1df1uf2a', 'false', 0, 0, true);   -- sifra = petarlopov
-insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-6, 'lucijat', 'Lucija', 'Toto', '1', 'Lovro.Gacina@fer.hr', '$2a$10$nxYU1X0/oibYTqcAjelo0eL5a/wlHSkw47eMpl/LygbNnFjXzVDNa', 'false', 0, 0, true);     -- ova sifra je bbbbb, samo enkriptirano
+insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-6, 'lucijat', 'Lucija', 'Toto', '1', 'kd53000@fer.hr', '$2a$10$nxYU1X0/oibYTqcAjelo0eL5a/wlHSkw47eMpl/LygbNnFjXzVDNa', 'false', 0, 0, true);     -- ova sifra je bbbbb, samo enkriptirano
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-7, 'tamarag', 'Tamara', 'Golub', '3', 'Karlo.Dimjasevic@fer.hr', 'pticagolub', 'false', 0, 0, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-8, 'ivank8', 'Ivan', 'Krešo', '2', 'ivan8@fer.hr', 'ivanivan', 'false', 5, 12, true);
 insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, email, lozinka, moderator, broj_primljenih_recenzija, suma_primljenih_recenzija, enabled) values (-9, 'ivank9', 'Ivan', 'Krešo', '2', 'ivan9@fer.hr', 'ivanivan', 'false', 4, 17, true);
@@ -90,12 +90,12 @@ insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, emai
 insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-2, -1, 'Zelim error', 'ovo je da izazove error', -10, true, 'LABOS', true);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-3, -3, 'Linalg instrukcije', 'Nudim pomoć oko rješavanja zadataka', -1, true, 'GRADIVO', false);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-4, -4, 'Osnove prvi lab', 'Tražim pomoć za prvi labos iz osnova elektrotehnike', -3, true, 'LABOS', false);
-insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-5, -6, 'baze dz', 'Tražim pomoć za prvu domaću zadaću iz baza podataka', -2, false, 'GRADIVO', true);
+insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-5, -6, 'baze dz', 'Tražim pomoć za prvu domaću zadaću iz baza podataka', -2, true, 'GRADIVO', true);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-6, -7, 'baze dz', 'Nudim pomoć oko rješavanja domaće zadaće iz baza podataka', -2, true, 'GRADIVO', false);
 
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-3, -1, -2, 'Ovo je poruka dobrog upita slovo č', 'U_TIJEKU');
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-4, -3, -6, 'Pomoć oko baza por favor', 'U_TIJEKU');
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-5, -6, -4, 'Meni treba pomoć oko labosa iz osnova', 'CEKA_OCJENJIVANJE');
-insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-6, -7, -5, 'Trebam pomoć oko matana', 'ODBIJEN');
+insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-6, -5, -5, 'Trebam pomoć oko matana', 'ODBIJEN');
 
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-7, -7, -6, 'Pomozi mi oko matana', 'PRIHVACEN');

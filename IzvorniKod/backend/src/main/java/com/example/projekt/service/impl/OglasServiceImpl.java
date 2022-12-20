@@ -129,8 +129,12 @@ public class OglasServiceImpl implements OglasService {
         else {
             boolean pristup = provjeraPristupa(id, user, "Samo aktivne oglase možete izbrisati");
             if (pristup) {
-            oglasRepository.deleteById(id);
-            return true;
+                var upiti = upitService.listUpitByOglas(optionalOglas.get());
+                for (Upit upit : upiti) {
+                    upitRepository.deleteById(upit.getId());
+                }
+                oglasRepository.deleteById(id);
+                return true;
             } else {
                 return false;
             }
