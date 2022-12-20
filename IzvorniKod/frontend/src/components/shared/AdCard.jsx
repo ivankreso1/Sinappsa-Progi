@@ -1,0 +1,24 @@
+import React, { Component } from "react";
+import QueryList from "../profile/QueryList";
+import Ad from "./Ad";
+
+
+class AdCard extends Component {
+	render() {
+		return (
+			<React.Fragment>
+				<Ad
+					key={`ad${this.props.ad.id}`}
+					ad={this.props.ad}
+					forProfile={this.props.forProfile}
+				/>
+				<QueryList
+					key={`queryList${this.props.ad.id}`}
+					queries={this.props.queries}
+				/>
+			</React.Fragment>
+		);
+	}
+}
+
+export default AdCard;

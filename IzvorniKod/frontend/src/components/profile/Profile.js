@@ -18,8 +18,8 @@ export default function Profile() {
 
     
 
-    const personInfo = JSON.parse(localStorage.getItem("personInfo"))
-    console.log(personInfo)
+    // const personInfo = JSON.parse(localStorage.getItem("personInfo"))
+    // console.log(personInfo)
     return (
         <div className="profile-container">
             <Navbar getPersonInfo={getPersonInfo}></Navbar>
