@@ -5,7 +5,7 @@ import { getData, getPersonInfo, postDataAuth } from "../scripts/util";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateAd() {
-  // za onemogucavanje neulogiranog odlaska na /create-ad
+  let personInfo = getPersonInfo();
 
   const [count, setCount] = React.useState(0);
 
@@ -30,6 +30,10 @@ export default function CreateAd() {
   ];
 
   React.useEffect(() => {
+    if (personInfo.userName.length === 0) {
+      navigate("/login"); // za onemogucavanje neulogiranog odlaska na /create-ad
+    }
+
     getData("/kolegiji").then((data) => {
       setKolegiji(data);
     });
