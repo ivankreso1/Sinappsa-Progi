@@ -80,7 +80,8 @@ button {
 }
 
 .avatar-placeholder {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
     align-content: space-between;
 }
@@ -93,6 +94,7 @@ button {
     width: 100px;
     border: 2px solid black;
     border-radius: 5px;
+    margin: 10px;
 }
 
 .avatar-placeholder img:hover {

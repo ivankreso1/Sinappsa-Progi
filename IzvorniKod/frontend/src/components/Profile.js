@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import avatars from "../avatars";
-import "../cssFiles/Profile.css";
+import "../cssFiles/home/Profile.css";
 import Navbar from "./home/Navbar";
 import { getPersonInfo } from "../scripts/util";
 
