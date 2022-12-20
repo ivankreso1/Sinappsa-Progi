@@ -18,11 +18,11 @@ class ProfileInfo extends Component {
 
     handleProfileInfo = () => {
         const personInfo = getPersonInfo();
-        console.log(personInfo);
+        // console.log(personInfo);
         getDataAuth("korisnik/podaci/" + personInfo.id)
         .then(data => this.setState({ profileInfo: data }));
         //console.log("4" / "2");
-        console.log(this.state.profileInfo);
+        // console.log(this.state.profileInfo);
     }
 
     render() { 

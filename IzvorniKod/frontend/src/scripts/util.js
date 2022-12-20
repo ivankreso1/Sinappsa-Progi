@@ -160,6 +160,7 @@ export function getPersonInfo() {
 
 async function fetchData(url, options) {
   const response = await fetch(`${configData.hostname}/${url}`, options);
+  
   const string = await response.text();
   const json = string === "" ? { error: !response.ok } : JSON.parse(string);
 
