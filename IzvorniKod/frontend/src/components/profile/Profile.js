@@ -26,9 +26,11 @@ export default function Profile() {
   console.log(personInfo);
   return (
     <div className="profile-container">
-      <Navbar getPersonInfo={getPersonInfo}></Navbar>
-      <ProfileInfo key="profileInfo"></ProfileInfo>
-      <UserAds key="userAds"></UserAds>
+        <Navbar getPersonInfo={getPersonInfo}></Navbar>
+        <div className="profile-elements">
+            <ProfileInfo key="profileInfo"></ProfileInfo>
+            <UserAds key="userAds"></UserAds>
+        </div>
     </div>
   );
 }

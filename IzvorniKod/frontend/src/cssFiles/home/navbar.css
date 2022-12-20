@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     background-color: #F5F5F5;
+    height: 100px
 }
 
 .homepage-project-name {
@@ -17,7 +18,7 @@
 
 .homepage-header-links {
     display: grid;
-    margin: 40px;
+    margin: 20px;
 }
 
 .page-links a:link {
