@@ -96,6 +96,6 @@ insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija,
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-3, -1, -2, 'Ovo je poruka dobrog upita slovo č', 'U_TIJEKU');
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-4, -3, -6, 'Pomoć oko baza por favor', 'U_TIJEKU');
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-5, -6, -4, 'Meni treba pomoć oko labosa iz osnova', 'CEKA_OCJENJIVANJE');
-insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-6, -5, -5, 'Trebam pomoć oko matana', 'ODBIJEN');
-
+insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-6, -7, -5, 'Nudim pomoć oko baza', 'U_TIJEKU');
+insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-8, -8, -5, 'Pomoci cu ti oko podataka baza', 'U_TIJEKU');
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-7, -7, -6, 'Pomozi mi oko matana', 'PRIHVACEN');
