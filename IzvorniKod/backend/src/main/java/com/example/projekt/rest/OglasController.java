@@ -9,6 +9,7 @@ import com.example.projekt.rest.dto.CreateOglasDTO;
 import com.example.projekt.rest.dto.OglasUpitiDTO;
 import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.NotFoundException;
+import com.example.projekt.service.RegKorisnikService;
 import com.example.projekt.service.RequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,8 @@ public class OglasController {
     @Autowired
     private OglasService oglasService;
 
+    @Autowired
+    private RegKorisnikService regKorisnikService;
     @GetMapping
     @Secured("ROLE_ADMIN")
     public List<Oglas> listOglasi() {
@@ -96,17 +99,38 @@ public class OglasController {
     }
 
     @GetMapping("/aktivni/{idKreatora}")
-    public List<OglasUpitiDTO> getAktivniKorisnikoviOglasi(@PathVariable Long idKreatora) {
+    @Secured("ROLE_STUDENT_KORISNIK")
+    public List<OglasUpitiDTO> getAktivniKorisnikoviOglasi(@PathVariable Long idKreatora, @AuthenticationPrincipal User user) {
+        userNull(user);
+        Optional<RegistriraniKorisnik> registriraniKorisnik = regKorisnikService.findById(idKreatora);
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        if (korisnikPoUsername != registriraniKorisnik.get()) {
+            throw new RequestDeniedException("Nemate pravo dohvatiti aktivne oglase");
+        }
         return oglasService.aktivniOglasiUpiti(idKreatora, true);
     }
 
     @GetMapping("/neaktivni/{idKreatora}")
-    public List<OglasUpitiDTO> getNeaktivniKorisnikoviOglasi(@PathVariable Long idKreatora) {
+    @Secured("ROLE_STUDENT_KORISNIK")
+    public List<OglasUpitiDTO> getNeaktivniKorisnikoviOglasi(@PathVariable Long idKreatora, @AuthenticationPrincipal User user) {
+        userNull(user);
+        Optional<RegistriraniKorisnik> registriraniKorisnik = regKorisnikService.findById(idKreatora);
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        if (korisnikPoUsername != registriraniKorisnik.get()) {
+            throw new RequestDeniedException("Nemate pravo dohvatiti neaktivne oglase");
+        }
         return oglasService.aktivniOglasiUpiti(idKreatora, false);
     }
 
-    @PutMapping("{id}/promjeniAktivnost")
-    public Oglas switchAktivnost(@PathVariable Long id) {
+    @PutMapping("{id}/promijeniAktivnost")
+    @Secured("ROLE_STUDENT_KORISNIK")
+    public Oglas switchAktivnost(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        userNull(user);
+        Optional<Oglas> oglas = oglasService.dohvatiOglasPoId(id);
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        if (korisnikPoUsername != oglas.get().getKreator()) {
+            throw new RequestDeniedException("Nemate pravo promijeniti aktivnost oglasa");
+        }
         return oglasService.promijeniAktivnost(id);
     }
 }

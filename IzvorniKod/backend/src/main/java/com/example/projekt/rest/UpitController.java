@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.userdetails.User;
 
 import javax.mail.MessagingException;
+import javax.mail.ReadOnlyFolderException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -34,7 +36,15 @@ public class UpitController {
 //    }
 
     @GetMapping("autorUpita/{idAutoraUpita}")
-    public List<Upit> getUpitByKreator(@PathVariable("idAutoraUpita") Long idAutoraUpita) {
+    @Secured("ROLE_STUDENT_KORISNIK")
+    public List<Upit> getUpitByKreator(@PathVariable("idAutoraUpita") Long idAutoraUpita, @AuthenticationPrincipal User user) {
+        if (user == null) {
+            throw new RequestDeniedException("Nema podataka o autentikaciji");
+        }
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        if (idAutoraUpita != korisnikPoUsername.getId()) {
+            throw new RequestDeniedException("Nemate pravo dohvatiti upite");
+        }
         Optional<RegistriraniKorisnik> registriraniKorisnik = regKorisnikService.findById(idAutoraUpita);
         if(registriraniKorisnik.isEmpty()) {
             throw new RequestDeniedException("Nema korisnika sa id-om: " + idAutoraUpita);
@@ -53,7 +63,15 @@ public class UpitController {
 
     @PostMapping("{idAutoraUpita}/{idOglasa}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Upit postUpit(@PathVariable("idAutoraUpita") Long idAutoraUpita, @PathVariable("idOglasa") Long idOglasa, @RequestBody CreateUpitDTO createUpitDTO) throws MessagingException, UnsupportedEncodingException {
+    @Secured("ROLE_STUDENT_KORISNIK")
+    public Upit postUpit(@PathVariable("idAutoraUpita") Long idAutoraUpita, @PathVariable("idOglasa") Long idOglasa, @RequestBody CreateUpitDTO createUpitDTO, @AuthenticationPrincipal User user) throws MessagingException, UnsupportedEncodingException {
+        if (user == null) {
+            throw new RequestDeniedException("Nema podataka o autentikaciji");
+        }
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        if (!Objects.equals(idAutoraUpita, korisnikPoUsername.getId())) {
+            throw new RequestDeniedException("Nemate pravo objaviti upit");
+        }
         Optional<RegistriraniKorisnik> registriraniKorisnik = regKorisnikService.findById(idAutoraUpita);
         if(registriraniKorisnik.isEmpty()) {
             throw new RequestDeniedException("Nema korisnika sa id-om: " + idAutoraUpita);
@@ -63,15 +81,24 @@ public class UpitController {
         if(oglas.isEmpty()) {
             throw new RequestDeniedException("Nema oglasa sa id-om: " + idOglasa);
         }
-        if (idAutoraUpita == oglas.get().getKreator().getId()) {
+        if (Objects.equals(idAutoraUpita, oglas.get().getKreator().getId())) {
             throw new RequestDeniedException("Ne možete postaviti upit na vlastiti oglas");
         }
         return upitService.objaviUpit(createUpitDTO.getPoruka(), registriraniKorisnik.get(), oglas.get());
     }
 
     @PutMapping("{idUpita}/novoStanje")
-    public Upit putNovoStanje(@PathVariable("idUpita") Long idUpita, @RequestParam("stanjeUpita") StanjeUpita stanjeUpita) {
+    @Secured("ROLE_STUDENT_KORISNIK")
+    public Upit putNovoStanje(@PathVariable("idUpita") Long idUpita, @RequestParam("stanjeUpita") StanjeUpita stanjeUpita, @AuthenticationPrincipal User user) {
         Optional<Upit> upit = upitService.dohvatiUpitPoId(idUpita);
+        Oglas oglas = upit.get().getOglas();
+        RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
+        if (user == null) {
+            throw new RequestDeniedException("Nema podataka o autentikaciji");
+        }
+        if (korisnikPoUsername != oglas.getKreator()) {
+            throw new RequestDeniedException("Nemate pravo promijeniti stanje upita");
+        }
         if (upit.isEmpty()) {
             throw new RequestDeniedException("Nema upita sa id-om: " + idUpita);
         }
