@@ -63,7 +63,9 @@ public class UpitController {
         if(oglas.isEmpty()) {
             throw new RequestDeniedException("Nema oglasa sa id-om: " + idOglasa);
         }
-
+        if (idAutoraUpita == oglas.get().getKreator().getId()) {
+            throw new RequestDeniedException("Ne možete postaviti upit na vlastiti oglas");
+        }
         return upitService.objaviUpit(createUpitDTO.getPoruka(), registriraniKorisnik.get(), oglas.get());
     }
 
