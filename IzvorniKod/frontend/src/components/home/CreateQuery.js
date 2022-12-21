@@ -5,7 +5,7 @@ import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { postDataAuth } from "../../scripts/util";
 
-export default function CreateQuery(user, id) {
+export default function CreateQuery(props) {
   let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
   const [count, setCount] = React.useState(0);
   const [show, setShow] = useState(false);
@@ -40,7 +40,10 @@ export default function CreateQuery(user, id) {
       poruka: query.opis,
     };
 
-    postDataAuth("upiti/" + currentInfo.id + "/" + id.id, data).then((res) => {
+    postDataAuth(
+      "upiti/" + currentInfo.id + "/" + props.props.ad.id,
+      data
+    ).then((res) => {
       if (res.error) {
         alert(res.message);
       }
@@ -56,7 +59,9 @@ export default function CreateQuery(user, id) {
         variant="secondary"
         onClick={handleShow}
         disabled={
-          user.user.korisnickoIme === currentInfo.userName ? true : false
+          props.props.ad.kreator.korisnickoIme === currentInfo.userName
+            ? true
+            : false
         }
       >
         Pošalji upit!

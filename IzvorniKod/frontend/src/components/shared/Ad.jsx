@@ -27,11 +27,7 @@ class Ad extends Component {
               <p style={{ color: "green", fontSize: "20px" }}>Nudim pomoć</p>
             )}
             <p>
-              {this.props.forProfile ? (
-                ""
-              ) : (
-                <CreateQuery user={ad.kreator} id={ad.id} />
-              )}
+              {this.props.forProfile ? "" : <CreateQuery props={this.props} />}
             </p>
           </div>
         </div>
