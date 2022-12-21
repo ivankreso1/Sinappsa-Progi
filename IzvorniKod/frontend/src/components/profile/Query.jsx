@@ -7,7 +7,7 @@ import GradeStudent from "../grading/GradeStudent";
 class Query extends Component {
   render() {
     // console.log("Query: ");
-    // console.log(this.props.query);
+    //console.log(this.props.query);
 
     return (
       <div className="oglas-container query">
@@ -22,7 +22,8 @@ class Query extends Component {
         ) : (
           ""
         )}
-        {this.props.query.stanjeUpita === "CEKA_OCJENJIVANJE" ? (
+        {this.props.query.stanjeUpita === "CEKA_OCJENJIVANJE" &&
+        this.props.query.oglas.trazimPomoc ? (
           <GradeStudent id={this.props.query.id} />
         ) : (
           ""

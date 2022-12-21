@@ -5,7 +5,7 @@ import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { postDataAuth } from "../../scripts/util";
 
-export default function CreateQuery(id) {
+export default function CreateQuery(user, id) {
   let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
   const [count, setCount] = React.useState(0);
   const [show, setShow] = useState(false);
@@ -52,7 +52,13 @@ export default function CreateQuery(id) {
 
   return (
     <>
-      <Button variant="secondary" onClick={handleShow}>
+      <Button
+        variant="secondary"
+        onClick={handleShow}
+        disabled={
+          user.user.korisnickoIme === currentInfo.userName ? true : false
+        }
+      >
         Pošalji upit!
       </Button>
 

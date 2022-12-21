@@ -115,13 +115,13 @@ public class UpitServiceImpl implements UpitService {
         }
         if (oglas.isTrazimPomoc()) {
             if (oglas.getKreator().equals(korisnikPoUsername)) {
-                regKorisnikService.ocijeni(oglas.getKreator(), createOcjenaDTO.getOcjena());
+                regKorisnikService.ocijeni(upit.getAutorUpita(), createOcjenaDTO.getOcjena());
             } else {
                 throw new RequestDeniedException("Nemate prava ocijeniti");
             }
         } else {
             if (upit.getAutorUpita().equals(korisnikPoUsername)) {
-                regKorisnikService.ocijeni(upit.getAutorUpita(), createOcjenaDTO.getOcjena());
+                regKorisnikService.ocijeni(oglas.getKreator(), createOcjenaDTO.getOcjena());
             } else {
                 throw new RequestDeniedException("Nemate prava ocijeniti");
             }

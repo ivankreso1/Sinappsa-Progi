@@ -90,12 +90,12 @@ insert into registrirani_korisnik(id, korisnicko_ime, ime, prezime, avatar, emai
 insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-2, -1, 'Zelim error', 'ovo je da izazove error', -10, true, 'LABOS', true);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-3, -3, 'Linalg instrukcije', 'Nudim pomoć oko rješavanja zadataka', -1, true, 'GRADIVO', false);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-4, -4, 'Osnove prvi lab', 'Tražim pomoć za prvi labos iz osnova elektrotehnike', -3, true, 'LABOS', false);
-insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-5, -6, 'baze dz', 'Tražim pomoć za prvu domaću zadaću iz baza podataka', -2, false, 'GRADIVO', true);
+insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-5, -6, 'baze dz', 'Tražim pomoć za prvu domaću zadaću iz baza podataka', -2, true, 'GRADIVO', true);
 insert into oglas(id, kreator_id, naslov, opis, kolegij_id, aktivan, kategorija, trazim_pomoc) values (-6, -7, 'baze dz', 'Nudim pomoć oko rješavanja domaće zadaće iz baza podataka', -2, true, 'GRADIVO', false);
 
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-3, -1, -2, 'Ovo je poruka dobrog upita slovo č', 'U_TIJEKU');
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-4, -3, -6, 'Pomoć oko baza por favor', 'U_TIJEKU');
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-5, -6, -4, 'Meni treba pomoć oko labosa iz osnova', 'CEKA_OCJENJIVANJE');
-insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-6, -7, -5, 'Trebam pomoć oko matana', 'U_TIJEKU');
-insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-8, -8, -5, 'Novi upit', 'U_TIJEKU');
+insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-6, -7, -5, 'Nudim pomoć oko baza', 'U_TIJEKU');
+insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-8, -8, -5, 'Pomoci cu ti oko podataka baza', 'U_TIJEKU');
 insert into upit(id, autor_upita_id, oglas_id, poruka, stanje_upita) values (-7, -7, -6, 'Pomozi mi oko matana', 'PRIHVACEN');

@@ -25,9 +25,24 @@ export default function CreateQuery(id) {
     event.preventDefault();
 
     const data = {
+      idUpita: id.id,
       ocjena: grade.ocjena,
     };
     console.log(data);
+
+    putDataAuth("upiti/ocijeni", data).then((data) => {
+      console.log(data);
+      if (data.error) {
+        alert(data.error.message);
+      } else {
+        putDataAuth(
+          "/upiti/" + id.id + "/novoStanje?stanjeUpita=PRIHVACEN",
+          {}
+        );
+      }
+    });
+    //setShow(false);
+    window.location.reload(false);
   }
 
   return (
