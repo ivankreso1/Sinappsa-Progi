@@ -153,6 +153,7 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
             RangiraniKorisnikDTO rangiraniKorisnikDTO = new RangiraniKorisnikDTO();
             rangiraniKorisnikDTO.setKorisnickoIme(korisnik.getKorisnickoIme());
             rangiraniKorisnikDTO.setProsjek((float) korisnik.getSumaPrimljenihRecenzija() / korisnik.getBrojPrimljenihRecenzija());
+            rangiraniKorisnikDTO.setAvatar(korisnik.getAvatar());
             listaRangiranihKorisnika.add(rangiraniKorisnikDTO);
         }
 
