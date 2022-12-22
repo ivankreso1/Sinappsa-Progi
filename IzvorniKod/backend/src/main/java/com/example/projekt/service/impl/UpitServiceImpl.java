@@ -127,6 +127,7 @@ public class UpitServiceImpl implements UpitService {
             }
         }
         upit.setStanjeUpita(StanjeUpita.PRIHVACEN);
+        upit.setOcjena(createOcjenaDTO.getOcjena());
         upitRepository.save(upit);
 
         return true;

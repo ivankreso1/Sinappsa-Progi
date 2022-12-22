@@ -24,6 +24,9 @@ public class Upit {
     @Column(nullable = false)
     private StanjeUpita stanjeUpita;
 
+    @Column(nullable = false)
+    private int ocjena;
+
     public Upit() {
     }
 
@@ -32,6 +35,15 @@ public class Upit {
         this.oglas = oglas;
         this.poruka = poruka;
         this.stanjeUpita = stanjeUpita;
+        this.ocjena = -1;
+    }
+
+    public int getOcjena() {
+        return ocjena;
+    }
+
+    public void setOcjena(int ocjena) {
+        this.ocjena = ocjena;
     }
 
     public Long getId() {
