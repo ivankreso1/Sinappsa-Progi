@@ -18,7 +18,7 @@ public interface RegKorisnikRepository extends JpaRepository<RegistriraniKorisni
     @Query(value = "SELECT * " +
             "FROM registrirani_korisnik " +
             "WHERE registrirani_korisnik.broj_primljenih_recenzija > 0 " +
-            "ORDER BY (registrirani_korisnik.suma_primljenih_recenzija / registrirani_korisnik.broj_primljenih_recenzija) DESC " +
+            "ORDER BY (CAST(registrirani_korisnik.suma_primljenih_recenzija AS DECIMAL(7, 5)) / registrirani_korisnik.broj_primljenih_recenzija) DESC " +
             "LIMIT 10", nativeQuery = true)
     List<RegistriraniKorisnik> dohvatiNajboljih10();
 }
