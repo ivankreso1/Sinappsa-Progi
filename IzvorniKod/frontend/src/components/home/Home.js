@@ -30,7 +30,7 @@ function App() {
 		);
 		fetch(
 			`${configData.hostname}/oglasi/filter?smjer=&kategorija=&kolegij=`
-		) /* fetch(`${configData.hostname}/oglasi/aktivni`)*/
+		) 
 			.then((res) => res.json())
 			.then((data) => {
 				// console.log(data)
@@ -42,6 +42,21 @@ function App() {
 		fetchNotFiltered();
 	}, []);
 
+	useEffect(() => {
+		fetch(
+			`${configData.hostname}/oglasi/filter?smjer=${formInfo.smjer
+			}&kategorija=${formInfo.kategorija
+			}&kolegij=${formInfo.kolegij.replace(/ /g, "+")}`
+		)
+			.then((res) => res.json())
+			.then((data) => {
+				// console.log(data)
+				setOglasi(data);
+			})
+	}, [oglasi])	//SLUZI tome da se stranica refresha u trenutku kada se obrise neki od oglasa
+	
+	
+	
 	//u ovoj funkciji treba fetchati sve kolegije s backenda koji postoje u bazi podataka
 	function dohvatiKolegije(smjer) {
 		//console.log(smjer)
@@ -49,7 +64,7 @@ function App() {
 			.then((res) => res.json())
 			.then((data) => {
 				// console.log(data)
-				setKolegiji(data);
+				setTimeout(() => {setKolegiji(data)}, 10);	//riješen problem višestrukog renderanja
 				// console.log(kolegiji)
 			});
 	}
@@ -93,7 +108,15 @@ function App() {
 			kolegij: "",
 			kategorija: "",
 		});
-		fetchNotFiltered();
+		//fetchNotFiltered();
+		
+		fetch(`${configData.hostname}/kolegiji`).then((res) =>
+			res.json().then((data) => {
+				// console.log(data)
+				setKolegiji(data);
+			})
+		);
+
 		setCheckedRadioButton("");
 	}
 

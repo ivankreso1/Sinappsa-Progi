@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
+import { deleteData, deleteDataAuth } from "../../scripts/util";
 
 export default function CreateQuery(props) {
     let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
@@ -34,8 +35,7 @@ export default function CreateQuery(props) {
             poruka: deleteMessage.opis,
         };
 
-        console.log(deleteMessage)
-
+        deleteDataAuth(`oglasi/${props.props.ad.id}`, {poruka: deleteMessage.opis})
         setCount(0);
         setShow(false);
     }

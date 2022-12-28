@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import AdCard from "./AdCard";
 import { getPersonInfo } from "../../scripts/util";
+import { useAccordionButton } from "react-bootstrap";
 
 
 class AdList extends Component {
@@ -13,6 +14,7 @@ class AdList extends Component {
     console.log(getPersonInfo())
     //console.log(this.props.ad.kreator)
     this.isModerator = getPersonInfo().isModerator ? true : false
+
   }
 
   render() {
