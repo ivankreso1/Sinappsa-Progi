@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import AdCard from "./AdCard";
+import { getPersonInfo } from "../../scripts/util";
+
 
 class AdList extends Component {
 
@@ -7,6 +9,10 @@ class AdList extends Component {
     super(props);
 
     this.state = {};
+    //console.log(props)
+    console.log(getPersonInfo())
+    //console.log(this.props.ad.kreator)
+    this.isModerator = getPersonInfo().isModerator ? true : false
   }
 
   render() {
@@ -19,6 +25,7 @@ class AdList extends Component {
           ? this.props.data.map((dataElement) => 
             <AdCard 
               key={`adCard${this.props.data.indexOf(dataElement)}`} 
+              isModerator = {this.isModerator}
               ad={dataElement.oglas}
               queries={dataElement.listaUpita}
               forProfile={this.props.forProfile}

@@ -19,6 +19,7 @@
 .homepage-header-links {
     display: grid;
     margin: 20px;
+    text-align: center;
 }
 
 .page-links a:link {

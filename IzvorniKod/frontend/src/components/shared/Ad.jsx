@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CreateQuery from "../home/CreateQuery";
+import DeleteQuery from "../home/DeleteQuery";
 import "../../cssFiles/home/oglas.css";
 import UserTag from "./UserTag";
 
@@ -8,6 +9,8 @@ class Ad extends Component {
     super(props);
 
     this.state = {};
+
+    console.log(props)
   }
 
   render() {
@@ -37,6 +40,7 @@ class Ad extends Component {
           </div>
           <div className="oglas-text-opis">{ad.opis}</div>
         </div>
+        {this.props.isModerator ? <DeleteQuery props={this.props}></DeleteQuery> : ""}
       </div>
     );
   }

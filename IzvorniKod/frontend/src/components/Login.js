@@ -49,11 +49,14 @@ export default function Login() {
           // console.log(data.message)
           setError(data.message);
         } else {
+          console.log("data")
+          console.log(data)
           const personInfo = PERSON_INFO_TEMPLATE;
 
           personInfo.userName = info.userName;
           personInfo.password = info.password;
           personInfo.id = data.id;
+          personInfo.isModerator = data.moderator;
 
           localStorage.setItem(PERSON_INFO_KEY, JSON.stringify(personInfo));
 

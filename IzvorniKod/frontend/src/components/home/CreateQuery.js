@@ -95,7 +95,7 @@ export default function CreateQuery(props) {
                 onChange={handleMultipleFun}
                 maxLength={255}
                 minLength={10}
-                required="true"
+                required={true}
               />
             </Form.Group>
             <div>

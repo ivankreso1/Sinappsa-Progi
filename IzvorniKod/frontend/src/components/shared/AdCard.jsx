@@ -9,6 +9,7 @@ class AdCard extends Component {
 			<React.Fragment>
 				<Ad
 					key={`ad${this.props.ad.id}`}
+					isModerator = {this.props.isModerator}
 					ad={this.props.ad}
 					forProfile={this.props.forProfile}
 				/>
