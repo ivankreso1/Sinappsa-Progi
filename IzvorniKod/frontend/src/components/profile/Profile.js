@@ -4,6 +4,7 @@ import "../../cssFiles/Profile.css";
 import Navbar from "../home/Navbar";
 import ProfileInfo from "./ProfileInfo";
 import UserAds from "./UserAds";
+import UserQueries from "./UserQueries";
 import { getPersonInfo } from "../../scripts/util";
 
 export default function Profile() {
@@ -24,6 +25,7 @@ export default function Profile() {
       <div className="profile-elements">
         <ProfileInfo key="profileInfo"></ProfileInfo>
         <UserAds key="userAds"></UserAds>
+        <UserQueries key="userQueries"></UserQueries>
       </div>
     </div>
   );

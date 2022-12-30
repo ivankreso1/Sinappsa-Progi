@@ -17,7 +17,7 @@ class Query extends Component {
         />
         <p>{this.props.query.poruka}</p>
         <p>{this.props.query.stanjeUpita}</p>
-        {this.props.query.stanjeUpita === "U_TIJEKU" ? (
+        {this.props.query.stanjeUpita  === "U_TIJEKU" && this.props.enableResponse ? (
           <QueryResponse id={this.props.query.id} />
         ) : (
           ""

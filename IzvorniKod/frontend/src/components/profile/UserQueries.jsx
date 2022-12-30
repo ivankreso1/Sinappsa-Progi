@@ -34,6 +34,7 @@ class UserQueries extends Component {
                         	<Query 
                             	key={`query${this.state.userQueries.indexOf(query)}`} 
                             	query={query}
+								enableResponse={false}
                         	/>
                     )
 					}
