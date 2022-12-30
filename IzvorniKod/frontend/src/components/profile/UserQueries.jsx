@@ -31,11 +31,20 @@ class UserQueries extends Component {
 					<h2 className="section-title section-title-secondary-color"> Moji upiti </h2>
 					{
 					this.state.userQueries.map(query =>
+						<div class="user-query-card">
+							<Ad
+								key={`ad${query.oglas.id}`}
+								isModerator = {false} //hardkodirano, jer modovi ne mogu imati svoje upite na profilu
+								ad={query.oglas}
+								forProfile={true}
+							/>
+
                         	<Query 
                             	key={`query${this.state.userQueries.indexOf(query)}`} 
                             	query={query}
 								enableResponse={false}
                         	/>
+						</div>
                     )
 					}
 				</div>

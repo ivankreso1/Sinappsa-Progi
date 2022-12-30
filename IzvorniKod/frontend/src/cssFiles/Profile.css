@@ -51,5 +51,11 @@ body {
 }
 
 .query {
-    margin-left: 10%;
+    margin-left: 15%;
 }
+
+.user-query-card {
+    margin-bottom: 25px;
+}
+
+
