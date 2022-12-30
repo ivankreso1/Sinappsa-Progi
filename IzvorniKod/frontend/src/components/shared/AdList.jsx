@@ -11,7 +11,7 @@ class AdList extends Component {
 
     this.state = {};
     //console.log(props)
-    console.log(getPersonInfo())
+    // console.log(getPersonInfo())
     //console.log(this.props.ad.kreator)
     this.isModerator = getPersonInfo().isModerator ? true : false
 

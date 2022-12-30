@@ -6,6 +6,7 @@ import Filter from "./Filter";
 import AdList from "../shared/AdList";
 import RankList from "./RankList";
 import Navbar from "./Navbar";
+import AddCourse from "./AddCourse";
 import { getPersonInfo } from "../../scripts/util";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -150,6 +151,7 @@ function App() {
 					>
 						Kreiraj oglas!
 					</Button>
+					{getPersonInfo().isModerator ? <AddCourse /> : ""}
 					<Filter
 						key="filter"
 						kolegiji={kolegiji}

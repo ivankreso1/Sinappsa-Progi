@@ -10,7 +10,7 @@ class Ad extends Component {
 
     this.state = {};
 
-    console.log(props)
+    // console.log(props)
   }
 
   render() {

@@ -1,15 +1,15 @@
 package com.example.projekt.rest.dto;
 
 public class CreateKolegijDTO {
-    private String nazivKolegija;
+    private String ime;
     private String smjer;
 
     public String getNazivKolegija() {
-        return nazivKolegija;
+        return ime;
     }
 
-    public void setNazivKolegija(String nazivKolegija) {
-        this.nazivKolegija = nazivKolegija;
+    public void setNazivKolegija(String ime) {
+        this.ime = ime;
     }
 
     public String getSmjer() {
