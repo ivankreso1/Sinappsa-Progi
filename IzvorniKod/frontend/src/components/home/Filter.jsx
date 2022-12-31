@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import { Form, Button } from "react-bootstrap";
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import DropdownItem from 'react-bootstrap/esm/DropdownItem';
+// import { Form, Button } from "react-bootstrap";
+// import DropdownButton from 'react-bootstrap/DropdownButton';
+// import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import "../../cssFiles/home/filter.css";
+import "bootstrap";
 
 
 class Filter extends Component {
     
     state = {
         categories: [
-            "LABOS", "BLIC", "GRADIVO", "KONTINUIRANI_ISPIT", "ISPITNI_ROK"
+            "Labos", 
+            "Blic", 
+            "Gradivo", 
+            "Kontinuirani ispit", 
+            "Ispitni rok"
         ]
     };
 
@@ -17,49 +22,40 @@ class Filter extends Component {
         const formInfo = this.props.formInfo;
 
         return (
-            <div className="filter-container">
-                <Form key="form" className="form-filter" onSubmit={this.props.onFormSubmit}>
-                    <div className='form-filter-item'>
-                        <Form.Group key="g1" className="filter-smjer-radio">Smjer:
-                            <Form.Check type="radio" label="R" name="smjer" value="R" isValid={formInfo.smjer === "R" ? true : false} onChange={this.props.onFormInfo} checked={this.props.checkedRadioButton === "R" ? true : false} />  {/*stavljen onChange umjesto onClick kako bi se riješio "You provided 'checked' prop to a form field without onChange handler" error u konzoli */}
-                            <Form.Check type="radio" label="E" name="smjer" value="E" isValid={formInfo.smjer === "E" ? true : false} onChange={this.props.onFormInfo} checked={this.props.checkedRadioButton === "E" ? true : false} />   {/*stavljen onChange umjesto onClick kako bi se riješio "You provided 'checked' prop to a form field without onChange handler" error u konzoli */}
-                        </Form.Group>
-                        {/* {formInfo.smjer === "" ? "" : <h6 className='selected-filter'>{formInfo.smjer}</h6>} */}
+            <div className="row">
+                <div className="col-lg-15 mb-3">
+                    <div className="row text-left mb-2">
+                        <div className="col-lg-3 mb-3 mb-sm-0">
+                            <div className="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" style={{width: "100%"}}>
+                                <select name="smjer" className="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabindex="-98" onChange={this.props.onDropDownClick}>
+                                    <option value="">Svi smjerovi</option>
+                                    <option value="R">R smjer</option>
+                                    <option value="E">E smjer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="col-lg-5 mb-3 mb-sm-0">
+                            <div className="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" style={{width: "100%"}}>
+                                <select name="kolegij" className="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabindex="-98" onChange={this.props.onDropDownClick}>
+                                    <option value="">Svi kolegiji</option>
+                                    {this.props.kolegiji.map(kolegij => {
+                                        return <option value={kolegij.ime}>{kolegij.ime}</option>
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 mb-3 mb-sm-0">
+                            <div className="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" style={{width: "100%"}}>
+                                <select name="kategorija" className="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabindex="-98" onChange={this.props.onDropDownClick}>
+                                    <option value="">Sve kategorije</option>
+                                    {this.state.categories.map(category => {
+                                        return <option value={category.toUpperCase().replace(" ", "_")}>{category}</option>
+                                    })}
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div className="form-filter-item">  
-                        <DropdownButton key="db1" title="Kolegiji" variant={!formInfo.kolegij ? "danger" : "success"} /*onSelect={dohvatiKolegije}*/>
-                            {this.props.kolegiji.map(kolegij => {
-                                return <DropdownItem onClick={this.props.onDropDownClick} name="kolegij">{kolegij.ime}</DropdownItem>
-                            })}
-                        </DropdownButton>
-                        {formInfo.kolegij === "" ? "" : <h6 className='selected-filter'>{formInfo.kolegij}</h6>}
-                    </div>
-                    <div className="form-filter-item">
-                        <DropdownButton key="db2" title="Kategorije" variant={!formInfo.kategorija ? "danger" : "success"} /*onClick={menuDropDownClick}*/>
-                            {this.state.categories.map(category => 
-                                <DropdownItem onClick={this.props.onDropDownClick} name="kategorija">{category}</DropdownItem>                    
-                            )}
-                        </DropdownButton>
-                        {formInfo.kategorija === "" ? "" : <h6 className='selected-filter'>{formInfo.kategorija}</h6>}
-                    </div>
-                    <div className="form-filter-item">
-                        <Button key="btn1"
-                            type="submit" 
-                            variant={
-                                !formInfo.kategorija && !formInfo.kolegij && !formInfo.smjer ? "danger" : "success"
-                            } 
-                            disabled={
-                                !formInfo.kategorija && !formInfo.kolegij && !formInfo.smjer
-                            }
-                        >Filtriraj</Button>
-                        <Button key="btn2"
-                            disabled={
-                                !formInfo.kategorija && !formInfo.kolegij && !formInfo.smjer
-                            }
-                            onClick={this.props.resetFilterOption}
-                        >Očisti filtere</Button>
-                    </div>
-                </Form>
+                </div>
             </div>
         );
     }

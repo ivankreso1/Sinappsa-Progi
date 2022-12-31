@@ -89,7 +89,7 @@ function App() {
 
 	function optionDropDownClick(e) {
 		setFormInfo((prevInfo) => {
-			return { ...prevInfo, [e.target.name]: e.target.innerHTML };
+			return { ...prevInfo, [e.target.name]: e.target.value };
 		});
 	}
 
@@ -140,9 +140,9 @@ function App() {
 			<Navbar getPersonInfo={getPersonInfo}></Navbar>
 			<div className="body-wrapper">
 				<div className="body-wrapper-child">
-					<h2 className="section-title section-title-primary-color">
+					{/* <h2 className="section-title section-title-primary-color">
 						Oglasi
-					</h2>
+					</h2> */}
 					<Button
 						onClick={optionCreateAd}
 						className="mb-3"
