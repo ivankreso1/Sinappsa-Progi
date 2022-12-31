@@ -1,18 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './cssFiles/index.css';
-import Home from './components/home/Home';
-import { BrowserRouter, Route, Routes, } from "react-router-dom";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./cssFiles/index.css";
+import Home from "./components/home/Home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
-import Profile from "./components/profile/Profile"
-import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Profile from "./components/profile/Profile";
+import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Register from "./components/Register";
-import EditProfile from './components/profile/EditProfile';
-import CreateAd from './components/CreateAd';
+import EditProfile from "./components/profile/EditProfile";
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -20,9 +18,8 @@ root.render(
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/register" element ={<Register />} />
-        <Route path="/editProfile" element ={<EditProfile />} />
-        <Route path="/create-ad" element ={<CreateAd />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/editProfile" element={<EditProfile />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
 import { putDataAuth } from "../../scripts/util";
 
-export default function CreateQuery(id) {
+export default function QueryResponse(id) {
   const [show, setShow] = useState(false);
   const [queryResponse, setQueryResponse] = useState({
     odgovor: "",

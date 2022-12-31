@@ -1,17 +1,16 @@
-import { Button, ButtonGroup, Card, Form } from "react-bootstrap";
 import React, { useState } from "react";
-import Navbar from "./home/Navbar";
-import { getData, getPersonInfo, postDataAuth } from "../scripts/util";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { getData, getPersonInfo, postDataAuth } from "../../scripts/util";
 
 export default function CreateAd() {
   let personInfo = getPersonInfo();
 
   const [count, setCount] = React.useState(0);
-
   const navigate = useNavigate();
   const [error, setError] = useState("");
-
   const [ad, setAd] = useState({
     radnja: "",
     kolegij: "",
@@ -19,7 +18,6 @@ export default function CreateAd() {
     naslov: "",
     opis: "",
   });
-
   const [kolegiji, setKolegiji] = useState([""]);
   let kategorije = [
     "LABOS",
@@ -29,11 +27,17 @@ export default function CreateAd() {
     "ISPITNI_ROK",
   ];
 
-  React.useEffect(() => {
-    if (personInfo.userName.length === 0) {
-      navigate("/login"); // za onemogucavanje neulogiranog odlaska na /create-ad
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    if (!personInfo.userName) {
+      navigate("/login");
+    } else {
+      setShow(true);
     }
+  };
 
+  React.useEffect(() => {
     getData("/kolegiji").then((data) => {
       setKolegiji(data);
     });
@@ -54,7 +58,7 @@ export default function CreateAd() {
     handleAdChange(event);
   }
 
-  function onSubmit(event) {
+  function optionSubmitForm(event) {
     event.preventDefault();
 
     const data = {
@@ -69,30 +73,39 @@ export default function CreateAd() {
       if (res.error) {
         setError(res.message);
       } else {
-        navigate("/");
+        //navigate("/");
+        setCount(0);
+        setShow(false);
+        window.location.reload(false);
       }
     });
   }
 
   return (
-    <div>
-      <Navbar getPersonInfo={getPersonInfo}></Navbar>
+    <>
+      <button
+        className="btn btn-lg btn-block btn-success rounded-3 py-4 mb-3 bg-op-6 roboto-bold"
+        onClick={handleShow}
+      >
+        Kreiraj oglas
+      </button>
 
-      <div className="container">
-        <Card
-          style={{
-            boxShadow:
-              "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px",
-            minWidth: "400px",
-            maxWidth: "480px",
-            display: "flex",
-            alignContent: "center",
-            alignItems: "center",
-            borderRadius: "10px",
-          }}
-        >
-          <h1> Kreiraj novi oglas! </h1>
-          <Form className="form" onSubmit={onSubmit}>
+      <Modal
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={show}
+        onHide={handleClose}
+        backdrop="static" //onemogucen izlaz klikom na pozadinu
+        keyboard={false} //onemogucen izlaz pomocu escape key-a
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Kreiraj oglas!
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form className="form" onSubmit={optionSubmitForm}>
             <div className="mb-3">
               <Form.Check
                 inline
@@ -170,33 +183,35 @@ export default function CreateAd() {
                 </p>
               </div>
             </div>
-            <ButtonGroup className="mb-3 d-flex ">
-              <Button variant="danger" href="/">
-                Cancel
-              </Button>
-              <Button variant="secondary" type="reset">
-                Clear
-              </Button>
-              <Button
-                variant="success"
-                type="submit"
-                disabled={
-                  !ad.radnja ||
-                  !ad.kolegij ||
-                  !ad.kategorija ||
-                  !ad.naslov ||
-                  !ad.opis
-                    ? true
-                    : false
-                }
-              >
-                Submit
-              </Button>
-            </ButtonGroup>
+            <ModalFooter>
+              <ButtonGroup className="mb-3 d-flex ">
+                <Button variant="danger" href="/">
+                  Cancel
+                </Button>
+                <Button variant="secondary" type="reset">
+                  Clear
+                </Button>
+                <Button
+                  variant="success"
+                  type="submit"
+                  disabled={
+                    !ad.radnja ||
+                    !ad.kolegij ||
+                    !ad.kategorija ||
+                    !ad.naslov ||
+                    !ad.opis
+                      ? true
+                      : false
+                  }
+                >
+                  Submit
+                </Button>
+              </ButtonGroup>
+            </ModalFooter>
           </Form>
           <div className="error-message">{error}</div>
-        </Card>
-      </div>
-    </div>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }

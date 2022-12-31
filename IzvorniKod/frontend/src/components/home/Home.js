@@ -8,139 +8,129 @@ import RankList from "./RankList";
 import Navbar from "./Navbar";
 import AddCourse from "./AddCourse";
 import { getPersonInfo } from "../../scripts/util";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import CreateAd from "./CreateAd";
 
 function App() {
-	const navigate = useNavigate();
-	const [kolegiji, setKolegiji] = useState([""]);
-	const [oglasi, setOglasi] = useState([]);
-	const [checkedRadioButton, setCheckedRadioButton] = useState("");
-	const [formInfo, setFormInfo] = useState({
-		smjer: "",
-		kolegij: "",
-		kategorija: "",
-	});
+  const [kolegiji, setKolegiji] = useState([""]);
+  const [oglasi, setOglasi] = useState([]);
+  const [checkedRadioButton, setCheckedRadioButton] = useState("");
+  const [formInfo, setFormInfo] = useState({
+    smjer: "",
+    kolegij: "",
+    kategorija: "",
+  });
 
-	function fetchNotFiltered() {
-		fetch(`${configData.hostname}/kolegiji`).then((res) =>
-			res.json().then((data) => {
-				// console.log(data)
-				setKolegiji(data);
-			})
-		);
-		fetch(
-			`${configData.hostname}/oglasi/filter?smjer=&kategorija=&kolegij=`
-		) 
-			.then((res) => res.json())
-			.then((data) => {
-				// console.log(data)
-				setOglasi(data);
-			});
-	} /*ovaj dio je izdvojen u funkciju jer se koristi u useeffectu i kada se očiste opcije filtriranja (resetFilterOption)*/
+  function fetchNotFiltered() {
+    fetch(`${configData.hostname}/kolegiji`).then((res) =>
+      res.json().then((data) => {
+        // console.log(data)
+        setKolegiji(data);
+      })
+    );
+    fetch(`${configData.hostname}/oglasi/filter?smjer=&kategorija=&kolegij=`)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data)
+        setOglasi(data);
+      });
+  } /*ovaj dio je izdvojen u funkciju jer se koristi u useeffectu i kada se očiste opcije filtriranja (resetFilterOption)*/
 
-	useEffect(() => {
-		fetchNotFiltered();
-	}, []);
+  useEffect(() => {
+    fetchNotFiltered();
+  }, []);
 
-	useEffect(() => {
-		fetch(
-			`${configData.hostname}/oglasi/filter?smjer=${formInfo.smjer
-			}&kategorija=${formInfo.kategorija
-			}&kolegij=${formInfo.kolegij.replace(/ /g, "+")}`
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				// console.log(data)
-				setOglasi(data);
-			})
-	}, [oglasi])	//SLUZI tome da se stranica refresha u trenutku kada se obrise neki od oglasa
-	
-	
-	
-	//u ovoj funkciji treba fetchati sve kolegije s backenda koji postoje u bazi podataka
-	function dohvatiKolegije(smjer) {
-		//console.log(smjer)
-		fetch(`${configData.hostname}/kolegiji/smjer/${smjer.toLowerCase()}`)
-			.then((res) => res.json())
-			.then((data) => {
-				// console.log(data)
-				setTimeout(() => {setKolegiji(data)}, 10);	//riješen problem višestrukog renderanja
-				// console.log(kolegiji)
-			});
-	}
+  useEffect(() => {
+    fetch(
+      `${configData.hostname}/oglasi/filter?smjer=${
+        formInfo.smjer
+      }&kategorija=${formInfo.kategorija}&kolegij=${formInfo.kolegij.replace(
+        / /g,
+        "+"
+      )}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data)
+        setOglasi(data);
+      });
+  }, [oglasi]); //SLUZI tome da se stranica refresha u trenutku kada se obrise neki od oglasa
 
-	function handleFormSubmit(e) {
-		e.preventDefault();
-		// console.log(formInfo)       //target je cijela forma koja se submita
-		fetch(
-			`${configData.hostname}/oglasi/filter?smjer=${
-				formInfo.smjer
-			}&kategorija=${
-				formInfo.kategorija
-			}&kolegij=${formInfo.kolegij.replace(/ /g, "+")}`
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				// console.log(data)
-				setOglasi(data);
-			});
-	}
+  //u ovoj funkciji treba fetchati sve kolegije s backenda koji postoje u bazi podataka
+  function dohvatiKolegije(smjer) {
+    //console.log(smjer)
+    fetch(`${configData.hostname}/kolegiji/smjer/${smjer.toLowerCase()}`)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data)
+        setTimeout(() => {
+          setKolegiji(data);
+        }, 10); //riješen problem višestrukog renderanja
+        // console.log(kolegiji)
+      });
+  }
 
-	function optionDropDownClick(e) {
-		setFormInfo((prevInfo) => {
-			return { ...prevInfo, [e.target.name]: e.target.value };
-		});
-	}
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    // console.log(formInfo)       //target je cijela forma koja se submita
+    fetch(
+      `${configData.hostname}/oglasi/filter?smjer=${
+        formInfo.smjer
+      }&kategorija=${formInfo.kategorija}&kolegij=${formInfo.kolegij.replace(
+        / /g,
+        "+"
+      )}`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data)
+        setOglasi(data);
+      });
+  }
 
-	function changeFormInfo(e) {
-		/*ovdje se trebaju fetchati svi kolegiji za određen smjer*/
-		console.log(e.target.value);
-		dohvatiKolegije(e.target.value);
-		setFormInfo((prevInfo) => {
-			return { ...prevInfo, [e.target.name]: e.target.value };
-		});
-		setCheckedRadioButton(e.target.value);
-	}
+  function optionDropDownClick(e) {
+    setFormInfo((prevInfo) => {
+      return { ...prevInfo, [e.target.name]: e.target.value };
+    });
+  }
 
-	function resetFilterOption() {
-		setFormInfo({
-			smjer: "",
-			kolegij: "",
-			kategorija: "",
-		});
-		//fetchNotFiltered();
-		
-		fetch(`${configData.hostname}/kolegiji`).then((res) =>
-			res.json().then((data) => {
-				// console.log(data)
-				setKolegiji(data);
-			})
-		);
+  function changeFormInfo(e) {
+    /*ovdje se trebaju fetchati svi kolegiji za određen smjer*/
+    console.log(e.target.value);
+    dohvatiKolegije(e.target.value);
+    setFormInfo((prevInfo) => {
+      return { ...prevInfo, [e.target.name]: e.target.value };
+    });
+    setCheckedRadioButton(e.target.value);
+  }
 
-		setCheckedRadioButton("");
-	}
+  function resetFilterOption() {
+    setFormInfo({
+      smjer: "",
+      kolegij: "",
+      kategorija: "",
+    });
+    //fetchNotFiltered();
 
-	function optionCreateAd() {
-		let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
-		console.log(currentInfo.userName);
-		if (!currentInfo.userName) {
-			navigate("/login");
-		} else {
-			navigate("/create-ad");
-		}
-	}
+    fetch(`${configData.hostname}/kolegiji`).then((res) =>
+      res.json().then((data) => {
+        // console.log(data)
+        setKolegiji(data);
+      })
+    );
 
-	function mapAds(ads) {
-		return ads.map((ad) => Object({ oglas: ad, listaUpita: [] }));
-	}
+    setCheckedRadioButton("");
+  }
 
-	return (
-		<div className="home-page">
-			<Navbar getPersonInfo={getPersonInfo}></Navbar>
-			<div className="body-wrapper">
-				<div className="body-wrapper-child">
-					{/* <Button
+  function mapAds(ads) {
+    return ads.map((ad) => Object({ oglas: ad, listaUpita: [] }));
+  }
+
+  return (
+    <div className="home-page">
+      <Navbar getPersonInfo={getPersonInfo}></Navbar>
+      <div className="body-wrapper">
+        <div className="body-wrapper-child">
+          {/* <Button
 						onClick={optionCreateAd}
 						className="mb-3"
 						size="lg"
@@ -148,33 +138,25 @@ function App() {
 					>
 						Kreiraj oglas!
 					</Button> */}
-					<Filter
-						key="filter"
-						kolegiji={kolegiji}
-						formInfo={formInfo}
-						checkedRadioButton={checkedRadioButton}
-						resetFilterOption={resetFilterOption}
-						onFormSubmit={(e) => handleFormSubmit(e)}
-						onFormInfo={(e) => changeFormInfo(e)}
-						onDropDownClick={(e) => optionDropDownClick(e)}
-					/>
-					<AdList 
-            key="adList" 
-            data={mapAds(oglasi)} 
-            forProfile={false}
+          <Filter
+            key="filter"
+            kolegiji={kolegiji}
+            formInfo={formInfo}
+            checkedRadioButton={checkedRadioButton}
+            resetFilterOption={resetFilterOption}
+            onFormSubmit={(e) => handleFormSubmit(e)}
+            onFormInfo={(e) => changeFormInfo(e)}
+            onDropDownClick={(e) => optionDropDownClick(e)}
           />
-				</div>
-				<div className="body-wrapper-child">					
-					{
-						getPersonInfo().isModerator ? 
-							<AddCourse /> : 
-							<button className="btn btn-lg btn-block btn-success rounded-3 py-4 mb-3 bg-op-6 roboto-bold" onClick={optionCreateAd}>Kreiraj oglas</button>
-					}
-					<RankList key="rankList" />
-				</div>
-			</div>
-		</div>
-	);
+          <AdList key="adList" data={mapAds(oglasi)} forProfile={false} />
+        </div>
+        <div className="body-wrapper-child">
+          {getPersonInfo().isModerator ? <AddCourse /> : <CreateAd />}
+          <RankList key="rankList" />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default App;
