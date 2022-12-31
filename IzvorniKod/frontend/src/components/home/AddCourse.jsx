@@ -46,7 +46,7 @@ class AddCourse extends Component {
     render() { 
         return (
             <React.Fragment>
-                <Button key="gumb1" className="mb-3" variant="secondary" onClick={this.handleShow}>Dodaj kolegij</Button>
+                <button className="btn btn-lg btn-block btn-success rounded-3 py-4 mb-3 bg-op-6 roboto-bold" onClick={this.handleShow}>Dodaj kolegij</button>
 
                 <Modal
                     key="modal"

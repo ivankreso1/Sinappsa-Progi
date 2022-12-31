@@ -38,17 +38,16 @@ export default function Navbar({ getPersonInfo }) {
           <h2>Sinappsa</h2>
         </a>
       </div>
-      <div className="homepage-header-links">
+      <div className="homepage-header-links d-flex justify-content-end">
         <div className="page-links">
-          <a href="/">Početna stranica</a>
-          {personInfo.id !== "" ? <a href="/profile">Profil</a> : ""}
+          {personInfo.id !== "" ? <a className="mx-2" href="/profile">Profil</a> : ""}
           {personInfo.id !== "" ? (
-            <a onClick={logout} href="/">
+            <a className="mx-2" onClick={logout} href="/">
               {" "}
-              Odjava ({personInfo.userName})
+              Odjava
             </a>
           ) : (
-            <a href="/login"> Prijava </a>
+            <a className="mx-2" href="/login"> Prijava </a>
           )}{" "}
           {/*href kod Logout je nepotreban sto se tice funkcionalnosti, dodan je kako bi se stilovi primijenili */}
         </div>

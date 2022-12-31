@@ -140,18 +140,14 @@ function App() {
 			<Navbar getPersonInfo={getPersonInfo}></Navbar>
 			<div className="body-wrapper">
 				<div className="body-wrapper-child">
-					{/* <h2 className="section-title section-title-primary-color">
-						Oglasi
-					</h2> */}
-					<Button
+					{/* <Button
 						onClick={optionCreateAd}
 						className="mb-3"
 						size="lg"
 						variant="light"
 					>
 						Kreiraj oglas!
-					</Button>
-					{getPersonInfo().isModerator ? <AddCourse /> : ""}
+					</Button> */}
 					<Filter
 						key="filter"
 						kolegiji={kolegiji}
@@ -168,7 +164,12 @@ function App() {
             forProfile={false}
           />
 				</div>
-				<div className="body-wrapper-child">
+				<div className="body-wrapper-child">					
+					{
+						getPersonInfo().isModerator ? 
+							<AddCourse /> : 
+							<button className="btn btn-lg btn-block btn-success rounded-3 py-4 mb-3 bg-op-6 roboto-bold" onClick={optionCreateAd}>Kreiraj oglas</button>
+					}
 					<RankList key="rankList" />
 				</div>
 			</div>

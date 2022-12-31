@@ -17,7 +17,7 @@ class Ad extends Component {
     const ad = this.props.ad;
 
     return (
-      <div className="oglas-container">
+      <div className="card">
         <div className="oglas-korisnik-info-container">
           <UserTag key={`user${ad.kreator.id}`} user={ad.kreator} />
           <div className="oglas-kolegij-i-pomoc">
