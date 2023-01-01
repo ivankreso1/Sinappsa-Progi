@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
-import { deleteData, deleteDataAuth } from "../../scripts/util";
+import { deleteDataAuth } from "../../scripts/util";
 
 export default function DeleteAd(props) {
   let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
@@ -49,24 +49,12 @@ export default function DeleteAd(props) {
 
   return (
     <>
-      <div
-        className="delete-ad-button-container"
-        style={{
-          display: "flex",
-          justifyContent: "end",
-        }}
-      >
-        <Button
-          variant="danger"
-          onClick={handleShow}
-          style={{
-            width: "20%",
-            margin: "5px",
-          }}
+      <Button
+        variant="danger"
+        onClick={handleShow}
         >
-          Obriši oglas
-        </Button>
-      </div>
+        Obriši oglas
+      </Button>
 
       <Modal
         size="lg"

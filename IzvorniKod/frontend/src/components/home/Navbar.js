@@ -40,7 +40,7 @@ export default function Navbar({ getPersonInfo }) {
       </div>
       <div className="homepage-header-links d-flex justify-content-end">
         <div className="page-links">
-          {personInfo.id !== "" ? <a className="mx-2" href="/profile">Profil</a> : ""}
+          {personInfo.id !== "" && !personInfo.isModerator ? <a className="mx-2" href="/profile">Profil</a> : ""}
           {personInfo.id !== "" ? (
             <a className="mx-2" onClick={logout} href="/">
               {" "}
