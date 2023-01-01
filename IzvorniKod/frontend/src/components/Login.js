@@ -49,8 +49,8 @@ export default function Login() {
           // console.log(data.message)
           setError(data.message);
         } else {
-          console.log("data")
-          console.log(data)
+          console.log("data");
+          console.log(data);
           const personInfo = PERSON_INFO_TEMPLATE;
 
           personInfo.userName = info.userName;
@@ -82,7 +82,7 @@ export default function Login() {
             borderRadius: "10px",
           }}
         >
-          <h1> Login </h1>
+          <h1> Prijava </h1>
           <Form className="form" onSubmit={handleSubmit}>
             <Form.Group className="info-input">
               <Form.Control
@@ -110,7 +110,7 @@ export default function Login() {
               disabled={!info.userName || !info.password ? true : false}
             >
               {" "}
-              Submit{" "}
+              Prijavi se!{" "}
             </Button>
           </Form>
           <div className="register-link">

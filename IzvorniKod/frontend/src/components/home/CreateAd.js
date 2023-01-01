@@ -186,10 +186,10 @@ export default function CreateAd() {
             <ModalFooter>
               <ButtonGroup className="mb-3 d-flex ">
                 <Button variant="danger" href="/">
-                  Cancel
+                  Odustani
                 </Button>
                 <Button variant="secondary" type="reset">
-                  Clear
+                  Očisti
                 </Button>
                 <Button
                   variant="success"
@@ -204,7 +204,7 @@ export default function CreateAd() {
                       : false
                   }
                 >
-                  Submit
+                  Kreiraj
                 </Button>
               </ButtonGroup>
             </ModalFooter>

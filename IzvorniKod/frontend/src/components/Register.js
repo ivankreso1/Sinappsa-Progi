@@ -91,7 +91,7 @@ export default function Register() {
             borderRadius: "10px",
           }}
         >
-          <h1> Register </h1>
+          <h1> Registracija </h1>
           <Form className="form" onSubmit={handleSubmit}>
             <Form.Group className="info-input">
               <Form.Control
@@ -185,7 +185,7 @@ export default function Register() {
               }
             >
               {" "}
-              Submit{" "}
+              Registriraj se!{" "}
             </Button>
           </Form>
           <div className="error-message">{error}</div>

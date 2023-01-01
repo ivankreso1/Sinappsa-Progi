@@ -1,27 +1,27 @@
 .oglas-container {
-    border: 1px solid black;
-    border-radius: 10px;
-    margin: 10px;
-    /* max-width: 50%; */
-    background-color: white;
+  /* border: 1px solid black;*/
+  border-radius: 10px;
+  margin: 10px;
+  /* max-width: 50%; */
+  background-color: white;
 }
 
 .oglas-korisnik-info-container {
-    display: grid;
-    grid-template-columns: 4fr 1fr;
-    margin: 20px;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  margin: 20px;
 }
 
 .oglas-korisnik-info img {
-    border: 1px solid black;
-    width: 75px;
-    height: 75px;
-    margin: 10px 15px 10px 5px;
-    border-radius: 50px;
+  border: 1px solid black;
+  width: 75px;
+  height: 75px;
+  margin: 10px 15px 10px 5px;
+  border-radius: 50px;
 }
 .oglas-korisnik-info {
-    font-size: 20px;
-    font-weight: 400;
+  font-size: 20px;
+  font-weight: 400;
 }
 /*.oglas-info-container{
     display: flex;
@@ -29,19 +29,19 @@
 }*/
 
 .oglas-naslov h2 {
-    margin: 20px;
-    min-width: 100px;   /*ovime je osigurano to da nema overflowa*/
-    max-width: 100%; /*ovime je osigurano to da nema overflowa*/
-    display: flex;
-    justify-content: start;
-    align-self: center;
-    font-weight: 400;
+  margin: 20px;
+  min-width: 100px; /*ovime je osigurano to da nema overflowa*/
+  max-width: 100%; /*ovime je osigurano to da nema overflowa*/
+  display: flex;
+  justify-content: start;
+  align-self: center;
+  font-weight: 400;
 }
 
 .oglas-text-opis {
-    margin: 20px;
-    font-size: 20px;
-    /*border: 1px solid black;*/
-    border-radius: 10px;
-    padding: 20px;
+  margin: 20px;
+  font-size: 20px;
+  /*border: 1px solid black;*/
+  border-radius: 10px;
+  padding: 20px;
 }

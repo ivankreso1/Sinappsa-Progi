@@ -2,23 +2,18 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { postDataAuth } from "../../scripts/util";
+import { deleteData, deleteDataAuth } from "../../scripts/util";
 
-export default function CreateQuery(props) {
+export default function DeleteAd(props) {
   let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
   const [count, setCount] = React.useState(0);
   const [show, setShow] = useState(false);
-  const [query, setQuery] = useState({
+  const [deleteMessage, setDeleteMessage] = useState({
     opis: "",
   });
-  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    if (!currentInfo.userName) {
-      navigate("/login");
-    }
     setShow(true);
   };
 
@@ -26,9 +21,9 @@ export default function CreateQuery(props) {
     setCount(event.target.value.length);
   }
 
-  function handleMultipleFun(event) {
+  function handleMessageChange(event) {
     handleCount(event);
-    setQuery((prevQuery) => {
+    setDeleteMessage((prevQuery) => {
       return { ...prevQuery, [event.target.name]: event.target.value };
     });
   }
@@ -37,35 +32,41 @@ export default function CreateQuery(props) {
     event.preventDefault();
 
     const data = {
-      poruka: query.opis,
+      poruka: deleteMessage.opis,
     };
 
-    postDataAuth(
-      "upiti/" + currentInfo.id + "/" + props.props.ad.id,
-      data
-    ).then((res) => {
-      if (res.error) {
-        alert(res.message);
-      }
+    deleteDataAuth(`oglasi/${props.props.ad.id}`, {
+      poruka: deleteMessage.opis,
     });
-
     setCount(0);
     setShow(false);
   }
 
+  /*function handleMouseHover() {
+        if (!count) console.log("ERROR DISPLAYED")
+        else console.log("NO error")
+    }*/
+
   return (
     <>
-      <Button
-        variant="secondary"
-        onClick={handleShow}
-        disabled={
-          props.props.ad.kreator.korisnickoIme === currentInfo.userName
-            ? true
-            : false
-        }
+      <div
+        className="delete-ad-button-container"
+        style={{
+          display: "flex",
+          justifyContent: "end",
+        }}
       >
-        Pošalji upit
-      </Button>
+        <Button
+          variant="danger"
+          onClick={handleShow}
+          style={{
+            width: "20%",
+            margin: "5px",
+          }}
+        >
+          Obriši oglas
+        </Button>
+      </div>
 
       <Modal
         size="lg"
@@ -77,25 +78,21 @@ export default function CreateQuery(props) {
         keyboard={false} //onemogucen izlaz pomocu escape key-a
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Kreiraj upit!
-          </Modal.Title>
+          <Modal.Title>Razlog brisanja oglasa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={optionSubmitForm}>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
+            <Form.Group>
               <Form.Label>Poruka vlasniku oglasa:</Form.Label>
               <Form.Control
                 name="opis"
                 as="textarea"
                 rows="3"
-                onChange={handleMultipleFun}
+                onChange={handleMessageChange}
                 maxLength={255}
                 minLength={10}
                 required={true}
+                placeholder={"Poruka"}
               />
             </Form.Group>
             <div>
@@ -106,10 +103,15 @@ export default function CreateQuery(props) {
             <ModalFooter>
               <ButtonGroup>
                 <Button variant="danger" onClick={handleClose}>
-                  Odustani
+                  Otkaži
                 </Button>
-                <Button variant="success" type="submit">
-                  Pošalji
+                <Button
+                  variant="success"
+                  type="submit"
+                  disabled={count === 0 ? true : false}
+                  //onMouseOver = {handleMouseHover}
+                >
+                  Obriši
                 </Button>
               </ButtonGroup>
             </ModalFooter>

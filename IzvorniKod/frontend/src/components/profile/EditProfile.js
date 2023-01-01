@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Card } from "react-bootstrap";
+import { Button, Form, Card, ButtonGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import avatars from "../../avatars";
 import {
@@ -137,21 +137,32 @@ export default function EditProfile() {
               onChange={handleInfoChange}
             ></Form.Control>
           </Form.Group>
-
-          <Button
-            style={{
-              marginBottom: "10px",
-            }}
-            type="submit"
-            disabled={
-              !editInfo.korisnickoIme && !editInfo.avatar && !editInfo.lozinka
-                ? true
-                : false
-            }
-          >
-            {" "}
-            Spremi{" "}
-          </Button>
+          <ButtonGroup>
+            <Button
+              style={{
+                marginBottom: "10px",
+              }}
+              variant="danger"
+              href="/profile"
+            >
+              {" "}
+              Odustani{" "}
+            </Button>
+            <Button
+              style={{
+                marginBottom: "10px",
+              }}
+              type="submit"
+              disabled={
+                !editInfo.korisnickoIme && !editInfo.avatar && !editInfo.lozinka
+                  ? true
+                  : false
+              }
+            >
+              {" "}
+              Spremi{" "}
+            </Button>
+          </ButtonGroup>
         </Form>
         <div className="error-message">{error}</div>
       </Card>

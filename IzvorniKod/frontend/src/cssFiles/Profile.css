@@ -1,61 +1,56 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
 .profile-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow-y: auto;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  min-height: 100vh;
 }
 
 .profile-elements {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .profile-section {
-    display: flex;
-    width: 400px;
-    flex-direction: column;
-    margin: 5px 5px 5px 5px;
+  display: block;
+  width: 400px;
+  margin: 5px 5px 5px 5px;
 }
 
 .profile-info-container {
-    width: 400px;
-    background-color:  white;
-    border: solid 1px black;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-items: space-evenly;
-    align-items: center;
-    border-radius: 15px;
+  width: 400px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-items: space-evenly;
+  align-items: center;
+  border-radius: 15px;
 }
 
 .profile-info-container img {
-    height: 50%;
-    width: 50%;
-    border: 1px solid black;
-    border-radius: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  height: 50%;
+  width: 50%;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .query {
-    margin-left: 15%;
+  margin-left: 15%;
 }
 
 .user-query-card {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
-
-

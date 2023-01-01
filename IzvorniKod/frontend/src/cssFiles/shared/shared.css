@@ -2,9 +2,13 @@
   text-align: center;
   max-width: 80%;
   margin: auto;
-  margin-bottom: 1%;
-  border: 2px solid black;
+  margin-bottom: 5%;
   border-radius: 10px;
+  font-size: x-large;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
 }
 
 .section-title-primary-color {
@@ -12,5 +16,9 @@
 }
 
 .section-title-secondary-color {
-  background-color: aqua;
+  background-color: white;
+}
+
+.rankList-title {
+  font-style: italic;
 }

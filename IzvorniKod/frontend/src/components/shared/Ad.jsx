@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import CreateQuery from "../home/CreateQuery";
-import DeleteQuery from "../home/DeleteQuery";
+import DeleteQuery from "../home/DeleteAd";
 import "../../cssFiles/home/oglas.css";
 import UserTag from "./UserTag";
+import DeleteAd from "../home/DeleteAd";
 
 class Ad extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class Ad extends Component {
           </div>
           <div className="oglas-text-opis">{ad.opis}</div>
         </div>
-        {this.props.isModerator ? <DeleteQuery props={this.props}></DeleteQuery> : ""}
+        {this.props.isModerator ? <DeleteAd props={this.props}></DeleteAd> : ""}
       </div>
     );
   }

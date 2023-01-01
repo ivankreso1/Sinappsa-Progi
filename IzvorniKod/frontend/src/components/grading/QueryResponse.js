@@ -59,7 +59,7 @@ export default function QueryResponse(id) {
       >
         <Modal.Header key="header" closeButton>
           <Modal.Title key="naslov" id="contained-modal-title-vcenter">
-            Odgovor na upit!
+            Odgovor na upit:
           </Modal.Title>
         </Modal.Header>
         <Modal.Body key="tijelo">
@@ -68,7 +68,7 @@ export default function QueryResponse(id) {
               <Form.Check
                 key="ocjena"
                 inline
-                label="Ocjenjivanje"
+                label="Ocjenjivanje usluge"
                 name="odgovor"
                 type="radio"
                 value="CEKA_OCJENJIVANJE"
@@ -77,7 +77,7 @@ export default function QueryResponse(id) {
               <Form.Check
                 key="odbijeno"
                 inline
-                label="Odbijanje"
+                label="Odbijanje usluge"
                 name="odgovor"
                 type="radio"
                 value="ODBIJEN"
@@ -88,7 +88,7 @@ export default function QueryResponse(id) {
             <ModalFooter key="podnozje">
               <ButtonGroup key="gumbici">
                 <Button key="gumbic1" variant="danger" onClick={handleClose}>
-                  Cancel
+                  Odustani
                 </Button>
                 <Button
                   key="gumbic2"
@@ -96,7 +96,7 @@ export default function QueryResponse(id) {
                   type="submit"
                   disabled={!queryResponse.odgovor ? true : false}
                 >
-                  Submit
+                  Pošalji
                 </Button>
               </ButtonGroup>
             </ModalFooter>
