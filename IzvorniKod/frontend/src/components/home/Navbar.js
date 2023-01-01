@@ -33,21 +33,21 @@ export default function Navbar({ getPersonInfo }) {
 
   return (
     <div className="homepage-header">
-      <div className="homepage-project-name">
+      <div className="homepage-project-name mx-5">
         <a href="/" style={{ textDecoration: "none" }}>
           <h2>Sinappsa</h2>
         </a>
       </div>
-      <div className="homepage-header-links d-flex justify-content-end">
-        <div className="page-links">
-          {personInfo.id !== "" && !personInfo.isModerator ? <a className="mx-2" href="/profile">Profil</a> : ""}
+      <div className="">
+        <div className="page-links d-flex justify-content-end h-100">
+          {personInfo.id !== "" && !personInfo.isModerator ? <a className="mx-0 align-self-center" href="/profile">Profil</a> : ""}
           {personInfo.id !== "" ? (
-            <a className="mx-2" onClick={logout} href="/">
+            <a className="mx-5 align-self-center" onClick={logout} href="/">
               {" "}
               Odjava
             </a>
           ) : (
-            <a className="mx-2" href="/login"> Prijava </a>
+            <a className="mx-5 align-self-center" href="/login"> Prijava </a>
           )}{" "}
           {/*href kod Logout je nepotreban sto se tice funkcionalnosti, dodan je kako bi se stilovi primijenili */}
         </div>
