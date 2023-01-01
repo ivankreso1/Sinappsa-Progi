@@ -21,10 +21,10 @@ class RankList extends Component {
   render() {
     return (
       <React.Fragment>
-        <h1 className="card rounded-0 mb-2 mt-5 section-title section-title-secondary-color rankList-title">
+        <h1 className="card rounded-0 mb-2 mt-5section-title section-title-secondary-color rankList-title">
           Top lista studenata - pomagača
         </h1>
-        <div className="rank-list-container">
+        <div className="rank-list-container mb-5">
           {this.state.rankList.length > 0 ? (
             this.state.rankList.map((user) => (
               <Rank

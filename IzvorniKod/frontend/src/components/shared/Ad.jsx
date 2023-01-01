@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import CreateQuery from "../home/CreateQuery";
-import DeleteQuery from "../home/DeleteAd";
 import "../../cssFiles/home/oglas.css";
 import UserTag from "./UserTag";
 import DeleteAd from "../home/DeleteAd";

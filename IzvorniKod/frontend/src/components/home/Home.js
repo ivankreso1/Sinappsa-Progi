@@ -129,15 +129,7 @@ function App() {
     <div className="home-page">
       <Navbar getPersonInfo={getPersonInfo}></Navbar>
       <div className="body-wrapper">
-        <div className="body-wrapper-child">
-          {/* <Button
-						onClick={optionCreateAd}
-						className="mb-3"
-						size="lg"
-						variant="light"
-					>
-						Kreiraj oglas!
-					</Button> */}
+        <div className="body-wrapper-child child1">
           <Filter
             key="filter"
             kolegiji={kolegiji}

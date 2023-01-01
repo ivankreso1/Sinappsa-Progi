@@ -16,10 +16,29 @@ html, body {
   margin-top: 1%;
 }
 
-.body-wrapper {
-  display: grid;
-  grid-template-columns: 75% 25%;
-  margin: 2% 10% 0 10%; /* Odmakne sve nekako malo u centar */
+.child1 {
+  grid-area: childArea1;
+}
+
+.child2 {
+  grid-area: childArea2;
+}
+
+@media only screen and (min-width: 1024px) {
+  .body-wrapper {
+    display: grid;
+    grid-template-columns: 75% 25%;
+    grid-template-areas: "childArea1 childArea2";
+    margin: 2% 10% 0 10%; /* Odmakne sve nekako malo u centar */
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .body-wrapper {
+    display: grid;
+    grid-template-areas: "childArea2" "childArea1";
+    margin: 2% 2%;
+  } 
 }
 
 .body-wrapper-child {

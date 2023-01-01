@@ -8,8 +8,16 @@
 
 .oglas-korisnik-info-container {
   display: grid;
-  grid-template-columns: 4fr 1fr;
+  grid-template-columns: 3fr 1fr;
   margin: 20px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .oglas-korisnik-info-container {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    margin: 20px;
+  }
 }
 
 .oglas-korisnik-info img {
