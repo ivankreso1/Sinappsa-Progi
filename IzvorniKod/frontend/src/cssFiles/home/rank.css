@@ -15,8 +15,8 @@
 }
 
 .rank-mark {
-  border: 2px solid gray;
-  border-radius: 30%;
+  border: 4px dotted var(--bs-border-color-translucent);
+  border-radius: 90%;
   background-color: white;
   padding: 2%;
 }

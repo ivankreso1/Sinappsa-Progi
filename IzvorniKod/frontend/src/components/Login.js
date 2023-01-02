@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Card } from "react-bootstrap";
+import { Button, Form, Card, ButtonGroup } from "react-bootstrap";
 import {
   PERSON_INFO_KEY,
   PERSON_INFO_TEMPLATE,
@@ -104,14 +104,17 @@ export default function Login() {
                 onChange={handleInfoChange}
               ></Form.Control>
             </Form.Group>
-
-            <Button
-              type="submit"
-              disabled={!info.userName || !info.password ? true : false}
-            >
-              {" "}
-              Prijavi se!{" "}
-            </Button>
+            <ButtonGroup className="mb-3 d-flex ">
+              <Button variant="danger" href="/">
+                Odustani
+              </Button>
+              <Button
+                type="submit"
+                disabled={!info.userName || !info.password ? true : false}
+              >
+                Prijavi se
+              </Button>
+            </ButtonGroup>
           </Form>
           <div className="register-link">
             Nemaš korisnički račun? <a href="/register">Registriraj se ovdje</a>

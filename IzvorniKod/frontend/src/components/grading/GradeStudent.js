@@ -53,7 +53,7 @@ export default function GradeStudent(id) {
         variant="secondary"
         onClick={handleShow}
       >
-        Ocijeni uslugu!
+        Ocijeni uslugu
       </Button>
 
       <Modal

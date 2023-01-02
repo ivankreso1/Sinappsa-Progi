@@ -21,7 +21,7 @@
 }
 
 .oglas-korisnik-info img {
-  border: 1px solid black;
+  border: 1px solid var(--bs-border-color-translucent);
   width: 75px;
   height: 75px;
   margin: 10px 15px 10px 5px;

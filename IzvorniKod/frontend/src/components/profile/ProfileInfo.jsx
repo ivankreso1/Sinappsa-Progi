@@ -57,7 +57,11 @@ class ProfileInfo extends Component {
                   this.state.profileInfo.brojPrimljenihRecenzija}
             </span>
             <div className="mt-2">
-              <Button style={{ marginBottom: "10px" }} href="/editProfile">
+              <Button
+                style={{ marginBottom: "10px" }}
+                variant="secondary"
+                href="/editProfile"
+              >
                 Uredi profil
               </Button>
             </div>

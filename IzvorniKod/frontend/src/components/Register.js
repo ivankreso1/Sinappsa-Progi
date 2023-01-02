@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Card } from "react-bootstrap";
+import { Button, Form, Card, ButtonGroup } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { postData, getPersonInfo } from "../scripts/util";
 import avatars from "../avatars";
@@ -168,25 +168,35 @@ export default function Register() {
                 onChange={handleInfoChange}
               ></Form.Control>
             </Form.Group>
-            <Button
-              style={{
-                marginBottom: "10px",
-              }}
-              type="submit"
-              disabled={
-                !registerInfo.ime ||
-                !registerInfo.prezime ||
-                !registerInfo.korisnickoIme ||
-                !registerInfo.avatar ||
-                !registerInfo.lozinka ||
-                !registerInfo.email
-                  ? true
-                  : false
-              }
-            >
-              {" "}
-              Registriraj se!{" "}
-            </Button>
+            <ButtonGroup className="mb-3 d-flex ">
+              <Button
+                style={{
+                  marginBottom: "10px",
+                }}
+                variant="danger"
+                href="/login"
+              >
+                Odustani
+              </Button>
+              <Button
+                style={{
+                  marginBottom: "10px",
+                }}
+                type="submit"
+                disabled={
+                  !registerInfo.ime ||
+                  !registerInfo.prezime ||
+                  !registerInfo.korisnickoIme ||
+                  !registerInfo.avatar ||
+                  !registerInfo.lozinka ||
+                  !registerInfo.email
+                    ? true
+                    : false
+                }
+              >
+                Registriraj se
+              </Button>
+            </ButtonGroup>
           </Form>
           <div className="error-message">{error}</div>
         </Card>

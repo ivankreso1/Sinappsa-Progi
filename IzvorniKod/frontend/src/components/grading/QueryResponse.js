@@ -44,7 +44,7 @@ export default function QueryResponse(id) {
         variant="secondary"
         onClick={handleShow}
       >
-        Odgovori na upit!
+        Odgovori na upit
       </Button>
 
       <Modal
