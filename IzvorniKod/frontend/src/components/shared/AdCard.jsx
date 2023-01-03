@@ -12,6 +12,7 @@ class AdCard extends Component {
 					isModerator = {this.props.isModerator}
 					ad={this.props.ad}
 					forProfile={this.props.forProfile}
+					onAdDelete={this.props.onAdDelete}
 				/>
 				<QueryList
 					key={`queryList${this.props.ad.id}`}

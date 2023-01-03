@@ -8,6 +8,7 @@ export default function DeleteAd(props) {
   let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
   const [count, setCount] = React.useState(0);
   const [show, setShow] = useState(false);
+  const [deletingShow, setDeletingShow] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState({
     opis: "",
   });
@@ -16,6 +17,9 @@ export default function DeleteAd(props) {
   const handleShow = () => {
     setShow(true);
   };
+
+  const handleDeletingAlertClose = () => setDeletingShow(false);
+  const handleDeletingAlertShow = () => setDeletingShow(true);
 
   function handleCount(event) {
     setCount(event.target.value.length);
@@ -35,9 +39,21 @@ export default function DeleteAd(props) {
       poruka: deleteMessage.opis,
     };
 
-    deleteDataAuth(`oglasi/${props.props.ad.id}`, {
-      poruka: deleteMessage.opis,
+    handleDeletingAlertShow();
+
+    deleteDataAuth(`oglasi/${props.props.ad.id}`, data)
+    .then(res => {
+      handleDeletingAlertClose();
+
+      if (res.error) {
+        alert("Oglas nije moguće obrisati!");
+      } else {
+        props.props.onAdDelete(props.props.ad);
+
+        alert("Oglas uspješno obrisan!");
+      }
     });
+
     setCount(0);
     setShow(false);
   }
@@ -104,6 +120,23 @@ export default function DeleteAd(props) {
               </ButtonGroup>
             </ModalFooter>
           </Form>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        size="sm"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={deletingShow}
+        onHide={handleDeletingAlertClose}
+        backdrop="static" //onemogucen izlaz klikom na pozadinu
+        keyboard={false} //onemogucen izlaz pomocu escape key-a
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Brisanje oglasa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Brisanje u tijeku...
         </Modal.Body>
       </Modal>
     </>

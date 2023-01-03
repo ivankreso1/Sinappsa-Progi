@@ -31,6 +31,7 @@ class AdList extends Component {
               ad={dataElement.oglas}
               queries={dataElement.listaUpita}
               forProfile={this.props.forProfile}
+              onAdDelete={this.props.onAdDelete}
             />)    
           : "Nema oglasa za prikaz"}
       </React.Fragment>

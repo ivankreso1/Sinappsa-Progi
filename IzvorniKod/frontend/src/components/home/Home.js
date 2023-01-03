@@ -23,6 +23,11 @@ class Home extends Component {
     this.setState({ ads: ads });
   }
 
+  handleAdDelete = (ad) => {
+    console.log("On  ad  delete");
+    this.setState({ ads: this.state.ads.filter(ad_ => ad_.id !== ad.id)});
+  }
+
   mapAds = (ads) => {
     return ads.map((ad) => Object({ oglas: ad, listaUpita: [] }));
   }
@@ -37,7 +42,7 @@ class Home extends Component {
               key="filter"
               onFilter={(ads) => this.handleFilter(ads)}
             />
-            <AdList key="adList" data={this.mapAds(this.state.ads)} forProfile={false} />
+            <AdList key="adList" data={this.mapAds(this.state.ads)} forProfile={false} onAdDelete={this.handleAdDelete}/>
           </div>
           <div className="body-wrapper-child">
             {getPersonInfo().isModerator ? <AddCourse /> : <CreateAd />}
