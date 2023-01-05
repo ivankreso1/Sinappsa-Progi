@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.example.projekt.domain.*;
 import com.example.projekt.rest.dto.CreateOglasDTO;
+import com.example.projekt.rest.dto.CreateUpitDTO;
 import com.example.projekt.rest.dto.OglasUpitiDTO;
 import com.example.projekt.rest.dto.PutOglasDTO;
 import com.example.projekt.service.NotFoundException;
@@ -84,9 +85,9 @@ public class OglasController {
 
     @DeleteMapping("/{id}")
     @Secured({"ROLE_STUDENT_KORISNIK", "ROLE_ADMIN"})
-    public ResponseEntity<Void> obrisiOglas(@PathVariable Long id, @AuthenticationPrincipal User user) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity<Void> obrisiOglas(@PathVariable Long id, @AuthenticationPrincipal User user, @RequestBody CreateUpitDTO createUpitDTO) throws MessagingException, UnsupportedEncodingException {
         userNull(user);
-        if (oglasService.obrisiOglas(id, user)) {
+        if (oglasService.obrisiOglas(id, user, createUpitDTO.getPoruka())) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         throw new NotFoundException("Ne postoji oglas s id: " + id);

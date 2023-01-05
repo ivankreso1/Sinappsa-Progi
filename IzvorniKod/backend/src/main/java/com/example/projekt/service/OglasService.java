@@ -27,7 +27,7 @@ public interface OglasService {
 
     boolean objaviOglas(CreateOglasDTO oglas, User user);
 
-    boolean obrisiOglas(Long id, User user) throws MessagingException, UnsupportedEncodingException;
+    boolean obrisiOglas(Long id, User user, String poruka) throws MessagingException, UnsupportedEncodingException;
 
     List<Oglas> dohvatiOglasePoKorisniku(RegistriraniKorisnik registriraniKorisnik);
 

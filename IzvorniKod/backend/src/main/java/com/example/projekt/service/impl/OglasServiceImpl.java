@@ -113,7 +113,7 @@ public class OglasServiceImpl implements OglasService {
     }
 
     @Override
-    public boolean obrisiOglas (Long id, User user) throws MessagingException, UnsupportedEncodingException {
+    public boolean obrisiOglas (Long id, User user, String poruka) throws MessagingException, UnsupportedEncodingException {
         Optional<Oglas> optionalOglas = oglasRepository.findById(id);
 
         RegistriraniKorisnik korisnikPoUsername = regKorisnikService.findByKorisnickoIme(user.getUsername()).get();
@@ -123,7 +123,7 @@ public class OglasServiceImpl implements OglasService {
                 upitRepository.deleteById(upit.getId());
             }
             oglasRepository.deleteById(id);
-            mailNakonObrisanog(optionalOglas.get());
+            mailNakonObrisanog(optionalOglas.get(), poruka);
             return true;
         }
         else {
@@ -242,14 +242,14 @@ public class OglasServiceImpl implements OglasService {
         return oglasRepository.save(oglas.get());
     }
 
-    private void mailNakonObrisanog(Oglas idOglasa) throws MessagingException, UnsupportedEncodingException {
+    private void mailNakonObrisanog(Oglas idOglasa, String poruka) throws MessagingException, UnsupportedEncodingException {
 
         String fromAddress = "sinappsa.team@gmail.com";
         String senderName = "Sinappsa";
         String subject = "UKLONJEN POSTAVLJENI OGLAS";
         String content = "Dragi/a [[autorOglasa]],<br>"
-                + "Obavještavamo Vas da je oglas <i>[[naslovOglasa]]</i> uklonjen od strane moderatora.<br>"
-                + "Moderator oglas smatra nepravilnim ili neprikladnim te je iz tog razloga uklonjen.<br><br>"
+                + "Obavještavamo Vas da je oglas <b>[[naslovOglasa]]</b> uklonjen od strane moderatora.<br>"
+                + "Razlog uklanjanja: <b>[[poruka]]</b><br><br>"
                 + "LP,<br>"
                 + "Tvoj Sinappsa tim";
 
@@ -262,6 +262,7 @@ public class OglasServiceImpl implements OglasService {
 
         content = content.replace("[[autorOglasa]]", idOglasa.getKreator().getIme() + " " + idOglasa.getKreator().getPrezime());
         content = content.replace("[[naslovOglasa]]", idOglasa.getNaslov());
+        content = content.replace("[[poruka]]", poruka);
 
         helper.setText(content, true);
         mailSender.send(message);
