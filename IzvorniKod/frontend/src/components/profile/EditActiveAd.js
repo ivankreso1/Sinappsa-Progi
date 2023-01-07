@@ -2,26 +2,25 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { putDataAuth } from "../../scripts/util";
 
-export default function EditActiveAd() {
-  let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
-
-  const [error, setError] = useState(""); //jel mi treba?
+export default function EditActiveAd(props) {
   const [show, setShow] = useState(false);
-  const navigate = useNavigate();
   const [count, setCount] = React.useState(0);
   const [editActAd, setEditActAd] = useState({
-    naslov: "",
-    opis: "",
+    naslov: props.props.ad.naslov,
+    opis: props.props.ad.opis,
   });
 
-  const handleClose = () => setShow(false);
+  const handleClose = (event) => {
+    setShow(false);
+    editActAd.naslov = props.props.ad.naslov;
+    editActAd.opis = props.props.ad.opis;
+    handleCount(event);
+  };
   const handleShow = () => {
-    if (!currentInfo.userName) {
-      navigate("/login");
-    }
     setShow(true);
+    setCount(props.props.ad.opis.length);
   };
 
   function handleCount(event) {
@@ -30,6 +29,10 @@ export default function EditActiveAd() {
 
   function handleMultipleFun(event) {
     handleCount(event);
+    handleAdChange(event);
+  }
+
+  function handleAdChange(event) {
     setEditActAd((prevEditActAd) => {
       return { ...prevEditActAd, [event.target.name]: event.target.value };
     });
@@ -37,15 +40,19 @@ export default function EditActiveAd() {
 
   function optionSubmitForm(event) {
     event.preventDefault();
-
+    //  console.log(event);
+    //  console.log(props.props);
     const data = {
-      poruka: editActAd.opis,
+      naslov: editActAd.naslov,
+      opis: editActAd.opis,
     };
-  }
-  function handleAdChange(event) {
-    setEditActAd((prevEditActAd) => {
-      return { ...prevEditActAd, [event.target.name]: event.target.value };
+    putDataAuth("/oglasi/" + props.props.ad.id, data).then((res) => {
+      if (res.error) {
+        alert(res.message);
+      }
     });
+
+    window.location.reload(false);
   }
 
   return (
@@ -76,6 +83,7 @@ export default function EditActiveAd() {
               <Form.Control
                 type="text"
                 name="naslov"
+                value={editActAd.naslov}
                 required="true"
                 maxLength={255}
                 minLength={5}
@@ -89,10 +97,11 @@ export default function EditActiveAd() {
                 as="textarea"
                 rows="3"
                 name="opis"
-                onChange={handleMultipleFun}
+                value={editActAd.opis}
+                required={true}
                 maxLength={255}
-                minLength={20}
-                required="true"
+                minLength={10}
+                onChange={handleMultipleFun}
               ></Form.Control>
               <div>
                 <p>
@@ -111,7 +120,6 @@ export default function EditActiveAd() {
               </ButtonGroup>
             </ModalFooter>
           </Form>
-          <div className="error-message">{error}</div>
         </Modal.Body>
       </Modal>
     </>

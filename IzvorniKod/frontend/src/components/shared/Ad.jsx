@@ -4,18 +4,18 @@ import "../../cssFiles/home/oglas.css";
 import UserTag from "./UserTag";
 import DeleteAd from "../home/DeleteAd";
 import EditActiveAd from "../profile/EditActiveAd";
+import { getPersonInfo } from "../../scripts/util";
 
 class Ad extends Component {
   constructor(props) {
     super(props);
 
     this.state = {};
-
-    // console.log(props)
   }
 
   render() {
     const ad = this.props.ad;
+    const personInfo = getPersonInfo();
 
     return (
       <div className="card mb-3">
@@ -51,12 +51,16 @@ class Ad extends Component {
                 {this.props.isModerator ? (
                   <DeleteAd props={this.props}></DeleteAd>
                 ) : this.props.forProfile ? (
-                  ""
+                  this.props.ad.aktivan &&
+                  this.props.ad.kreator.id === personInfo.id ? (
+                    <EditActiveAd props={this.props} />
+                  ) : (
+                    ""
+                  )
                 ) : (
                   <CreateQuery props={this.props} />
                 )}
               </div>
-              <EditActiveAd></EditActiveAd>
             </div>
           </div>
         </div>
