@@ -106,7 +106,7 @@ export default function CreateAd() {
         </Modal.Header>
         <Modal.Body>
           <Form className="form" onSubmit={optionSubmitForm}>
-            <div className="mb-3">
+            <div className="mb-3" required="true">
               <Form.Check
                 inline
                 label="Tražim pomoć!"

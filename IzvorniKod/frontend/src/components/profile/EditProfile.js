@@ -153,6 +153,7 @@ export default function EditProfile() {
                 marginBottom: "10px",
               }}
               type="submit"
+              variant="success"
               disabled={
                 !editInfo.korisnickoIme && !editInfo.avatar && !editInfo.lozinka
                   ? true
