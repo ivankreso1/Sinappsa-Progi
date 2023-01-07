@@ -40,6 +40,7 @@ class UserAds extends Component {
 						key="adList"
 						data={this.state.activeUserAds ?? []}
 						forProfile={true}
+						forOwnAds={true}
 					/>
 				</div>
 				<div className="profile-section">
@@ -51,6 +52,7 @@ class UserAds extends Component {
 						key="adList"
 						data={this.state.inactiveUserAds ?? []}
 						forProfile={true}
+						forOwnAds={true}
 					/>
 				</div>
 			</React.Fragment>

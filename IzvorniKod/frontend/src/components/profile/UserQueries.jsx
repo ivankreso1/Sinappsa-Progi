@@ -29,23 +29,24 @@ class UserQueries extends Component {
 			<React.Fragment>
 				<div className="profile-section">
 					<h2 className="section-title section-title-secondary-color"> Moji upiti </h2>
-					{
-					this.state.userQueries.map(query =>
-						<div class="user-query-card">
-							<Ad
-								key={`ad${query.oglas.id}`}
-								isModerator = {false} //hardkodirano, jer modovi ne mogu imati svoje upite na profilu
-								ad={query.oglas}
-								forProfile={true}
-							/>
+					{this.state.userQueries.length > 0 ?
+						this.state.userQueries.map(query =>
+							<div class="user-query-card">
+								<Ad
+									key={`ad${query.oglas.id}`}
+									isModerator = {false} //hardkodirano, jer modovi ne mogu imati svoje upite na profilu
+									ad={query.oglas}
+									forProfile={true}
+									forOwnAds={false}
+								/>
 
-                        	<Query 
-                            	key={`query${this.state.userQueries.indexOf(query)}`} 
-                            	query={query}
-								forOwnQueries={true}
-                        	/>
-						</div>
-                    )
+                        		<Query 
+                            		key={`query${this.state.userQueries.indexOf(query)}`} 
+                            		query={query}
+									forOwnQueries={true}
+                        		/>
+							</div>
+                    	) : "Nema upita za prikaz" 
 					}
 				</div>
 			</React.Fragment>

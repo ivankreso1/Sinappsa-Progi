@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import Button from "react-bootstrap/Button";
 import CreateQuery from "../home/CreateQuery";
 import "../../cssFiles/home/oglas.css";
 import UserTag from "./UserTag";
 import DeleteAd from "../home/DeleteAd";
+import { putDataAuth } from "../../scripts/util";
 
 class Ad extends Component {
   constructor(props) {
@@ -12,6 +14,18 @@ class Ad extends Component {
 
     // console.log(props)
   }
+
+  handleActivityChange = () => {
+    const ad = this.props.ad;
+    console.log(ad.aktivan);
+    putDataAuth("oglasi/" + ad.id + "/promijeniAktivnost").then((data) => {
+      if (data.error) {
+        alert(data.error.message);
+      } else {
+        window.location.reload();
+      }
+    })
+  };
 
   render() {
     const ad = this.props.ad;
@@ -41,9 +55,11 @@ class Ad extends Component {
                   this.props.isModerator ?
                     <DeleteAd props={this.props}></DeleteAd> : 
                     (
-                      this.props.forProfile ? 
-                      "" : 
-                      <CreateQuery props={this.props} />
+                      this.props.forProfile ? (
+                          this.props.forOwnAds ? 
+                            <Button variant="secondary" onClick={this.handleActivityChange}> Promijeni aktivnost oglasa </Button> : 
+                            "" ) : 
+                        <CreateQuery props={this.props} />
                     )
                 }
               </div>

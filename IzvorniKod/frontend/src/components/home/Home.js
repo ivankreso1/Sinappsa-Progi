@@ -42,7 +42,7 @@ class Home extends Component {
               key="filter"
               onFilter={(ads) => this.handleFilter(ads)}
             />
-            <AdList key="adList" data={this.mapAds(this.state.ads)} forProfile={false} onAdDelete={this.handleAdDelete}/>
+            <AdList key="adList" data={this.mapAds(this.state.ads)} forProfile={false} forOwnAds={false} onAdDelete={this.handleAdDelete}/>
           </div>
           <div className="body-wrapper-child">
             {getPersonInfo().isModerator ? <AddCourse /> : <CreateAd />}
