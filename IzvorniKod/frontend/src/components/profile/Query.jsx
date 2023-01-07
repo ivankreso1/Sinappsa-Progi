@@ -17,17 +17,16 @@ class Query extends Component {
         />
         <p>{this.props.query.poruka}</p>
         <p>{this.props.query.stanjeUpita}</p>
-        {this.props.query.stanjeUpita  === "U_TIJEKU" && this.props.enableResponse ? (
+        {this.props.query.stanjeUpita  === "U_TIJEKU" && !this.props.forOwnQueries ? (
           <QueryResponse id={this.props.query.id} />
         ) : (
           ""
         )}
-        {this.props.query.stanjeUpita === "CEKA_OCJENJIVANJE" &&
-        this.props.query.oglas.trazimPomoc ? (
-          <GradeStudent id={this.props.query.id} />
-        ) : (
-          ""
-        )}
+        {this.props.query.stanjeUpita === "CEKA_OCJENJIVANJE" && (
+         (this.props.query.oglas.trazimPomoc && !this.props.forOwnQueries) ||
+         (!this.props.query.oglas.trazimPomoc && this.props.forOwnQueries)) ? (
+          <GradeStudent id={this.props.query.id} />) : ("")
+        }
       </div>
     );
   }

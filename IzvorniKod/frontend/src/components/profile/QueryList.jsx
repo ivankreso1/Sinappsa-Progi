@@ -21,7 +21,7 @@ class QueryList extends Component {
                         <Query 
                             key={`query${this.props.queries.indexOf(query)}`} 
                             query={query}
-                            enableResponse = {true} 
+                            forOwnQueries = {false} 
                         />
                     )
                 }

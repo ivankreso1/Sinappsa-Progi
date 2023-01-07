@@ -101,7 +101,7 @@ export default function Register() {
                 value={registerInfo.ime}
                 required
                 maxLength={25}
-                minLength={5}
+                minLength={1}
                 onChange={handleInfoChange}
               ></Form.Control>
             </Form.Group>
@@ -112,7 +112,7 @@ export default function Register() {
                 name="prezime"
                 required
                 maxLength={25}
-                minLength={5}
+                minLength={1}
                 value={registerInfo.prezime}
                 onChange={handleInfoChange}
               ></Form.Control>
