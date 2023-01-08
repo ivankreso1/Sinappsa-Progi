@@ -9,6 +9,7 @@ import com.example.projekt.service.RequestDeniedException;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 @Service
 public class RegKorisnikServiceImpl implements RegKorisnikService {
@@ -31,6 +33,26 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    // napravljeno za svrhu testiranja, inace se ne koristi ovaj konstruktor
+    public RegKorisnikServiceImpl(RegKorisnikRepository regKorRepository, PasswordEncoder passwordEncoder) {
+        this.regKorisnikRepository = regKorRepository;
+        this.passwordEncoder = passwordEncoder;
+
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("sinappsa.team@gmail.com");
+        mailSender.setPassword("ejdbfvqrnrjskpcn");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        this.mailSender = mailSender;
+    }
+
 
     @Override
     public Optional<RegistriraniKorisnik> findById(Long id) {
@@ -96,7 +118,7 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
         return savedRegistriraniKorisnik;
     }
 
-    private void sendVerificationEmail(RegistriraniKorisnik registriraniKorisnik, String siteURL) throws MessagingException, UnsupportedEncodingException {
+    public void sendVerificationEmail(RegistriraniKorisnik registriraniKorisnik, String siteURL) throws MessagingException, UnsupportedEncodingException {
         String toAddress = registriraniKorisnik.getEmail();
         String fromAddress = "sinappsa.team@gmail.com";
         String senderName = "Sinappsa";
