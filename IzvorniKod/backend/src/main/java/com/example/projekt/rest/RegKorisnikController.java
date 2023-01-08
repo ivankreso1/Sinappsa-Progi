@@ -29,7 +29,6 @@ public class RegKorisnikController {
     @Autowired
     private RegKorisnikService regKorisnikService;
 
-
     @GetMapping
     public List<RegistriraniKorisnik> getKorisnike() {
         return regKorisnikService.dohvatiKorisnike();

@@ -28,4 +28,6 @@ public interface RegKorisnikService {
     RegistriraniKorisnik promijeniPodatke(RegistriraniKorisnik registriraniKorisnik, String novoKorisnickoIme, String novaLozinka, String noviAvatar);
 
     void ocijeni (RegistriraniKorisnik registriraniKorisnik, int ocjena);
+
+    void sendVerificationEmail(RegistriraniKorisnik registriraniKorisnik, String siteURL) throws MessagingException, UnsupportedEncodingException;
 }
