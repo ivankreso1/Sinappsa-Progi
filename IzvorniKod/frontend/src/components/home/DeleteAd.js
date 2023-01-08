@@ -41,8 +41,7 @@ export default function DeleteAd(props) {
 
     handleDeletingAlertShow();
 
-    deleteDataAuth(`oglasi/${props.props.ad.id}`, data)
-    .then(res => {
+    deleteDataAuth(`oglasi/${props.props.ad.id}`, data).then((res) => {
       handleDeletingAlertClose();
 
       if (res.error) {
@@ -65,10 +64,7 @@ export default function DeleteAd(props) {
 
   return (
     <>
-      <Button
-        variant="danger"
-        onClick={handleShow}
-        >
+      <Button variant="danger" onClick={handleShow}>
         Obriši oglas
       </Button>
 
@@ -107,7 +103,7 @@ export default function DeleteAd(props) {
             <ModalFooter>
               <ButtonGroup>
                 <Button variant="danger" onClick={handleClose}>
-                  Otkaži
+                  Odustani
                 </Button>
                 <Button
                   variant="success"
@@ -135,9 +131,7 @@ export default function DeleteAd(props) {
         <Modal.Header closeButton>
           <Modal.Title>Brisanje oglasa</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Brisanje u tijeku...
-        </Modal.Body>
+        <Modal.Body>Brisanje u tijeku...</Modal.Body>
       </Modal>
     </>
   );

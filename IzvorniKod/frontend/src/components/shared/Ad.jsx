@@ -6,6 +6,7 @@ import UserTag from "./UserTag";
 import DeleteAd from "../home/DeleteAd";
 import { putDataAuth } from "../../scripts/util";
 import EditActiveAd from "../profile/EditActiveAd";
+import DeleteActiveAd from "../profile/DeleteActiveAd";
 import { getPersonInfo } from "../../scripts/util";
 
 class Ad extends Component {
@@ -66,6 +67,18 @@ class Ad extends Component {
                   this.props.ad.aktivan &&
                   this.props.ad.kreator.id === personInfo.id ? (
                     <EditActiveAd props={this.props} />
+                  ) : (
+                    ""
+                  )
+                ) : (
+                  ""
+                )}
+              </div>
+              <div>
+                {this.props.forProfile ? (
+                  this.props.ad.aktivan &&
+                  this.props.ad.kreator.id === personInfo.id ? (
+                    <DeleteActiveAd props={this.props} />
                   ) : (
                     ""
                   )
