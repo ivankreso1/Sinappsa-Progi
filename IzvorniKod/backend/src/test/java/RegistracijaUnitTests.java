@@ -33,10 +33,10 @@ public class RegistracijaUnitTests {
 
     @BeforeEach
     void initService() {
-        // service koji koristi umjetni repository kojem ćemo ručno zadavat što vraća
+        // service koji koristi umjetni repository kojem cemo rucno zadavat sto vraca
         regKorisnikService = new RegKorisnikServiceImpl(regKorisnikRepository, new BCryptPasswordEncoder());
 
-        // mock podaci u bazi su ova tri korisnika, kad pišem 'when' naredbe, vraćam rezultate kao što bi se i zapravo vratili
+        // mock podaci u bazi su ova tri korisnika, kad pisem 'when' naredbe, vracam rezultate kao sto bi se i zapravo vratili
         // da su u bazi ova 3 korisnika, npr. ak imamo countByKorisnickoIme("ivek44") to bi vratilo broj 1
         korisnikArrayList = Arrays.asList(new RegistriraniKorisnik("emailAna@fer.hr", "anchy123","Ana", "Anic", "tajnaLozinka", "1"),
                 new RegistriraniKorisnik("emailIvo@fer.hr", "ivek44","Ivo", "Ivic", "tajnaLozinka", "2"),
@@ -98,7 +98,7 @@ public class RegistracijaUnitTests {
 
     @Test
     public void uspjesanZapisUBazu() throws MessagingException, UnsupportedEncodingException {
-        Long randomLong = ThreadLocalRandom.current().nextLong(10, 21);     // random broj između 10 i 20 uključivo
+        Long randomLong = ThreadLocalRandom.current().nextLong(10, 21);     // random broj izmedu 10 i 20 ukljucivo
 
         RegistriraniKorisnik korisnikUBazi = new RegistriraniKorisnik("emailLuka@fer.hr", "lux","Luka", "Lukic", "abcde", "4");
         korisnikUBazi.setId(randomLong);

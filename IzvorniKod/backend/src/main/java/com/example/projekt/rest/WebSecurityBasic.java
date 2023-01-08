@@ -9,9 +9,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-// @Profile("basic-security")
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class WebSecurityBasic {        // samo da izbjegnem onaj login koji se automatski napravi kad dodas spring-boot-starter-security dependency
+public class WebSecurityBasic {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.httpBasic();

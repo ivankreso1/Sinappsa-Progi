@@ -1,7 +1,5 @@
 package com.example.projekt.domain;
 
-import org.hibernate.annotations.Cache;
-
 import javax.persistence.*;
 
 @Entity
