@@ -9,7 +9,10 @@ class UserTag extends Component {
 				{avatars.map((avatar) => {
 					if (avatar.id === this.props.user.avatar) {
 						return (
-							<div className="oglas-korisnik-info">
+							<div
+								key={`userTagInfo${this.props.user.korisnickoIme}`}
+								className="oglas-korisnik-info"
+							>
 								<img
 									id={avatar.id}
 									src={avatar.src}
@@ -19,7 +22,11 @@ class UserTag extends Component {
 							</div>
 						);
 					} else {
-						return <React.Fragment></React.Fragment>
+						return (
+							<React.Fragment
+								key={`fragment${this.props.user.korisnickoIme}${avatar.id}`}
+							></React.Fragment>
+						);
 					}
 				})}
 			</div>

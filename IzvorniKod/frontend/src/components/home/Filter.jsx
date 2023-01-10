@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import "../../cssFiles/home/filter.css";
 import "bootstrap";
-import { getData } from '../../scripts/util';
-
+import { getCategoriesPretty, getCategoryToEnumValue, getData } from '../../scripts/util';
 
 class Filter extends Component {
     
@@ -14,19 +13,12 @@ class Filter extends Component {
             course: "",
             category: "",
             courses: [],
-            categories: [
-                "Labos", 
-                "Blic", 
-                "Gradivo", 
-                "Kontinuirani ispit", 
-                "Ispitni rok"
-            ]
+            categories: getCategoriesPretty()
         };
-
-        this.fetchCourses();
     }
 
     componentDidMount() {
+        this.fetchCourses();
         this.fetchAds();
     }
 
@@ -69,20 +61,20 @@ class Filter extends Component {
                     <div className="row text-left mb-2">
                         <div className="col-lg-3 mb-3 mb-sm-0">
                             <div className="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" style={{width: "100%"}}>
-                                <select name="direction" className="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabindex="-98" onChange={this.handleDropDownClick}>
-                                    <option value="">Svi smjerovi</option>
-                                    <option value="R">R smjer</option>
-                                    <option value="E">E smjer</option>
+                                <select name="direction" className="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabIndex="-98" onChange={this.handleDropDownClick}>
+                                    <option key="allDirections" value="">Svi smjerovi</option>
+                                    <option key="rDirection" value="R">R smjer</option>
+                                    <option key="eDirection" value="E">E smjer</option>
                                 </select>
                             </div>
                         </div>
                         <div className="col-lg-5 mb-3 mb-sm-0">
                             <div className="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" style={{width: "100%"}}>
-                                <select name="course" className="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabindex="-98" onChange={this.handleDropDownClick}>
-                                    <option value="">Svi kolegiji</option>
+                                <select name="course" className="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabIndex="-98" onChange={this.handleDropDownClick}>
+                                    <option key="allCourses" value="">Svi kolegiji</option>
                                     {this.state.courses.map(course => {
                                         if (this.state.direction === "" || course.smjer === this.state.direction)
-                                            return <option value={course.ime}>{course.ime}</option>
+                                            return <option key={`courseOption${course.ime}`} value={course.ime}>{course.ime}</option>
                                         return "";
                                     })}
                                 </select>
@@ -90,10 +82,10 @@ class Filter extends Component {
                         </div>
                         <div className="col-lg-4 mb-3 mb-sm-0">
                             <div className="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" style={{width: "100%"}}>
-                                <select name="category" className="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabindex="-98" onChange={this.handleDropDownClick}>
-                                    <option value="">Sve kategorije</option>
+                                <select name="category" className="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select" tabIndex="-98" onChange={this.handleDropDownClick}>
+                                    <option key="allCategories" value="">Sve kategorije</option>
                                     {this.state.categories.map(category => {
-                                        return <option value={category.toUpperCase().replace(" ", "_")}>{category}</option>
+                                        return <option key={`categoryOption${category}`} value={getCategoryToEnumValue(category)}>{category}</option>
                                     })}
                                 </select>
                             </div>

@@ -1,8 +1,6 @@
 .oglas-container {
-  /* border: 1px solid black;*/
   border-radius: 10px;
   margin: 10px;
-  /* max-width: 50%; */
   background-color: white;
 }
 
@@ -31,15 +29,11 @@
   font-size: 20px;
   font-weight: 400;
 }
-/*.oglas-info-container{
-    display: flex;
-    flex-direction: column;
-}*/
 
 .oglas-naslov h2 {
   margin: 20px;
-  min-width: 100px; /*ovime je osigurano to da nema overflowa*/
-  max-width: 100%; /*ovime je osigurano to da nema overflowa*/
+  min-width: 100px;
+  max-width: 100%;
   display: flex;
   justify-content: start;
   align-self: center;
@@ -49,7 +43,8 @@
 .oglas-text-opis {
   margin: 20px;
   font-size: 20px;
-  /*border: 1px solid black;*/
   border-radius: 10px;
   padding: 20px;
+  word-wrap: break-word;
+  word-break: break-all;
 }

@@ -12,7 +12,6 @@ class UserAds extends Component {
 	};
 
 	componentDidMount() {
-		// lifecycle hook, kad se stvori komponenta (dakle mora se renderirati prvo), pozovemo handleProfileInfo da fetcha i displaya podatke
 		this.handleUserAds();
 	}
 

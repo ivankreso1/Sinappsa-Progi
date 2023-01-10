@@ -15,7 +15,8 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      ads: []
+      ads: [],
+      personInfo: getPersonInfo()
     }
   }
 
@@ -24,7 +25,6 @@ class Home extends Component {
   }
 
   handleAdDelete = (ad) => {
-    console.log("On  ad  delete");
     this.setState({ ads: this.state.ads.filter(ad_ => ad_.id !== ad.id)});
   }
 
@@ -35,7 +35,7 @@ class Home extends Component {
   render() { 
     return (
       <div className="home-page">
-        <Navbar getPersonInfo={getPersonInfo}></Navbar>
+        <Navbar key="navbar" getPersonInfo={getPersonInfo}></Navbar>
         <div className="body-wrapper">
           <div className="body-wrapper-child child1">
             <Filter
@@ -45,7 +45,7 @@ class Home extends Component {
             <AdList key="adList" data={this.mapAds(this.state.ads)} forProfile={false} forOwnAds={false} onAdDelete={this.handleAdDelete}/>
           </div>
           <div className="body-wrapper-child">
-            {getPersonInfo().isModerator ? <AddCourse /> : <CreateAd />}
+            {this.state.personInfo !== null && this.state.personInfo.isModerator ? <AddCourse key="addCourse" /> : <CreateAd key="createAd" />}
             <RankList key="rankList" />
           </div>
         </div>

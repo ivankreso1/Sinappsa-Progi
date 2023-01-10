@@ -22,7 +22,6 @@ class AddCourse extends Component {
   handleSubmitForm = (e) => {
     e.preventDefault();
 
-    // console.log(this.state);
     postDataAuth("/kolegiji", {
       nazivKolegija: this.state.ime,
       smjer: this.state.smjer,

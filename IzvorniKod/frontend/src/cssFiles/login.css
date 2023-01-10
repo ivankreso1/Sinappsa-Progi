@@ -8,7 +8,7 @@ body {
 
 .container {
     margin: 0;
-    height: 100vh;
+    height: 90vh;
     max-width: 100%;
     display: flex;
     justify-content: center;
@@ -31,7 +31,6 @@ body {
 
 .info-input {
     outline: 5px solid white;
-    /*default plavi outline se nemre maknut pa sam ga morao obojati*/
     width: 100%;
     margin: 30px 0;
     border-bottom: 2px solid #adadad;

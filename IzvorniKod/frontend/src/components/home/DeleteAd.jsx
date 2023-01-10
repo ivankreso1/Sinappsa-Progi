@@ -2,33 +2,31 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { postDataAuth } from "../../scripts/util";
+import { deleteDataAuth } from "../../scripts/util";
 
-export default function CreateQuery(props) {
-  let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
+export default function DeleteAd(props) {
   const [count, setCount] = React.useState(0);
   const [show, setShow] = useState(false);
-  const [query, setQuery] = useState({
+  const [deletingShow, setDeletingShow] = useState(false);
+  const [deleteMessage, setDeleteMessage] = useState({
     opis: "",
   });
-  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    if (!currentInfo.userName) {
-      navigate("/login");
-    }
     setShow(true);
   };
+
+  const handleDeletingAlertClose = () => setDeletingShow(false);
+  const handleDeletingAlertShow = () => setDeletingShow(true);
 
   function handleCount(event) {
     setCount(event.target.value.length);
   }
 
-  function handleMultipleFun(event) {
+  function handleMessageChange(event) {
     handleCount(event);
-    setQuery((prevQuery) => {
+    setDeleteMessage((prevQuery) => {
       return { ...prevQuery, [event.target.name]: event.target.value };
     });
   }
@@ -37,15 +35,20 @@ export default function CreateQuery(props) {
     event.preventDefault();
 
     const data = {
-      poruka: query.opis,
+      poruka: deleteMessage.opis,
     };
 
-    postDataAuth(
-      "upiti/" + currentInfo.id + "/" + props.props.ad.id,
-      data
-    ).then((res) => {
+    handleDeletingAlertShow();
+
+    deleteDataAuth(`oglasi/${props.props.ad.id}`, data).then((res) => {
+      handleDeletingAlertClose();
+
       if (res.error) {
-        alert(res.message);
+        alert("Oglas nije moguće obrisati!");
+      } else {
+        props.props.onAdDelete(props.props.ad);
+
+        alert("Oglas uspješno obrisan!");
       }
     });
 
@@ -55,16 +58,8 @@ export default function CreateQuery(props) {
 
   return (
     <>
-      <Button
-        variant="secondary"
-        onClick={handleShow}
-        disabled={
-          props.props.ad.kreator.korisnickoIme === currentInfo.userName
-            ? true
-            : false
-        }
-      >
-        Pošalji upit
+      <Button variant="danger" onClick={handleShow}>
+        Obriši oglas
       </Button>
 
       <Modal
@@ -73,29 +68,25 @@ export default function CreateQuery(props) {
         centered
         show={show}
         onHide={handleClose}
-        backdrop="static" //onemogucen izlaz klikom na pozadinu
-        keyboard={false} //onemogucen izlaz pomocu escape key-a
+        backdrop="static"
+        keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Kreiraj upit!
-          </Modal.Title>
+          <Modal.Title>Razlog brisanja oglasa</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={optionSubmitForm}>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
+            <Form.Group>
               <Form.Label>Poruka vlasniku oglasa:</Form.Label>
               <Form.Control
                 name="opis"
                 as="textarea"
                 rows="3"
-                onChange={handleMultipleFun}
+                onChange={handleMessageChange}
                 maxLength={255}
                 minLength={10}
                 required={true}
+                placeholder={"Poruka"}
               />
             </Form.Group>
             <div>
@@ -108,13 +99,32 @@ export default function CreateQuery(props) {
                 <Button variant="danger" onClick={handleClose}>
                   Odustani
                 </Button>
-                <Button variant="success" type="submit">
-                  Pošalji
+                <Button
+                  variant="success"
+                  type="submit"
+                  disabled={count === 0 ? true : false}
+                >
+                  Obriši
                 </Button>
               </ButtonGroup>
             </ModalFooter>
           </Form>
         </Modal.Body>
+      </Modal>
+
+      <Modal
+        size="sm"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={deletingShow}
+        onHide={handleDeletingAlertClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Brisanje oglasa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Brisanje u tijeku...</Modal.Body>
       </Modal>
     </>
   );

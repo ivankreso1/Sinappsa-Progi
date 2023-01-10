@@ -4,10 +4,10 @@ import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
 import { putDataAuth } from "../../scripts/util";
 
-export default function QueryResponse(id) {
+export default function GradeStudent(id) {
   const [show, setShow] = useState(false);
-  const [queryResponse, setQueryResponse] = useState({
-    odgovor: "",
+  const [grade, setGrade] = useState({
+    ocjena: "",
   });
 
   const handleClose = () => setShow(false);
@@ -15,9 +15,9 @@ export default function QueryResponse(id) {
     setShow(true);
   };
 
-  function handleQueryResponseChange(event) {
-    setQueryResponse((prevQueryResponse) => {
-      return { ...prevQueryResponse, [event.target.name]: event.target.value };
+  function handleGradeChange(event) {
+    setGrade((prevGrade) => {
+      return { ...prevGrade, [event.target.name]: event.target.value };
     });
   }
 
@@ -25,15 +25,24 @@ export default function QueryResponse(id) {
     event.preventDefault();
 
     const data = {
-      odgovor: queryResponse.odgovor,
+      idUpita: id.id,
+      ocjena: grade.ocjena,
     };
 
-    var uriZaSlanje =
-      "/upiti/" + id.id + "/novoStanje?stanjeUpita=" + data.odgovor;
-
-    putDataAuth(uriZaSlanje, {});
-    //setShow(false);
-    window.location.reload(false);
+    putDataAuth("upiti/ocijeni", data).then((data) => {
+      if (data.error) {
+        alert(data.message);
+      } else {
+        putDataAuth(
+          "upiti/" + id.id + "/novoStanje?stanjeUpita=PRIHVACEN",
+          {}
+        ).then(res => {
+          setShow(false);
+          alert("Ocjenjivanje uspješno završeno.");
+          window.location.reload(false);
+        });
+      }
+    });
   }
 
   return (
@@ -44,7 +53,7 @@ export default function QueryResponse(id) {
         variant="secondary"
         onClick={handleShow}
       >
-        Odgovori na upit
+        Ocijeni uslugu
       </Button>
 
       <Modal
@@ -59,44 +68,71 @@ export default function QueryResponse(id) {
       >
         <Modal.Header key="header" closeButton>
           <Modal.Title key="naslov" id="contained-modal-title-vcenter">
-            Odgovor na upit:
+            Ocijeni uslugu studenta - pomagača!
           </Modal.Title>
         </Modal.Header>
         <Modal.Body key="tijelo">
           <Form key="forma" onSubmit={optionSubmitForm}>
             <div key="div" className="mb-3">
               <Form.Check
-                key="ocjena"
+                key="ocjena1"
                 inline
-                label="Ocjenjivanje usluge"
-                name="odgovor"
+                label="1"
+                name="ocjena"
                 type="radio"
-                value="CEKA_OCJENJIVANJE"
-                onChange={handleQueryResponseChange}
+                value="1"
+                onChange={handleGradeChange}
               />
               <Form.Check
-                key="odbijeno"
+                key="ocjena2"
                 inline
-                label="Odbijanje usluge"
-                name="odgovor"
+                label="2"
+                name="ocjena"
                 type="radio"
-                value="ODBIJEN"
-                onChange={handleQueryResponseChange}
+                value="2"
+                onChange={handleGradeChange}
+              />{" "}
+              <Form.Check
+                key="ocjena3"
+                inline
+                label="3"
+                name="ocjena"
+                type="radio"
+                value="3"
+                onChange={handleGradeChange}
+              />{" "}
+              <Form.Check
+                key="ocjena4"
+                inline
+                label="4"
+                name="ocjena"
+                type="radio"
+                value="4"
+                onChange={handleGradeChange}
+              />{" "}
+              <Form.Check
+                key="ocjena5"
+                inline
+                label="5"
+                name="ocjena"
+                type="radio"
+                value="5"
+                onChange={handleGradeChange}
               />
             </div>
 
             <ModalFooter key="podnozje">
               <ButtonGroup key="gumbici">
                 <Button key="gumbic1" variant="danger" onClick={handleClose}>
-                  Odustani
+                  Cancel
                 </Button>
                 <Button
                   key="gumbic2"
                   variant="success"
                   type="submit"
-                  disabled={!queryResponse.odgovor ? true : false}
+                  disabled={!grade.ocjena ? true : false}
                 >
-                  Pošalji
+                  Submit
                 </Button>
               </ButtonGroup>
             </ModalFooter>

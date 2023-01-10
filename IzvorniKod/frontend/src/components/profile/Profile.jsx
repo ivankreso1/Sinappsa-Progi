@@ -13,12 +13,11 @@ export default function Profile() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (personInfo.userName.length === 0) {
-      navigate("/login"); // za onemogucavanje neulogiranog odlaska na /editProfile
+    if (personInfo === null) {
+      navigate("/login");
     }
-  }, []);
+  });
 
-  console.log(personInfo);
   return (
     <div className="profile-container">
       <Navbar getPersonInfo={getPersonInfo}></Navbar>
