@@ -117,7 +117,8 @@ export function updatePersonInfo(id, userName, password) {
 }
 
 async function fetchData(url, options) {
-	const response = await fetch(`${configData.hostname}/${url}`, options);
+	console.log(configData.hostname[configData.profile]);
+	const response = await fetch(`${configData.hostname[configData.profile]}/${url}`, options);
 
 	const string = await response.text();
 	const json = string === "" ? { error: !response.ok } : JSON.parse(string);
