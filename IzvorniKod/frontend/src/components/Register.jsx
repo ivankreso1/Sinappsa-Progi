@@ -176,6 +176,7 @@ export default function Register() {
                   marginBottom: "10px",
                 }}
                 type="submit"
+                id="submit"
                 disabled={
                   !registerInfo.ime ||
                   !registerInfo.prezime ||

@@ -81,5 +81,26 @@ describe("React Sinappsa Frontend Registration Test", () => {
     });
   });
 
+  it("username input", () => {
+    driver.get(registerUrl).then(() => {
+      var username = driver.findElement(webdriver.By.id("username"));
+      username.sendKeys("testni username")
+        .then(() => {
+          var value = username.getAttribute("value");
+          assert.equal(value === "testni username" ? true : false, true);
+        });
+    });
+  });
+
+  it("submit button disabled before required inputs", () => {
+    driver.get(registerUrl).then(() => {
+      var submit = driver.findElement(webdriver.By.id("submit"))
+      .then(() => {
+        var submitState = submit.getAttribute("disabled");
+        assert.equal(submitState === true ? true : false, true)
+      })
+    })
+  })
+
   after(() => driver.quit());
 });
