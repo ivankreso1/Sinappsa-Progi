@@ -3,10 +3,10 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { postDataAuth } from "../../scripts/util";
+import { postDataAuth, getPersonInfo } from "../../scripts/util";
 
 export default function CreateQuery(props) {
-  let currentInfo = JSON.parse(localStorage.getItem("personInfo"));
+  let currentInfo = getPersonInfo();
   const [count, setCount] = React.useState(0);
   const [show, setShow] = useState(false);
   const [query, setQuery] = useState({
@@ -16,7 +16,7 @@ export default function CreateQuery(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    if (!currentInfo.userName) {
+    if (!currentInfo) {
       navigate("/login");
     }
     setShow(true);
@@ -40,8 +40,10 @@ export default function CreateQuery(props) {
       poruka: query.opis,
     };
 
-    postDataAuth("upiti/" + currentInfo.id + "/" + props.props.ad.id, data)
-    .then((res) => {
+    postDataAuth(
+      "upiti/" + currentInfo.id + "/" + props.props.ad.id,
+      data
+    ).then((res) => {
       if (res.error) {
         alert(res.message);
       }

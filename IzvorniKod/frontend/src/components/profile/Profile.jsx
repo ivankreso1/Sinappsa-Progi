@@ -8,7 +8,7 @@ import UserQueries from "./UserQueries";
 import { getPersonInfo } from "../../scripts/util";
 
 export default function Profile() {
-  const personInfo = JSON.parse(localStorage.getItem("personInfo"));
+  const personInfo = getPersonInfo();
 
   const navigate = useNavigate();
 
