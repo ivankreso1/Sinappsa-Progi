@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../../cssFiles/Profile.css";
+import "../../cssFiles/profile/Profile.css";
 import Navbar from "../home/Navbar";
 import ProfileInfo from "./ProfileInfo";
 import UserAds from "./UserAds";
