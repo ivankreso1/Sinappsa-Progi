@@ -4,10 +4,9 @@ import CreateQuery from "../home/CreateQuery";
 import "../../cssFiles/home/oglas.css";
 import UserTag from "./UserTag";
 import DeleteAd from "../home/DeleteAd";
-import { getCategoryFromEnumValue, putDataAuth } from "../../scripts/util";
+import { getCategoryFromEnumValue, putDataAuth, getPersonInfo } from "../../scripts/util";
 import EditActiveAd from "../profile/EditActiveAd";
 import DeleteActiveAd from "../profile/DeleteActiveAd";
-import { getPersonInfo } from "../../scripts/util";
 
 class Ad extends Component {
 	constructor(props) {

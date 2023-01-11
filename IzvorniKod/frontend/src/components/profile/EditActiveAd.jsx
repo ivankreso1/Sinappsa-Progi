@@ -50,7 +50,7 @@ export default function EditActiveAd(props) {
 			opis: editActAd.opis,
 		};
 
-		putDataAuth("/oglasi/" + props.props.ad.id, data).then((res) => {
+		putDataAuth("oglasi/" + props.props.ad.id, data).then((res) => {
 			if (res.error) {
 				alert(res.message);
 			} else {

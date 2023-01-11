@@ -29,7 +29,7 @@ export default function QueryResponse(id) {
     };
 
     var uriZaSlanje =
-      "/upiti/" + id.id + "/novoStanje?stanjeUpita=" + data.odgovor;
+      "upiti/" + id.id + "/novoStanje?stanjeUpita=" + data.odgovor;
 
     putDataAuth(uriZaSlanje, {}).then(res => {
       if (res.error) {

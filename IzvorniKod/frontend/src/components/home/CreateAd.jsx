@@ -33,7 +33,7 @@ export default function CreateAd() {
 	};
 
 	React.useEffect(() => {
-		getData("/kolegiji").then((data) => {
+		getData("kolegiji").then((data) => {
 			setKolegiji(data);
 		});
 	}, []);

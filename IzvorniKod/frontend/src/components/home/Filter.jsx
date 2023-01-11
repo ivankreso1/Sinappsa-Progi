@@ -43,14 +43,14 @@ class Filter extends Component {
     }
 
     fetchAds = () => {
-        getData(`/oglasi/filter?smjer=${this.state.direction}&kategorija=${this.state.category}&kolegij=${this.state.course.replace(/ /g, "+")}`)
+        getData(`oglasi/filter?smjer=${this.state.direction}&kategorija=${this.state.category}&kolegij=${this.state.course.replace(/ /g, "+")}`)
         .then(data => this.props.onFilter(data));
     }
 
     fetchCourses = () => {
         let path = this.state.direction === "" ? "" : `/smjer/${this.state.direction}`;
 
-        getData(`/kolegiji${path}`)
+        getData(`kolegiji${path}`)
         .then(data => this.setState({ courses: data }));
     }
 

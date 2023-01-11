@@ -21,6 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "https://sheeshmishi-fe.onrender.com")
 @RestController
 @RequestMapping("/korisnik")
 public class RegKorisnikController {

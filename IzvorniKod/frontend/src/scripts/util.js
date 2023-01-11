@@ -101,7 +101,6 @@ export function login(id, userName, password, moderator) {
 }
 
 export function logout() {
-	console.log(PERSON_INFO_TEMPLATE);
 	localStorage.setItem(PERSON_INFO_KEY, null);
 }
 
