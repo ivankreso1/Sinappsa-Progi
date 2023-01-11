@@ -9,7 +9,7 @@ describe("React Sinappsa Frontend Registration Test", () => {
   var driver;
 
   before(() => {
-    driver = new webdriver.Builder().forBrowser("firefox").build();
+    driver = new webdriver.Builder().forBrowser("chrome").build();
   });
 
   it("go to login", () => {
@@ -55,6 +55,28 @@ describe("React Sinappsa Frontend Registration Test", () => {
           driver.getPageSource().then((source) => {
             assert.equal(source.includes("Testno Prezime"), true);
           });
+        });
+    });
+  });
+
+  it("email input", () => {
+    driver.get(registerUrl).then(() => {
+      var email = driver.findElement(webdriver.By.id("email"));
+      email.sendKeys("luka.lukic@fer.hr")
+        .then(() => {
+          var value = email.getAttribute("value");
+          assert.equal(value.contains("@fer"), true);
+        });
+    });
+  });
+
+  it("password input", () => {
+    driver.get(registerUrl).then(() => {
+      var password = driver.findElement(webdriver.By.id("lozinka"));
+      password.sendKeys("12345")
+        .then(() => {
+          var value = password.getAttribute("value");
+          assert.equal(value.length >= 5 ? true : false, true);
         });
     });
   });

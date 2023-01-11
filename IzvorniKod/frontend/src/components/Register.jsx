@@ -144,7 +144,6 @@ export default function Register() {
                 name="email"
                 id="email"
                 required
-                maxLength={25}
                 value={registerInfo.email}
                 onChange={handleInfoChange}
               ></Form.Control>
