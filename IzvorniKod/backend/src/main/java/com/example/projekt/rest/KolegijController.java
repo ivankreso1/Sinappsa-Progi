@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "https://sheeshmishi-fe.onrender.com")
 @RestController
 @RequestMapping("/kolegiji")
 public class KolegijController {

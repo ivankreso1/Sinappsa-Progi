@@ -24,6 +24,7 @@ import com.example.projekt.service.OglasService;
 
 import javax.mail.MessagingException;
 
+@CrossOrigin(origins = "https://sheeshmishi-fe.onrender.com")
 @RestController
 @RequestMapping("/oglasi")
 public class OglasController {

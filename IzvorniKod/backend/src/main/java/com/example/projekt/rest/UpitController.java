@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@CrossOrigin(origins = "https://sheeshmishi-fe.onrender.com")
 @RestController
 @RequestMapping("/upiti")
 public class UpitController {
