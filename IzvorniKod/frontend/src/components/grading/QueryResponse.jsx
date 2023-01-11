@@ -71,7 +71,7 @@ export default function QueryResponse(id) {
               <Form.Check
                 key="ocjena"
                 inline
-                label="Ocjenjivanje usluge"
+                label="Prihvaćanje upita"
                 name="odgovor"
                 type="radio"
                 value="CEKA_OCJENJIVANJE"
@@ -80,7 +80,7 @@ export default function QueryResponse(id) {
               <Form.Check
                 key="odbijeno"
                 inline
-                label="Odbijanje usluge"
+                label="Odbijanje upita"
                 name="odgovor"
                 type="radio"
                 value="ODBIJEN"
