@@ -1,4 +1,5 @@
 package com.example.projekt.service.impl;
+
 import com.example.projekt.dao.UpitRepository;
 import com.example.projekt.domain.Oglas;
 import com.example.projekt.domain.RegistriraniKorisnik;
@@ -29,10 +30,6 @@ public class UpitServiceImpl implements UpitService {
     private JavaMailSender mailSender;
     @Autowired
     private RegKorisnikService regKorisnikService;
-//    @Override
-//    public List<Upit> getUpiti() {
-//        return upitRepository.findAll();
-//    }
 
     @Override
     public List<Upit> listUpitByKreator(RegistriraniKorisnik registriraniKorisnik) {

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.userdetails.User;
 
 import javax.mail.MessagingException;
-import javax.mail.ReadOnlyFolderException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
@@ -29,11 +28,6 @@ public class UpitController {
     private RegKorisnikService regKorisnikService;
     @Autowired
     private OglasService oglasService;
-
-//    @GetMapping()
-//    public List<Upit> getUpiti() {
-//        return upitService.getUpiti();
-//    }
 
     @GetMapping("autorUpita/{idAutoraUpita}")
     @Secured("ROLE_STUDENT_KORISNIK")

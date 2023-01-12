@@ -8,7 +8,6 @@ import java.util.Optional;
 
 @Service
 public interface KolegijService {
-
     List<Kolegij> getKolegiji();
 
     Kolegij napraviKolegij(String nazivKolegija, String smjer);

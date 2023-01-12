@@ -191,7 +191,6 @@ public class OglasServiceImpl implements OglasService {
             throw new RequestDeniedException("Pokušali ste izmijeniti oglas korisnika " + autorOglasa.getKorisnickoIme()
                     + " prijavljeni kao " + user.getUsername());
         }
-
         return true;
     }
 
@@ -224,7 +223,6 @@ public class OglasServiceImpl implements OglasService {
             zaJedanOglas.setOglas(korisnikovAktivan);
             zaJedanOglas.setListaUpita(upitiZaOglas);
             oglasiPlusUpiti.add(zaJedanOglas);
-
         }
         return oglasiPlusUpiti;
     }

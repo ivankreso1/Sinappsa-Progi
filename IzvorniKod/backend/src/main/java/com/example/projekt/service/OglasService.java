@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Service
 public interface OglasService {
-
     List<Oglas> listSveOglase();
 
     List<Oglas> listSvihAktivnihOglasa();

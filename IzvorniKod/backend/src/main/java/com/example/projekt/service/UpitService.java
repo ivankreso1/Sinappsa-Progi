@@ -13,10 +13,14 @@ import java.util.Optional;
 @Service
 public interface UpitService {
     List<Upit> listUpitByKreator(RegistriraniKorisnik registriraniKorisnik);
+
     List<Upit> listUpitByOglas(Oglas oglas);
+
     Upit objaviUpit(String poruka, RegistriraniKorisnik registriraniKorisnik, Oglas oglas) throws MessagingException, UnsupportedEncodingException;
-    // List<Upit> getUpiti();
+
     Optional<Upit> dohvatiUpitPoId(Long id);
+
     Upit promjeniStanjeUpita(Upit upit, StanjeUpita novoStanjeUpita);
+
     boolean ocijeniStudentPomagaca(CreateOcjenaDTO createOcjenaDTO, User user);
 }

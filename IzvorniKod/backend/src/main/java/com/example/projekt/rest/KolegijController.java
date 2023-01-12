@@ -21,7 +21,6 @@ public class KolegijController {
         return kolegijService.getKolegiji();
     }
 
-
     @PostMapping
     @Secured("ROLE_ADMIN")
     public Kolegij postKolegij(@RequestBody CreateKolegijDTO kolegijDTO) {
