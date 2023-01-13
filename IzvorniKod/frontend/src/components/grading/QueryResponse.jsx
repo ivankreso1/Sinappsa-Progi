@@ -57,8 +57,8 @@ export default function QueryResponse(id) {
         centered
         show={show}
         onHide={handleClose}
-        backdrop="static" //onemogucen izlaz klikom na pozadinu
-        keyboard={false} //onemogucen izlaz pomocu escape key-a
+        backdrop="static"
+        keyboard={false}
       >
         <Modal.Header key="header" closeButton>
           <Modal.Title key="naslov" id="contained-modal-title-vcenter">
