@@ -1,5 +1,0 @@
-testni file da bi se mapa Dokumentacija saveala na gitlab
-
-Ovo Karlo testira u grani devdoc.
-Idem sada ovo commitati, a onda kada odemo u granu "main", ovaj
-moj mali roman ne biste trebali moći vidjeti! :)
