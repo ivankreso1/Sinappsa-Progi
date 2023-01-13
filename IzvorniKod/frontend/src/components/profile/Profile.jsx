@@ -13,7 +13,7 @@ export default function Profile() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    if (personInfo === null) {
+    if (personInfo === null || personInfo?.isModerator) {
       navigate("/login");
     }
   });

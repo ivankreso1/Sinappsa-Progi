@@ -15,7 +15,7 @@ export default function EditProfile() {
   let currentInfo = getPersonInfo();
 
   React.useEffect(() => {
-    if (currentInfo === null) {
+    if (currentInfo === null || currentInfo?.isModerator) {
       navigate("/login");
     }
   });
