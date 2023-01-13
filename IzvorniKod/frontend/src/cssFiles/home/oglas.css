@@ -1,0 +1,50 @@
+.oglas-container {
+  border-radius: 10px;
+  margin: 10px;
+  background-color: white;
+}
+
+.oglas-korisnik-info-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  margin: 20px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .oglas-korisnik-info-container {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    margin: 20px;
+  }
+}
+
+.oglas-korisnik-info img {
+  border: 1px solid var(--bs-border-color-translucent);
+  width: 75px;
+  height: 75px;
+  margin: 10px 15px 10px 5px;
+  border-radius: 50px;
+}
+.oglas-korisnik-info {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.oglas-naslov h2 {
+  margin: 20px;
+  min-width: 100px;
+  max-width: 100%;
+  display: flex;
+  justify-content: start;
+  align-self: center;
+  font-weight: 400;
+}
+
+.oglas-text-opis {
+  margin: 20px;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  word-wrap: break-word;
+  word-break: normal;
+}

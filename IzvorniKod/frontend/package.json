@@ -10,24 +10,24 @@
     "@types/node": "^16.11.65",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
-	"bootstrap": "^5.2.2",
     "axios": "^0.24.0",
+    "bootstrap": "^5.2.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
-	"react-router-dom": "^6.4.3",
-	"react-bootstrap": "^2.6.0",
+    "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "typescript": "^4.8.4",
-    "web-vitals": "^2.1.4",
-    "http-proxy-middleware": "^2.0.6"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "yarn install && react-scripts build",
     "start-prod": "node app.js",
-    "test": "react-scripts test",
+    "test": "mocha \"test\" --timeout 10000",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,5 +47,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
   }
 }

@@ -4,15 +4,6 @@ body {
     padding: 0;
     height: 100%;
     width: 100%;
-    overflow: hidden;
-}
-
-#root {
-    background: linear-gradient(45deg, blue, red);
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    /*background: linear-gradient(120deg, #56CCF2, #2F80ED);*/
-
-    /*background: linear-gradient(120deg, #00b09b,#96c93d);*/
 }
 
 .container {
@@ -40,7 +31,6 @@ body {
 
 .info-input {
     outline: 5px solid white;
-    /*default plavi outline se nemre maknut pa sam ga morao obojati*/
     width: 100%;
     margin: 30px 0;
     border-bottom: 2px solid #adadad;
@@ -81,7 +71,8 @@ button {
 }
 
 .avatar-placeholder {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
     align-content: space-between;
 }
@@ -94,6 +85,7 @@ button {
     width: 100px;
     border: 2px solid black;
     border-radius: 5px;
+    margin: 10px;
 }
 
 .avatar-placeholder img:hover {

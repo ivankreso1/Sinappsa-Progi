@@ -1,0 +1,26 @@
+.rank-list-container {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.rank-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 10px;
+  height: 70px;
+  background-color: white;
+  justify-items: right;
+}
+
+.rank-mark {
+  border: 4px dotted var(--bs-border-color-translucent);
+  border-radius: 90%;
+  background-color: white;
+  padding: 2%;
+}
+
+.rank-item {
+  margin: auto;
+}

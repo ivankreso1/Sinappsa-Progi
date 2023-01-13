@@ -1,0 +1,46 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: -moz-scrollbars-vertical;
+  overflow-y: auto;
+}
+
+.home-page {
+  height: 100%;
+  overflow-y: auto;
+  min-height: 100vh;
+}
+
+.home-page h1 {
+  text-align: center;
+  margin-top: 1%;
+}
+
+.child1 {
+  grid-area: childArea1;
+}
+
+.child2 {
+  grid-area: childArea2;
+}
+
+@media only screen and (min-width: 720px) {
+  .body-wrapper {
+    display: grid;
+    grid-template-columns: 75% 25%;
+    grid-template-areas: "childArea1 childArea2";
+    margin: 2% 15% 0 15%;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .body-wrapper {
+    display: grid;
+    grid-template-areas: "childArea2" "childArea1";
+    margin: 2% 2%;
+  } 
+}
+
+.body-wrapper-child {
+  margin: 0 5% 0 5%;
+}

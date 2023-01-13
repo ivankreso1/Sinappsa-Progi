@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface OglasRepository extends JpaRepository<Oglas, Long> {
     List<Oglas> findByKreator(RegistriraniKorisnik registriraniKorisnik);
+
+    List<Oglas> findAllByAktivan(boolean aktivan);
 }
