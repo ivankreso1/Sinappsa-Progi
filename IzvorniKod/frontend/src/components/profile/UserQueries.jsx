@@ -16,6 +16,7 @@ class UserQueries extends Component {
 
   handleUserQueries = () => {
     const personInfo = getPersonInfo();
+    if (personInfo === null) return;
 
     getDataAuth("upiti/autorUpita/" + personInfo.id).then((data) =>
       this.setState({ userQueries: data })

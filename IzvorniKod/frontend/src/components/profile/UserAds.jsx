@@ -17,6 +17,7 @@ class UserAds extends Component {
 
   handleUserAds = () => {
     const personInfo = getPersonInfo();
+    if (personInfo === null) return;
 
     getDataAuth("oglasi/aktivni/" + personInfo.id).then((data) =>
       this.setState({ activeUserAds: data })

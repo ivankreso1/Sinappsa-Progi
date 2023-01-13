@@ -16,6 +16,8 @@ class ProfileInfo extends Component {
 
   handleProfileInfo = () => {
     const personInfo = getPersonInfo();
+    if (personInfo === null) return;
+    
     getDataAuth("korisnik/podaci/" + personInfo.id).then((data) =>
       this.setState({ profileInfo: data })
     );
