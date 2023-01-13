@@ -3,7 +3,6 @@ package com.example.projekt.dao;
 import com.example.projekt.domain.Oglas;
 import com.example.projekt.domain.RegistriraniKorisnik;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

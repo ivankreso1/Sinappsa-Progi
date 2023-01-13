@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
 import { putDataAuth } from "../../scripts/util";
 
-export default function GradeStudent(id) {
+export default function GradeStudent(props) {
   const [show, setShow] = useState(false);
   const [grade, setGrade] = useState({
     ocjena: "",
   });
 
   const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
-  };
+  const handleShow = () => setShow(true);
 
   function handleGradeChange(event) {
     setGrade((prevGrade) => {
@@ -25,7 +23,7 @@ export default function GradeStudent(id) {
     event.preventDefault();
 
     const data = {
-      idUpita: id.id,
+      idUpita: props.props.query.id,
       ocjena: grade.ocjena,
     };
 
@@ -34,11 +32,10 @@ export default function GradeStudent(id) {
         alert(data.message);
       } else {
         putDataAuth(
-          "upiti/" + id.id + "/novoStanje?stanjeUpita=PRIHVACEN",
+          "upiti/" + props.props.query.id + "/novoStanje?stanjeUpita=PRIHVACEN",
           {}
-        ).then(res => {
+        ).then((res) => {
           setShow(false);
-          alert("Ocjenjivanje uspješno završeno.");
           window.location.reload(false);
         });
       }
@@ -124,7 +121,7 @@ export default function GradeStudent(id) {
             <ModalFooter key="podnozje">
               <ButtonGroup key="gumbici">
                 <Button key="gumbic1" variant="danger" onClick={handleClose}>
-                  Cancel
+                  Odustani
                 </Button>
                 <Button
                   key="gumbic2"
@@ -132,7 +129,7 @@ export default function GradeStudent(id) {
                   type="submit"
                   disabled={!grade.ocjena ? true : false}
                 >
-                  Submit
+                  Ocijeni
                 </Button>
               </ButtonGroup>
             </ModalFooter>

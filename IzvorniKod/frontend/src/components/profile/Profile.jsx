@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../../cssFiles/Profile.css";
+import "../../cssFiles/profile/Profile.css";
 import Navbar from "../home/Navbar";
 import ProfileInfo from "./ProfileInfo";
 import UserAds from "./UserAds";
@@ -8,7 +8,7 @@ import UserQueries from "./UserQueries";
 import { getPersonInfo } from "../../scripts/util";
 
 export default function Profile() {
-  const personInfo = JSON.parse(localStorage.getItem("personInfo"));
+  const personInfo = getPersonInfo();
 
   const navigate = useNavigate();
 

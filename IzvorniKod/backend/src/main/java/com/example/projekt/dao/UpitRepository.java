@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface UpitRepository extends JpaRepository<Upit, Long> {
     List<Upit> findByAutorUpita(RegistriraniKorisnik registriraniKorisnik);
+
     List<Upit> findByOglas(Oglas oglas);
 }

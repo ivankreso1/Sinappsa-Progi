@@ -88,7 +88,7 @@ public class RegKorisnikServiceImpl implements RegKorisnikService {
         if(email == null || korisnickoIme == null || ime == null || prezime == null || lozinka == null || avatar == null) {
             throw new RequestDeniedException("Sva polja moraju biti ispunjena");
         }
-        if(email.isEmpty() || korisnickoIme.isEmpty() || ime.isEmpty() || prezime.isEmpty() || lozinka.isEmpty() || avatar.isEmpty()) {
+        if(email.isBlank() || korisnickoIme.isBlank() || ime.isBlank() || prezime.isBlank() || lozinka.isBlank() || avatar.isBlank()) {
             throw new RequestDeniedException("Polja ne smiju biti prazna");
         }
         if(regKorisnikRepository.existsByEmail(email)) {

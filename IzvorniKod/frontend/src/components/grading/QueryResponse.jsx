@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ButtonGroup, Form, ModalFooter } from "react-bootstrap";
@@ -11,9 +11,7 @@ export default function QueryResponse(id) {
   });
 
   const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
-  };
+  const handleShow = () => setShow(true);
 
   function handleQueryResponseChange(event) {
     setQueryResponse((prevQueryResponse) => {
@@ -31,12 +29,11 @@ export default function QueryResponse(id) {
     var uriZaSlanje =
       "upiti/" + id.id + "/novoStanje?stanjeUpita=" + data.odgovor;
 
-    putDataAuth(uriZaSlanje, {}).then(res => {
+    putDataAuth(uriZaSlanje, {}).then((res) => {
       if (res.error) {
         alert(res.message);
       } else {
         setShow(false);
-        alert("Odgovor na upit uspješno poslan.");
         window.location.reload(false);
       }
     });
@@ -74,7 +71,7 @@ export default function QueryResponse(id) {
               <Form.Check
                 key="ocjena"
                 inline
-                label="Ocjenjivanje usluge"
+                label="Prihvaćanje upita"
                 name="odgovor"
                 type="radio"
                 value="CEKA_OCJENJIVANJE"
@@ -83,7 +80,7 @@ export default function QueryResponse(id) {
               <Form.Check
                 key="odbijeno"
                 inline
-                label="Odbijanje usluge"
+                label="Odbijanje upita"
                 name="odgovor"
                 type="radio"
                 value="ODBIJEN"
