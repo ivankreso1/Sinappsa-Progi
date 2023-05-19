@@ -5,6 +5,6 @@ Used techonologies:
   -  React
   -  PostgreSQL
   
-My role was to lead the team of 7 students in making the app, I also designed the database and contrinuted to backend code (Spring).
+My role was to lead the team of 7 students in making the app, I also designed the database and contributed to backend code (Spring).
 
 
