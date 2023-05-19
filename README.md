@@ -1,4 +1,4 @@
-Web app for requesting help in classes, exams, tasks made for students of Faculty Of Engineering And Computing to help other students.
+Web app for requesting help in classes, exams, tasks made for students of Faculty Of Electrical Engineering And Computing (FER. Zagreb) to help other students.
 
 Used techonologies:
   -  Spring Boot
